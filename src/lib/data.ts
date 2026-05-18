@@ -37,7 +37,7 @@ Find Skills is an intelligent discovery engine that searches across the entire S
 ## How It Works
 
 1. **Natural Language Query** — Describe what you want to accomplish in plain English
-2. **Multi-Ecosystem Search** — Searches Vercel Labs, Anthropic, Pokais, Impeccable, Obra, and community sources
+2. **Multi-Ecosystem Search** — Searches Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, and community sources
 3. **Quality Scoring** — Results are ranked by a composite quality score based on install count, GitHub stars, and verification status
 4. **Smart Matching** — Uses semantic understanding to match intent, not just keywords
 
@@ -1333,7 +1333,7 @@ export const SUPPORTED_ECOSYSTEMS: Ecosystem[] = [
   { name: 'Skills.sh', url: 'https://skills.sh' },
   { name: 'Vercel Labs', url: 'https://github.com/vercel-labs/skills' },
   { name: 'Anthropic', url: 'https://github.com/anthropics/skills' },
-  { name: 'Pokais', url: 'https://skills.sh' },
-  { name: 'Impeccable', url: 'https://skills.sh' },
-  { name: 'Obra', url: 'https://skills.sh' },
+  { name: 'Tangison', url: 'https://github.com/tangison/skills' },
+  { name: 'Obra Superpowers', url: 'https://github.com/obra/superpowers' },
+  { name: 'Microsoft Azure', url: 'https://github.com/microsoft/azure-skills' },
 ];
