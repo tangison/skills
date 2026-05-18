@@ -158,3 +158,58 @@ Stage Summary:
 - AGENT_CONFIG integrated into chat widget and about page
 - Terminal animation uses semantic colors
 - Zero lint errors, clean compilation
+
+---
+Task ID: 2
+Agent: Page Rewriter (Task 2)
+Task: Complete rewrite of page.tsx with SkillsCamp branding, 8 views, self-contained data, and all features
+
+Work Log:
+- Complete rewrite of src/app/page.tsx (~950 lines) — self-contained, no imports from @/lib/data, @/lib/types, @/lib/agent-config
+- Added 'use client' directive at top
+- Implemented useTheme from next-themes with mounted state to prevent hydration mismatch
+- Added isDark conditional styling system with all required theme class mappings:
+  canvasClass, cardClass, cardNestedClass, borderClass, textMutedClass, textPrimaryClass, headerClass, footerClass
+- Logo usage: Header uses /logo.png + wordmark "TΛNGISON" + subtitle "SKILLSCAMP PLATFORM"; Footer uses ONLY logo image (h-16 w-auto) with filter for visibility in both themes
+- Theme toggle: Sun/Moon icons from lucide-react, toggles between 'dark' and 'light' using setTheme
+- Navigation: Desktop nav with Skills, Categories, Trending, Documents, Triangulation, About; Mobile hamburger menu with simple state toggle (no Sheet component)
+- All 8 views implemented:
+  1. home — Hero with terminal animation (NO ocean-view.jpeg background), trending skills row, categories grid, ecosystem sources, AI CTA
+  2. skills — Skills directory with sidebar filters (search, category dropdown, difficulty tier)
+  3. skill_detail — 3-column layout (metadata sidebar, content center, AI insights right) with tabs
+  4. categories — Grid of all 18 categories
+  5. trending — Top trending capabilities ranked by trendingDelta
+  6. documents — Document Creation Engine with configurator + 3-page preview canvas
+  7. research — Deep Research Triangulation view with confidence levels and cron job telemetry
+  8. about — About Tangison SkillsCamp with core principles and AI rewrite system
+- Self-contained data constants:
+  - SKILL_CATEGORIES (18 categories with name, icon, count)
+  - INITIAL_SKILLS (4 skills: find-skills, military-prompt-architect, flyer-luxury-generator, seo-auditor-pro)
+  - REWRITE_FUNCTIONS (7 items: clarity, remove-ai, structure, format, standards, clean-code, simplify)
+  - AUTOMATION_JOBS (4 cron jobs)
+  - SUPPORTED_ECOSYSTEMS (6 items)
+- CategoryIcon component with custom SVGs (strokeWidth="2.5") for all 18 icon types
+- SectionTag component with border-l-2 border-[#C56A4A] styling
+- TerminalAnimation component with typing animation showing "npx skills find --domain='african-enterprise'"
+- AI Chat Widget (floating bottom-right) with simulated responses, typing indicator, keyword matching
+- AI Rewrite System with toggleable rewrite function checkboxes and simulated rewrite output
+- Cron Job Telemetry with step-by-step log animation and auto-scroll
+- Document Creation Engine with configurator (doc type, title, subtitle, author, skill selection) + 3-page preview
+- System Notification (toast-style, bottom-left positioned)
+- Copy to clipboard with navigator.clipboard.writeText() and try/catch fallback
+- Footer: Logo ONLY (h-16 w-auto) with colored filter, Platform links, Legal links, "Windhoek, Namibia // Node", "© 2026 TANGISON GROUP. ALL RIGHTS SECURED."
+- fadeInUp animation keyframes via style tag
+- Difficulty values: FOUNDATIONAL, INTERMEDIATE, SOVEREIGN
+- Lint passes clean with zero errors
+- Dev server compiles successfully
+
+Stage Summary:
+- Complete self-contained page.tsx with all 19 critical requirements fulfilled
+- SkillsCamp branding (not Skillsmith) throughout
+- 8 views fully functional: home, skills, skill_detail, categories, trending, documents, research, about
+- All data self-contained — no external imports from @/lib/*
+- Theme toggle works in both light and dark modes with isDark conditional styling
+- Logo usage follows spec: header (logo + wordmark + subtitle), footer (logo only, large, filtered)
+- No Sheet component — simple mobile menu toggle
+- No ocean-view.jpeg in hero — terminal animation instead
+- Zero lint errors, clean compilation
