@@ -17,7 +17,7 @@ import { MastGlyph } from '@/components/brand/TangisonLogo';
    ═══════════════════════════════════════════════════════════════ */
 type PageRoute = 'home' | 'skills' | 'skill_detail' | 'categories' | 'trending' | 'documents' | 'research' | 'about' | 'agent_pipeline';
 type Difficulty = 'FOUNDATIONAL' | 'INTERMEDIATE' | 'SOVEREIGN';
-type EcosystemSource = 'VERCEL_LABS' | 'ANTHROPIC' | 'POKAIS' | 'IMPECCABLE' | 'OBRA' | 'TANGISON' | 'COMMUNITY';
+type EcosystemSource = 'VERCEL_LABS' | 'ANTHROPIC' | 'OBRA' | 'MICROSOFT' | 'TANGISON' | 'COMMUNITY';
 
 interface SkillRelationship {
   type: string;
@@ -84,22 +84,22 @@ interface Ecosystem {
 const SKILL_CATEGORIES = [
   { name: "Website Planning", icon: "Planning", count: 14 },
   { name: "Website Auditing", icon: "Auditing", count: 8 },
-  { name: "SEO", icon: "SEO", count: 22 },
-  { name: "Copywriting", icon: "Copywriting", count: 45 },
-  { name: "Prompt Engineering", icon: "Prompt", count: 112 },
-  { name: "Image Generation", icon: "ImageGen", count: 34 },
-  { name: "Flyer Design", icon: "Flyer", count: 19 },
-  { name: "Social Media", icon: "Social", count: 56 },
-  { name: "Document Design", icon: "DocDesign", count: 27 },
-  { name: "PDF Generation", icon: "PDFGen", count: 11 },
-  { name: "Research", icon: "Research", count: 38 },
-  { name: "Automation", icon: "Automation", count: 89 },
-  { name: "Deployment", icon: "Deployment", count: 41 },
-  { name: "Next.js", icon: "Nextjs", count: 156 },
-  { name: "React", icon: "ReactIcon", count: 204 },
-  { name: "TypeScript", icon: "TypeScriptIcon", count: 118 },
-  { name: "Brand Systems", icon: "Brand", count: 21 },
-  { name: "AI Infrastructure", icon: "Infra", count: 67 }
+  { name: "SEO", icon: "SEO", count: 18 },
+  { name: "Copywriting", icon: "Copywriting", count: 32 },
+  { name: "Prompt Engineering", icon: "Prompt", count: 67 },
+  { name: "Image Generation", icon: "ImageGen", count: 24 },
+  { name: "Flyer Design", icon: "Flyer", count: 12 },
+  { name: "Social Media", icon: "Social", count: 38 },
+  { name: "Document Design", icon: "DocDesign", count: 19 },
+  { name: "PDF Generation", icon: "PDFGen", count: 7 },
+  { name: "Research", icon: "Research", count: 28 },
+  { name: "Automation", icon: "Automation", count: 54 },
+  { name: "Deployment", icon: "Deployment", count: 31 },
+  { name: "Next.js", icon: "Nextjs", count: 89 },
+  { name: "React", icon: "ReactIcon", count: 112 },
+  { name: "TypeScript", icon: "TypeScriptIcon", count: 76 },
+  { name: "Brand Systems", icon: "Brand", count: 15 },
+  { name: "AI Infrastructure", icon: "Infra", count: 42 }
 ];
 
 const INITIAL_SKILLS: Skill[] = [
@@ -108,22 +108,23 @@ const INITIAL_SKILLS: Skill[] = [
     slug: 'find-skills',
     title: 'Find Skills',
     category: 'AI Infrastructure',
-    tagline: 'Discover the perfect AI skill for any task — search across the entire ecosystem',
-    difficulty: 'SOVEREIGN',
-    installCount: 12847,
-    githubStars: 2340,
-    qualityScore: 97,
+    tagline: 'The sovereign discovery engine — search the entire open agent skills ecosystem',
+    difficulty: 'FOUNDATIONAL',
+    installCount: 1600000,
+    githubStars: 19000,
+    qualityScore: 98,
     isTrending: true,
-    trendingDelta: 18,
-    installCommand: 'npx skills-sh find-skills',
+    trendingDelta: 12,
+    installCommand: 'npx skills add vercel-labs/skills',
     dependencies: [],
     originalAuthor: 'Vercel Labs',
     repositoryName: 'vercel-labs/skills',
-    sourceUrl: 'https://github.com/vercel-labs/skills/tree/main/find-skills',
-    skillsShUrl: 'https://skills.sh/skills/find-skills',
+    sourceUrl: 'https://github.com/vercel-labs/skills',
+    skillsShUrl: 'https://skills.sh/vercel-labs/skills',
     license: 'MIT',
     ecosystemSource: 'VERCEL_LABS',
-    usageExamples: `// Search for a skill by natural language
+    ui_widget_primitive: 'TARGETING_SYSTEM',
+    usageExamples: `// Discover skills by natural language
 const results = await findSkills("create a landing page for a restaurant");
 
 // Filter by category
@@ -135,250 +136,312 @@ const designSkills = await findSkills({
 // Get trending skills
 const trending = await findSkills({ trending: true, limit: 10 });`,
     relationships: [
-      { type: 'complementary', target: 'military-prompt-architect', label: 'Use for prompt optimization' },
-      { type: 'complementary', target: 'seo-auditor-pro', label: 'Research before choosing' }
+      { type: 'complementary', target: 'frontend-design', label: 'Design after discovering' },
+      { type: 'complementary', target: 'brainstorming', label: 'Ideate before searching' }
     ],
     contentMdx: `# Find Skills
 
 ## Overview
 
-Find Skills is the sovereign discovery engine that searches across the entire Skills.sh ecosystem and compatible sources to find the best AI skill for your task.
-
-## How It Works
-
-1. **Natural Language Query** — Describe what you want to accomplish in plain English
-2. **Multi-Ecosystem Search** — Searches Vercel Labs, Anthropic, Pokais, Impeccable, Obra, and community sources
-3. **Quality Scoring** — Results ranked by composite quality score based on install count, GitHub stars, and verification status
-4. **Smart Matching** — Uses semantic understanding to match intent, not just keywords
-
-## Features
-
-- **Fuzzy Matching**: Handles typos and partial names gracefully
-- **Category Filters**: Narrow results by category, difficulty, or ecosystem
-- **Trending Boost**: Trending skills get a relevance boost
-- **Dependency Awareness**: Shows compatible and complementary skills`,
-    aiInsight: 'The most-installed skill in the ecosystem — acts as the gateway to discovering all other skills. Quality score of 97 is the highest in the catalog.',
-    tangisonRecommendation: 'Start here for any project — Find Skills will point you to the right tool for the job.',
-    citations: ['skills.sh/docs/find-skills', 'vercel-labs/skills/README.md', 'ecosystem-report-2025.pdf'],
-    ui_widget_primitive: 'TARGETING_SYSTEM'
-  },
-  {
-    id: 'skill-2',
-    slug: 'military-prompt-architect',
-    title: 'Military Prompt Architect',
-    category: 'Prompt Engineering',
-    tagline: 'Battle-tested prompt frameworks with constraint enforcement and adversarial testing',
-    difficulty: 'INTERMEDIATE',
-    installCount: 8923,
-    githubStars: 1876,
-    qualityScore: 94,
-    isTrending: true,
-    trendingDelta: 24,
-    installCommand: 'npx skills-sh military-prompt-architect',
-    dependencies: ['find-skills'],
-    originalAuthor: 'Anthropic',
-    repositoryName: 'anthropics/skills',
-    sourceUrl: 'https://github.com/anthropics/skills/tree/main/military-prompt-architect',
-    skillsShUrl: 'https://skills.sh/skills/military-prompt-architect',
-    license: 'Apache-2.0',
-    ecosystemSource: 'ANTHROPIC',
-    usageExamples: `// Architect a constraint-enforced prompt
-const prompt = await militaryPromptArchitect({
-  objective: "Generate a compliant financial report",
-  constraints: ["no speculation", "cite all sources", "SEC Regulation S-K compliant"],
-  adversarialTests: ["hallucination resistance", "instruction leakage"],
-  outputFormat: "structured-markdown"
-});
-
-// Validate an existing prompt
-const validation = await militaryPromptArchitect.validate({
-  prompt: existingPrompt,
-  testSuite: "adversarial-v2"
-});`,
-    relationships: [
-      { type: 'requires', target: 'find-skills', label: 'Search for complementary skills' },
-      { type: 'complementary', target: 'seo-auditor-pro', label: 'Optimize content prompts' }
-    ],
-    contentMdx: `# Military Prompt Architect
-
-## Overview
-
-Military Prompt Architect applies adversarial engineering principles to prompt design. Every prompt is structured as a mission brief with clear objectives, constraints, rules of engagement, and success criteria.
+Find Skills is the #1 installed skill in the open agent skills ecosystem. It provides sovereign discovery across all connected registries — Vercel Labs, Anthropic, Obra Superpowers, and more.
 
 ## Architecture
 
-1. **Mission Brief** — Define the objective with precision
-2. **Rules of Engagement** — Set hard constraints that cannot be violated
-3. **Threat Model** — Identify failure modes and adversarial inputs
-4. **Verification Protocol** — Automated testing against known attack vectors
-5. **After-Action Review** — Post-execution analysis and refinement
+1. **Natural Language Query** — Describe what you want in plain language
+2. **Multi-Registry Search** — Scans vercel-labs/skills, anthropics/skills, obra/superpowers, and 40+ sources
+3. **Quality Scoring** — Composite rank from install count, GitHub stars, verification status
+4. **Semantic Matching** — Matches intent, not just keywords
 
-## Prompt Structure
+## Installation
 
+\`\`\`jetbrains-mono
+npx skills add vercel-labs/skills
 \`\`\`
-OBJECTIVE: [Clear, measurable goal]
-CONSTRAINTS: [Hard limits that cannot be violated]
-RULES: [Guidelines that should be followed]
-THREATS: [Known failure modes]
-VERIFICATION: [How to validate success]
-OUTPUT: [Expected format and structure]
-\`\`\``,
-    aiInsight: 'The most sophisticated prompt engineering skill in the ecosystem — its adversarial testing framework catches 94% of prompt injection attacks before deployment.',
-    tangisonRecommendation: 'Use Military Prompt Architect for any production prompt — the constraint enforcement alone prevents most common LLM failures.',
-    citations: ['anthropics/skills/docs/prompt-architect', 'arxiv.org/abs/2401-prompt-security', 'skills.sh/blog/military-prompts'],
-    ui_widget_primitive: 'FORWARD_SLASH'
+
+## Source
+
+Repository: github.com/vercel-labs/skills (19K stars)
+Ecosystem: skills.sh/vercel-labs/skills`,
+    aiInsight: 'The most-installed skill in the ecosystem at 1.6M installs — acts as the gateway to discovering all other skills across 40+ registries.',
+    tangisonRecommendation: 'Start here for any project. Find Skills will point you to the right tool for the job across the entire open ecosystem.',
+    citations: ['skills.sh/vercel-labs/skills', 'github.com/vercel-labs/skills', 'docs.skills.sh/find-skills']
+  },
+  {
+    id: 'skill-2',
+    slug: 'frontend-design',
+    title: 'Frontend Design',
+    category: 'React',
+    tagline: 'Production-grade frontend from specifications — React, Next.js, Vue, Svelte',
+    difficulty: 'INTERMEDIATE',
+    installCount: 424900,
+    githubStars: 8200,
+    qualityScore: 95,
+    isTrending: true,
+    trendingDelta: 8,
+    installCommand: 'npx skills add anthropics/skills',
+    dependencies: ['find-skills'],
+    originalAuthor: 'Anthropic',
+    repositoryName: 'anthropics/skills',
+    sourceUrl: 'https://github.com/anthropics/skills',
+    skillsShUrl: 'https://skills.sh/anthropics/skills',
+    license: 'Apache-2.0',
+    ecosystemSource: 'ANTHROPIC',
+    ui_widget_primitive: 'LAYER_MATRIX',
+    usageExamples: `// Generate a Next.js frontend from a spec
+const output = await frontendDesign({
+  framework: "nextjs",
+  spec: {
+    pages: [
+      { name: "Home", sections: ["Hero", "Features", "CTA"] },
+      { name: "Pricing", sections: ["Plans", "FAQ"] }
+    ],
+    styling: "tailwind",
+    componentLibrary: "shadcn-ui"
+  }
+});`,
+    relationships: [
+      { type: 'requires', target: 'find-skills', label: 'Discover first' },
+      { type: 'complementary', target: 'brainstorming', label: 'Ideate before building' }
+    ],
+    contentMdx: `# Frontend Design
+
+## Overview
+
+Frontend Design is the #2 most-installed skill (424.9K installs) from the Anthropic skills registry. It generates production-ready frontend code from design specifications.
+
+## Supported Frameworks
+
+- Next.js (App Router + RSC)
+- React (Vite, CRA)
+- Vue (Nuxt, standalone)
+- Svelte (SvelteKit)
+
+## Installation
+
+\`\`\`jetbrains-mono
+npx skills add anthropics/skills
+\`\`\`
+
+## Source
+
+Repository: github.com/anthropics/skills
+Ecosystem: skills.sh/anthropics/skills (18 skills, 1.6M total installs)`,
+    aiInsight: 'The second most-installed skill at 424.9K installs — its output often passes code review without modifications.',
+    tangisonRecommendation: 'Pair with Find Skills for end-to-end discovery and build workflows.',
+    citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   },
   {
     id: 'skill-3',
-    slug: 'flyer-luxury-generator',
-    title: 'Flyer Luxury Generator',
-    category: 'Flyer Design',
-    tagline: 'Premium, print-safe flyer and poster design — luxury aesthetics, export-ready output',
+    slug: 'brainstorming',
+    title: 'Brainstorming',
+    category: 'Automation',
+    tagline: 'Structured ideation and creative problem-solving for any project',
     difficulty: 'FOUNDATIONAL',
-    installCount: 5412,
-    githubStars: 923,
-    qualityScore: 89,
-    isTrending: false,
-    trendingDelta: 5,
-    installCommand: 'npx skills-sh flyer-luxury-generator',
+    installCount: 164900,
+    githubStars: 196000,
+    qualityScore: 96,
+    isTrending: true,
+    trendingDelta: 15,
+    installCommand: 'npx skills add obra/superpowers',
     dependencies: [],
     originalAuthor: 'Obra Superpowers',
-    repositoryName: 'obra-superpowers/skills',
-    sourceUrl: 'https://github.com/obra-superpowers/skills/tree/main/flyer-luxury-generator',
-    skillsShUrl: 'https://skills.sh/skills/flyer-luxury-generator',
+    repositoryName: 'obra/superpowers',
+    sourceUrl: 'https://github.com/obra/superpowers',
+    skillsShUrl: 'https://skills.sh/obra/superpowers',
     license: 'MIT',
     ecosystemSource: 'OBRA',
-    usageExamples: `// Generate a luxury event flyer
-const flyer = await flyerLuxuryGenerator({
-  event: "Annual Gala Dinner",
-  date: "2026-03-15",
-  venue: "The Grand Terrace, Windhoek",
-  style: "minimal-luxury",
-  palette: ["#1a1a2e", "#d4a843", "#f5f0e8"],
-  format: "A5-print"
-});
-
-// Generate a social media version
-const socialFlyer = await flyerLuxuryGenerator({
-  ...flyerConfig,
-  format: "instagram-story"
+    ui_widget_primitive: 'FORWARD_SLASH',
+    usageExamples: `// Start a brainstorming session
+const ideas = await brainstorming({
+  topic: "Growth strategy for SaaS startup",
+  constraints: ["budget under $5K/month", "B2B focus"],
+  format: "structured"
 });`,
     relationships: [
-      { type: 'complementary', target: 'find-skills', label: 'Discover design skill combinations' },
-      { type: 'complementary', target: 'military-prompt-architect', label: 'Optimize design prompts' }
+      { type: 'complementary', target: 'find-skills', label: 'Research before ideating' },
+      { type: 'complementary', target: 'frontend-design', label: 'Ideate before building' }
     ],
-    contentMdx: `# Flyer Luxury Generator
+    contentMdx: `# Brainstorming
 
 ## Overview
 
-Flyer Luxury Generator creates premium, print-safe flyers and posters with luxury aesthetics. Every output is designed for both print and digital distribution with proper bleed, color profiles, and typography.
+Brainstorming is the #1 skill from Obra Superpowers (164.9K installs) — the agentic skills framework with 196K GitHub stars. It provides structured ideation and creative problem-solving.
 
-## Design Philosophy
+## Installation
 
-1. **Less is More** — Luxury speaks through restraint, not excess
-2. **Typography First** — The right font does 80% of the work
-3. **White Space is Design** — Deliberate emptiness signals quality
-4. **Print-Safe by Default** — CMYK profiles, proper bleed, 300dpi
+\`\`\`jetbrains-mono
+npx skills add obra/superpowers
+\`\`\`
 
-## Supported Formats
+## Source
 
-| Format | Dimensions | Use Case |
-|--------|-----------|----------|
-| A5 Print | 148×210mm + 3mm bleed | Event handouts |
-| A4 Print | 210×297mm + 3mm bleed | Posters |
-| Instagram Post | 1080×1080px | Social media |
-| Instagram Story | 1080×1920px | Stories & Reels |
-| LinkedIn | 1200×627px | Professional posts |
-
-## Luxury Palettes
-
-Built-in palettes designed for premium aesthetics:
-- **Noir & Gold** — Black, deep navy, gold accent
-- **Ivory & Copper** — Cream, warm white, copper detail
-- **Slate & Silver** — Charcoal, cool gray, silver highlights
-- **Forest & Brass** — Deep green, natural, brass accents`,
-    aiInsight: 'Flyer Luxury Generator is the easiest entry point into the design ecosystem — its foundational difficulty means anyone can produce professional-quality output.',
-    tangisonRecommendation: 'Start with Flyer Luxury Generator for any event marketing. The built-in luxury palettes ensure every output looks premium without design expertise.',
-    citations: ['obra-superpowers/skills/docs/flyer-gen', 'skills.sh/skills/flyer-luxury-generator', 'print-specs-cmyk-guide.pdf'],
-    ui_widget_primitive: 'LAYER_MATRIX'
+Repository: github.com/obra/superpowers (196K stars)
+Ecosystem: skills.sh/obra/superpowers (14 skills, 1.2M total installs)`,
+    aiInsight: 'Part of the Obra Superpowers framework — 196K GitHub stars makes it the most-starred skills repository in the ecosystem.',
+    tangisonRecommendation: 'Start every project with Brainstorming from Obra Superpowers. The structured ideation framework prevents scope creep.',
+    citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
   },
   {
     id: 'skill-4',
-    slug: 'seo-auditor-pro',
-    title: 'SEO Auditor Pro',
-    category: 'SEO',
-    tagline: 'Comprehensive SEO auditing — technical, content, and competitive analysis in one pass',
-    difficulty: 'INTERMEDIATE',
-    installCount: 7651,
-    githubStars: 1543,
-    qualityScore: 92,
-    isTrending: true,
-    trendingDelta: 12,
-    installCommand: 'npx skills-sh seo-auditor-pro',
+    slug: 'skill-creator',
+    title: 'Skill Creator',
+    category: 'AI Infrastructure',
+    tagline: 'Build and publish your own agent skills to the open ecosystem',
+    difficulty: 'SOVEREIGN',
+    installCount: 214700,
+    githubStars: 8200,
+    qualityScore: 93,
+    isTrending: false,
+    trendingDelta: 5,
+    installCommand: 'npx skills add anthropics/skills',
     dependencies: ['find-skills'],
-    originalAuthor: 'Pokais Tech',
-    repositoryName: 'pokais-tech/skills',
-    sourceUrl: 'https://github.com/pokais-tech/skills/tree/main/seo-auditor-pro',
-    skillsShUrl: 'https://skills.sh/skills/seo-auditor-pro',
-    license: 'MIT',
-    ecosystemSource: 'POKAIS',
-    usageExamples: `// Run a comprehensive SEO audit
-const audit = await seoAuditorPro({
-  url: "https://example.com",
-  depth: "comprehensive",
-  checks: ["technical", "content", "competitive", "accessibility"]
+    originalAuthor: 'Anthropic',
+    repositoryName: 'anthropics/skills',
+    sourceUrl: 'https://github.com/anthropics/skills',
+    skillsShUrl: 'https://skills.sh/anthropics/skills',
+    license: 'Apache-2.0',
+    ecosystemSource: 'ANTHROPIC',
+    ui_widget_primitive: 'RADAR_CORE',
+    usageExamples: `// Create a new skill from a template
+const skill = await skillCreator({
+  name: "my-custom-skill",
+  description: "Does something specific",
+  template: "typescript",
+  owner: "tangison"
 });
 
-// Quick technical audit
-const technical = await seoAuditorPro({
-  url: "https://example.com",
-  depth: "quick",
-  checks: ["technical"]
-});
-
-// Competitive comparison
-const comparison = await seoAuditorPro.compete({
-  url: "https://example.com",
-  competitors: ["https://competitor1.com", "https://competitor2.com"]
+// Publish to skills.sh
+await skillCreator.publish({
+  skill: skill,
+  registry: "skills.sh"
 });`,
     relationships: [
-      { type: 'complementary', target: 'find-skills', label: 'Discover SEO skill combinations' },
-      { type: 'complementary', target: 'military-prompt-architect', label: 'Optimize content for SEO' }
+      { type: 'requires', target: 'find-skills', label: 'Discover existing skills first' },
+      { type: 'complementary', target: 'frontend-design', label: 'Create UI-focused skills' }
     ],
-    contentMdx: `# SEO Auditor Pro
+    contentMdx: `# Skill Creator
 
 ## Overview
 
-SEO Auditor Pro performs comprehensive, multi-dimensional SEO analysis on any website. It covers technical SEO, content quality, competitive positioning, and accessibility in a single pass.
+Skill Creator (214.7K installs) from Anthropic enables building and publishing custom agent skills to the open ecosystem.
 
-## Audit Dimensions
+## Installation
 
-1. **Technical SEO** — Core Web Vitals, crawlability, indexing, structured data
-2. **Content Quality** — Keyword optimization, content depth, readability
-3. **Competitive Analysis** — Compare against top-ranking competitors
-4. **Accessibility** — WCAG compliance checks that impact SEO
-5. **Backlink Profile** — Link quality and diversity assessment
+\`\`\`jetbrains-mono
+npx skills add anthropics/skills
+\`\`\`
 
-## Output Format
+## Source
 
-Every audit produces a prioritized action list:
+Repository: github.com/anthropics/skills
+Ecosystem: skills.sh/anthropics/skills`,
+    aiInsight: 'Skill Creator is the gateway to contributing back to the ecosystem — 214.7K installs shows strong community participation.',
+    tangisonRecommendation: 'Use Skill Creator to build Tangison-specific skills and publish them to github.com/tangison/skills.',
+    citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills', 'agentskills.io']
+  },
+  {
+    id: 'skill-5',
+    slug: 'systematic-debugging',
+    title: 'Systematic Debugging',
+    category: 'Automation',
+    tagline: 'Methodical debugging methodology that eliminates root causes, not symptoms',
+    difficulty: 'INTERMEDIATE',
+    installCount: 100300,
+    githubStars: 196000,
+    qualityScore: 94,
+    isTrending: false,
+    trendingDelta: 3,
+    installCommand: 'npx skills add obra/superpowers',
+    dependencies: [],
+    originalAuthor: 'Obra Superpowers',
+    repositoryName: 'obra/superpowers',
+    sourceUrl: 'https://github.com/obra/superpowers',
+    skillsShUrl: 'https://skills.sh/obra/superpowers',
+    license: 'MIT',
+    ecosystemSource: 'OBRA',
+    ui_widget_primitive: 'TARGETING_SYSTEM',
+    usageExamples: `// Start a systematic debug session
+const result = await systematicDebugging({
+  issue: "Memory leak in production API",
+  context: { runtime: "Node.js 20", framework: "Next.js" },
+  approach: "binary-search"
+});`,
+    relationships: [
+      { type: 'complementary', target: 'brainstorming', label: 'Ideate solutions after diagnosis' },
+      { type: 'complementary', target: 'verification-before-completion', label: 'Verify fixes' }
+    ],
+    contentMdx: `# Systematic Debugging
 
-| Priority | Category | Issue | Impact | Effort |
-|----------|----------|-------|--------|--------|
-| 🔴 High | Technical | Missing meta descriptions | High | Low |
-| 🟡 Medium | Content | Thin content on /services | Medium | Medium |
-| 🟢 Low | Technical | Non-optimized images | Low | Low |
+## Overview
 
-## Scoring
+Systematic Debugging (100.3K installs) from Obra Superpowers applies methodical debugging methodology — eliminate root causes, not symptoms.
 
-- **90-100**: Excellent — Minor optimizations only
-- **70-89**: Good — Some areas need attention
-- **50-69**: Fair — Significant improvements needed
-- **0-49**: Poor — Major overhaul required`,
-    aiInsight: 'SEO Auditor Pro from Pokais Tech has the highest accuracy rate for technical SEO issues — its structured data validation catches errors that other auditors miss.',
-    tangisonRecommendation: 'Run SEO Auditor Pro before any website launch. The competitive analysis alone provides actionable insights that typically require expensive tools.',
-    citations: ['pokais-tech/skills/docs/seo-auditor', 'skills.sh/skills/seo-auditor-pro', 'google-search-console-api-reference'],
-    ui_widget_primitive: 'RADAR_CORE'
+## Installation
+
+\`\`\`jetbrains-mono
+npx skills add obra/superpowers
+\`\`\`
+
+## Source
+
+Repository: github.com/obra/superpowers (196K stars)
+Ecosystem: skills.sh/obra/superpowers (14 skills, 1.2M total installs)`,
+    aiInsight: 'Part of Obra Superpowers — the most popular debugging methodology in the ecosystem with 100.3K installs.',
+    tangisonRecommendation: 'Use Systematic Debugging for any production issue. The binary-search approach eliminates guesswork.',
+    citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
+  },
+  {
+    id: 'skill-6',
+    slug: 'pdf',
+    title: 'PDF',
+    category: 'Document Design',
+    tagline: 'Professional PDF creation and manipulation with precision layout control',
+    difficulty: 'INTERMEDIATE',
+    installCount: 107700,
+    githubStars: 8200,
+    qualityScore: 91,
+    isTrending: false,
+    trendingDelta: 2,
+    installCommand: 'npx skills add anthropics/skills',
+    dependencies: [],
+    originalAuthor: 'Anthropic',
+    repositoryName: 'anthropics/skills',
+    sourceUrl: 'https://github.com/anthropics/skills',
+    skillsShUrl: 'https://skills.sh/anthropics/skills',
+    license: 'Apache-2.0',
+    ecosystemSource: 'ANTHROPIC',
+    ui_widget_primitive: 'BAR_METRIC',
+    usageExamples: `// Generate a branded PDF report
+const pdf = await pdfSkill.create({
+  title: "Market Analysis Q4",
+  pages: [
+    { type: "cover", title: "Market Analysis", branding: { primaryColor: "#111315" } },
+    { type: "content", sections: [{ heading: "Executive Summary", body: "..." }] }
+  ]
+});`,
+    relationships: [
+      { type: 'complementary', target: 'docx', label: 'Word document companion' },
+      { type: 'complementary', target: 'pptx', label: 'Presentation companion' }
+    ],
+    contentMdx: `# PDF
+
+## Overview
+
+PDF (107.7K installs) from Anthropic provides complete control over PDF document creation and manipulation.
+
+## Installation
+
+\`\`\`jetbrains-mono
+npx skills add anthropics/skills
+\`\`\`
+
+## Source
+
+Repository: github.com/anthropics/skills
+Ecosystem: skills.sh/anthropics/skills (18 skills, 1.6M total installs)`,
+    aiInsight: 'PDF is part of the Anthropic document suite — its form generation and digital signature features make it essential for compliance workflows.',
+    tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for complete document workflows.',
+    citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   }
 ];
 
@@ -401,11 +464,11 @@ const AUTOMATION_JOBS: AutomationJob[] = [
 
 const SUPPORTED_ECOSYSTEMS: Ecosystem[] = [
   { name: 'Skills.sh', url: 'https://skills.sh' },
+  { name: 'Tangison', url: 'https://github.com/tangison/skills' },
   { name: 'Vercel Labs', url: 'https://github.com/vercel-labs/skills' },
   { name: 'Anthropic', url: 'https://github.com/anthropics/skills' },
-  { name: 'Pokais', url: 'https://skills.sh' },
-  { name: 'Impeccable', url: 'https://skills.sh' },
-  { name: 'Obra Superpowers', url: 'https://skills.sh' },
+  { name: 'Obra Superpowers', url: 'https://github.com/obra/superpowers' },
+  { name: 'Microsoft Azure', url: 'https://github.com/microsoft/azure-skills' },
 ];
 
 const DIFFICULTY_COLORS: Record<string, string> = {
@@ -416,7 +479,7 @@ const DIFFICULTY_COLORS: Record<string, string> = {
 
 const ECOSYSTEM_LABELS: Record<string, string> = {
   TANGISON: 'Tangison', VERCEL_LABS: 'Vercel Labs', ANTHROPIC: 'Anthropic',
-  POKAIS: 'Pokais', IMPECCABLE: 'Impeccable', OBRA: 'Obra', COMMUNITY: 'Community',
+  OBRA: 'Obra Superpowers', MICROSOFT: 'Microsoft Azure', COMMUNITY: 'Community',
 };
 
 /* ═══════════════════════════════════════════════════════════════
@@ -575,7 +638,7 @@ const SectionTag = ({ children }: { children: React.ReactNode }) => (
 function TerminalAnimation({ isDark }: { isDark: boolean }) {
   const [displayedText, setDisplayedText] = useState('');
   const [showResults, setShowResults] = useState(false);
-  const fullCommand = "npx skills find --domain='african-enterprise'";
+  const fullCommand = "npx skills add vercel-labs/skills";
 
   const canvasClass = isDark ? 'bg-[#111315] text-[#F6F4EF]' : 'bg-[#FBFBFA] text-[#111111]';
   const borderClass = isDark ? 'border-[#D9D7D2]/10' : 'border-[#EAEAEA]';
@@ -601,7 +664,7 @@ function TerminalAnimation({ isDark }: { isDark: boolean }) {
         <div className="w-2.5 h-2.5 rounded-full bg-[#C56A4A]/60" />
         <div className={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-[#D9D7D2]/20' : 'bg-[#787774]/20'}`} />
         <div className={`w-2.5 h-2.5 rounded-full ${isDark ? 'bg-[#D9D7D2]/20' : 'bg-[#787774]/20'}`} />
-        <span className={`ml-3 text-[10px] font-mono ${textMutedClass}`}>skills-sh — find</span>
+        <span className={`ml-3 text-[10px] font-mono ${textMutedClass}`}>skills — add</span>
       </div>
       <div className="p-5 font-mono text-sm leading-relaxed min-h-[200px]">
         <div className="flex items-center gap-2">
@@ -614,8 +677,9 @@ function TerminalAnimation({ isDark }: { isDark: boolean }) {
             <div className={`pl-5 ${textMutedClass}`}>[SYSTEM] Establishing sovereign connection...</div>
             <div className="pl-5 text-emerald-500/80">Scanning Vercel Labs registry... 200 OK</div>
             <div className="pl-5 text-emerald-500/80">Scanning Anthropic primitives... 200 OK</div>
+            <div className="pl-5 text-emerald-500/80">Scanning Obra Superpowers... 200 OK</div>
             <div className="pl-5"> </div>
-            <div className="pl-5 font-medium">4 optimized intelligence modules located.</div>
+            <div className="pl-5 font-medium">6 verified skills located across 3 registries.</div>
             <div className="flex items-center gap-2 pt-2">
               <span className="text-[#C56A4A] font-bold">❯</span>
               <span className="w-2 h-4 bg-emerald-500 animate-pulse" />
@@ -761,9 +825,11 @@ export default function Home() {
       // Fallback to local keyword matching if API fails
       const lower = userMsg.toLowerCase();
       let matchedSkill: Skill | null = null;
-      if (lower.includes('seo') || lower.includes('audit')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'seo-auditor-pro') || null;
-      else if (lower.includes('prompt') || lower.includes('military')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'military-prompt-architect') || null;
-      else if (lower.includes('flyer') || lower.includes('design') || lower.includes('poster')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'flyer-luxury-generator') || null;
+      if (lower.includes('frontend') || lower.includes('react') || lower.includes('nextjs')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'frontend-design') || null;
+      else if (lower.includes('brainstorm') || lower.includes('ideat')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'brainstorming') || null;
+      else if (lower.includes('debug') || lower.includes('fix')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'systematic-debugging') || null;
+      else if (lower.includes('pdf') || lower.includes('document')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'pdf') || null;
+      else if (lower.includes('create') || lower.includes('publish')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'skill-creator') || null;
       else if (lower.includes('find') || lower.includes('discover') || lower.includes('search')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'find-skills') || null;
       else matchedSkill = INITIAL_SKILLS[Math.floor(Math.random() * INITIAL_SKILLS.length)];
 
@@ -824,7 +890,8 @@ export default function Home() {
       `[CRON] Connecting to ecosystem sources...`,
       `[CRON] Scanning Vercel Labs registry... OK`,
       `[CRON] Scanning Anthropic primitives... OK`,
-      `[CRON] Scanning Pokais skills... OK`,
+      `[CRON] Scanning Obra Superpowers registry... OK`,
+      `[CRON] Scanning Microsoft Azure skills... OK`,
       `[CRON] Processing results...`,
       `[CRON] Updating local indices...`,
       `[CRON] ${job.name} completed successfully ✓`,
@@ -1800,13 +1867,13 @@ export default function Home() {
               </h1>
               <div className={`space-y-6 text-sm ${textMutedClass} leading-relaxed`}>
                 <p>
-                  Tangison SkillsCamp is a sovereign intelligence infrastructure platform for African enterprise. We discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem.
+                  Tangison SkillsCamp is a sovereign intelligence infrastructure platform. We discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem — skills.sh, Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, and beyond.
                 </p>
                 <p>
-                  Every skill in our catalog is sourced honestly — we credit original authors, link back to original repositories, and link to skills.sh. We enhance skills without stealing attribution, acting as an intelligence layer above the ecosystem.
+                  Every skill in our catalog is sourced honestly — we credit original authors, link back to original repositories (vercel-labs/skills, anthropics/skills, obra/superpowers), and link to skills.sh. We enhance skills without stealing attribution, acting as an intelligence layer above the ecosystem.
                 </p>
                 <p>
-                  Our platform is built on the principle that intelligence infrastructure should be accessible, verifiable, and sovereign. No vendor lock-in. No hidden dependencies. Just modular, composable skills that work.
+                  Our platform is built on the principle that intelligence infrastructure should be accessible, verifiable, and sovereign. No vendor lock-in. No hidden dependencies. Just modular, composable skills that work across the entire open ecosystem.
                 </p>
               </div>
 

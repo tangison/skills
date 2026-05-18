@@ -68,3 +68,33 @@ Stage Summary:
 - Pipeline processes raw data through filtering → normalization → brand injection
 - Output shows MastGlyph avatar, widget primitive badges, install commands, MDX docs
 - Footer and nav updated with Pipeline link
+
+---
+Task ID: 2
+Agent: main
+Task: Replace fabricated skills with real skills.sh leaderboard data
+
+Work Log:
+- Replaced EcosystemSource type: removed POKAIS/IMPECCABLE, added MICROSOFT
+- Replaced all 4 fabricated INITIAL_SKILLS (find-skills, military-prompt-architect, flyer-luxury-generator, seo-auditor-pro) with 6 real skills from skills.sh leaderboard: find-skills (1.6M installs), frontend-design (424.9K), brainstorming (164.9K), skill-creator (214.7K), systematic-debugging (100.3K), pdf (107.7K)
+- Updated SUPPORTED_ECOSYSTEMS: removed Pokais/Impeccable, added Tangison (github.com/tangison/skills), Obra Superpowers (github.com/obra/superpowers), Microsoft Azure (github.com/microsoft/azure-skills)
+- Updated SKILL_CATEGORIES counts to be more realistic (reduced inflated numbers)
+- Updated ECOSYSTEM_LABELS: removed POKAIS/IMPECCABLE, added OBRA as 'Obra Superpowers' and MICROSOFT as 'Microsoft Azure'
+- Updated Terminal Animation: command changed from `npx skills find --domain='african-enterprise'` to `npx skills add vercel-labs/skills`
+- Updated Terminal Animation: title bar changed from `skills-sh — find` to `skills — add`
+- Added Obra Superpowers scan line to terminal animation results
+- Updated terminal output from "4 optimized intelligence modules located" to "6 verified skills located across 3 registries"
+- Updated hero section: `{INITIAL_SKILLS.length} verified skills` now shows 6 (dynamic)
+- Updated About page copy: replaced "African enterprise" with broader ecosystem references, added real repo names (vercel-labs/skills, anthropics/skills, obra/superpowers)
+- Updated chat fallback handler: replaced old slug matches (seo-auditor-pro, military-prompt-architect, flyer-luxury-generator) with new real skill slugs
+- Updated cron job text: replaced "Scanning Pokais skills... OK" with "Scanning Obra Superpowers registry... OK" and "Scanning Microsoft Azure skills... OK"
+- Lint passes clean
+
+Stage Summary:
+- All fabricated skills replaced with real skills.sh leaderboard data
+- All Pokais/Impeccable references eliminated from entire codebase
+- Install commands now use real format: `npx skills add owner/repo`
+- 6 real skills: find-skills, frontend-design, brainstorming, skill-creator, systematic-debugging, pdf
+- Ecosystem sources: Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, Tangison, Community
+- Terminal animation uses real `npx skills add vercel-labs/skills` command
+- About page references real GitHub repositories

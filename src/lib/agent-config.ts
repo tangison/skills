@@ -20,11 +20,11 @@ export const AGENT_CONFIG = {
 
   supported_ecosystems: [
     { name: 'Skills.sh', url: 'https://skills.sh' },
+    { name: 'Tangison Skills', url: 'https://github.com/tangison/skills' },
     { name: 'Vercel Labs Skills', url: 'https://github.com/vercel-labs/skills' },
     { name: 'Anthropic Skills', url: 'https://github.com/anthropics/skills' },
-    { name: 'Pokais Skills', url: 'https://skills.sh' },
-    { name: 'Impeccable Skills', url: 'https://skills.sh' },
-    { name: 'Obra Superpower Skills', url: 'https://skills.sh' },
+    { name: 'Obra Superpowers', url: 'https://github.com/obra/superpowers' },
+    { name: 'Microsoft Azure Skills', url: 'https://github.com/microsoft/azure-skills' },
   ],
 
   skill_discovery_engine: {
