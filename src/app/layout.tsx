@@ -26,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skills.tangison.com"),
-  title: "Tangison Skillsmith — Intelligence Built On What Remains",
+  title: "Tangison SkillsCamp — Intelligence Built On What Remains",
   description:
     "Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills — no installation required.",
   keywords: [
@@ -42,15 +42,15 @@ export const metadata: Metadata = {
     icon: "/icon.png",
   },
   openGraph: {
-    title: "Tangison Skillsmith",
+    title: "Tangison SkillsCamp",
     description: "Sovereign intelligence infrastructure for African enterprise. Intelligence built on what remains.",
-    siteName: "Tangison Skillsmith",
+    siteName: "Tangison SkillsCamp",
     type: "website",
     images: [{ url: "/ocean-view.jpeg", width: 1200, height: 630, alt: "Tangison Skillsmith — Sovereign Intelligence Infrastructure" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tangison Skillsmith",
+    title: "Tangison SkillsCamp",
     description: "Sovereign intelligence infrastructure for African enterprise.",
     images: ["/ocean-view.jpeg"],
   },
