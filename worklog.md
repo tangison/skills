@@ -282,3 +282,64 @@ Work Log:
   - Added "Copy install command" for pipeline copy button
 - Ran bun run lint — passed with zero errors
 - Dev server compiles successfully
+
+---
+Task ID: 6-c
+Agent: Page Deepening Agent
+Task: Improve Research, Categories, Trending, About, and Documents pages with more content and functionality
+
+Work Log:
+- Updated SKILL_CATEGORIES data constant: added `description` field to all 18 categories with specific, meaningful descriptions
+- Updated Categories page card rendering: replaced generic "Explore N verified skills in the X domain" text with actual `cat.description` content
+- Added time period filter buttons to Trending page: 4 buttons (24h, 7d, 30d, All) with active state styling on "All" button
+- Added Research Search section to Research page: includes text input with Search button, source type filter buttons (All Sources, Academic, News, Primary, Reference), and results placeholder with Globe icon
+- Added Roadmap section to About page: 3 milestone cards (v0.1.0 current, v0.2.0 planned, v0.3.0 planned) each with status badge and feature list items
+- Added Version History section to About page: 2 entries (0.1.0-beta 2025-03, 0.0.1-alpha 2025-02) with version number, date, and change descriptions
+- Fixed Documents page Table of Contents: replaced random page numbers (Math.random()) with sequential numbers (idx + 2) by adding idx parameter to .map() callback
+- Ran bun run lint — passed with zero errors
+- Dev server compiling successfully
+
+Changes Summary:
+✅ Categories: 18 descriptions added to data + card rendering updated
+✅ Trending: Time period filter buttons added (24h, 7d, 30d, All)
+✅ Research: Full search UI with input, source filters, and results placeholder
+✅ About: Roadmap (3 milestones) + Version History (2 releases) sections added
+✅ Documents: TOC page numbers fixed from random to sequential (2, 3, 4, 5, 6)
+
+---
+Task ID: 6-a
+Agent: Skill Content Deepening + Bug Fix Agent
+Task: Deepen all 6 skills' contentMdx and fix Skill Detail page tab bug
+
+Work Log:
+- Fixed CRITICAL BUG: Skill Detail tabs showed identical content for both "Tangison Enhanced" and "Original Source" tabs
+  - Changed `detailTab === 'enhanced' ? skill.contentMdx : skill.contentMdx` to `detailTab === 'enhanced' ? skill.contentMdx : skill.usageExamples`
+  - Now "Original Source" shows raw usage examples, "Tangison Enhanced" shows enhanced MDX content
+- Created SimpleMdxRenderer component (148 lines) that properly renders markdown content:
+  - Headers (h1/h2/h3) with proper typography hierarchy
+  - Tables with thead/tbody, proper borders, and font styling
+  - Code blocks with language label header and pre-formatted content
+  - Bullet lists with list-disc styling and inline bold/code formatting
+  - Numbered lists with list-decimal styling
+  - Paragraphs with inline bold (**text**) and code (`text`) formatting
+  - Empty lines skipped for clean spacing
+- Replaced all 6 skills' shallow contentMdx with deep, substantive content:
+  - skill-1 (Find Skills): Added "When to Use", Architecture table (4 phases), Core Principles table (4 principles), Search Methods table (4 methods), Integration section (3 relationships)
+  - skill-2 (Frontend Design): Added "When to Use", Supported Frameworks table (4 frameworks), Generation Phases table (5 phases), Quality Standards list (4 items), Integration section
+  - skill-3 (Brainstorming): Added "When to Use", Ideation Framework table (4 phases), Ideation Techniques table (5 techniques), Workshop Template numbered list (5 steps), Integration section
+  - skill-4 (Skill Creator): Added "When to Use", Skill Architecture table (6 components), Creation Phases table (4 phases), Integration section
+  - skill-5 (Systematic Debugging): Added "When to Use", Debugging Methodology table (5 phases), Debugging Techniques table (5 techniques), Anti-patterns list (4 items), Integration section
+  - skill-6 (PDF): Added "When to Use", Document Types table (5 types), Generation Pipeline table (5 phases), Integration section
+- Replaced content rendering div: removed `font-mono text-xs whitespace-pre-wrap` plain-text styling, replaced with SimpleMdxRenderer component that renders proper HTML elements
+- Ran bun run lint — passed with zero errors
+- Dev server compiles successfully
+
+Issues Addressed:
+✅ Skill Detail tabs bug: both tabs showed identical content → now "Original Source" shows usageExamples, "Tangison Enhanced" shows contentMdx
+✅ Content rendering: raw markdown text → proper HTML rendering with headers, tables, lists, code blocks
+✅ skill-1 contentMdx: 17 lines → 57 lines (When to Use, Architecture table, Core Principles table, Search Methods table, Integration)
+✅ skill-2 contentMdx: 16 lines → 58 lines (When to Use, Supported Frameworks table, Generation Phases table, Quality Standards, Integration)
+✅ skill-3 contentMdx: 13 lines → 58 lines (When to Use, Ideation Framework table, Ideation Techniques table, Workshop Template, Integration)
+✅ skill-4 contentMdx: 11 lines → 53 lines (When to Use, Skill Architecture table, Creation Phases table, Integration)
+✅ skill-5 contentMdx: 12 lines → 58 lines (When to Use, Debugging Methodology table, Debugging Techniques table, Anti-patterns, Integration)
+✅ skill-6 contentMdx: 12 lines → 51 lines (When to Use, Document Types table, Generation Pipeline table, Integration)
