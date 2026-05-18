@@ -45,13 +45,13 @@
   --color-fog-gray: #D9D7D2;
   --color-deep-ocean: #16353D;
   --color-rust-signal: #C56A4A;
-  --color-surface-01: #1A1C1E;
-  --color-surface-02: #222426;
-  --color-border-subtle: rgba(217, 215, 210, 0.08);
-  --color-border-default: rgba(217, 215, 210, 0.15);
-  --color-text-primary: #F6F4EF;
-  --color-text-secondary: rgba(246, 244, 239, 0.55);
-  --color-text-muted: rgba(246, 244, 239, 0.3);
+  --color-surface-01: var(--surface-01);
+  --color-surface-02: var(--surface-02);
+  --color-border-subtle: var(--border-subtle-value);
+  --color-border-default: var(--border-default-value);
+  --color-text-primary: var(--text-primary-value);
+  --color-text-secondary: var(--text-secondary-value);
+  --color-text-muted: var(--text-muted-value);
 
   /* ── Radii ── */
   --radius-sm: calc(var(--radius) - 4px);
@@ -70,74 +70,78 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Tangison Skillsmith — Dark-first brand tokens
-   :root IS the dark theme; .dark mirrors it for compatibility
+   LIGHT THEME (default :root)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
   --radius: 0.625rem;
 
-  /* ── Core palette references ── */
+  /* ── Core brand palette (constant) ── */
   --atlantic-black: #111315;
   --skeleton-bone: #F6F4EF;
   --fog-gray: #D9D7D2;
   --deep-ocean: #16353D;
   --rust-signal: #C56A4A;
-  --surface-01: #1A1C1E;
-  --surface-02: #222426;
-  --border-subtle: rgba(217, 215, 210, 0.08);
-  --border-default: rgba(217, 215, 210, 0.15);
-  --text-primary: #F6F4EF;
-  --text-secondary: rgba(246, 244, 239, 0.55);
-  --text-muted: rgba(246, 244, 239, 0.3);
 
-  /* ── Shadcn/UI semantic mappings ── */
-  --background: var(--atlantic-black);
-  --foreground: var(--skeleton-bone);
+  /* ── Light theme surfaces ── */
+  --surface-01: #FFFFFF;
+  --surface-02: #EDEAE5;
+  --border-subtle-value: rgba(17, 19, 21, 0.06);
+  --border-default-value: rgba(17, 19, 21, 0.12);
+  --text-primary-value: #111315;
+  --text-secondary-value: rgba(17, 19, 21, 0.55);
+  --text-muted-value: rgba(17, 19, 21, 0.35);
+
+  /* ── Semantic mappings ── */
+  --background: var(--skeleton-bone);
+  --foreground: var(--atlantic-black);
 
   --card: var(--surface-01);
-  --card-foreground: var(--skeleton-bone);
+  --card-foreground: var(--atlantic-black);
 
   --popover: var(--surface-01);
-  --popover-foreground: var(--skeleton-bone);
+  --popover-foreground: var(--atlantic-black);
 
   --primary: var(--rust-signal);
-  --primary-foreground: var(--skeleton-bone);
+  --primary-foreground: #FFFFFF;
 
   --secondary: var(--surface-02);
-  --secondary-foreground: var(--skeleton-bone);
+  --secondary-foreground: var(--atlantic-black);
 
   --muted: var(--surface-02);
-  --muted-foreground: var(--text-secondary);
+  --muted-foreground: var(--text-secondary-value);
 
   --accent: var(--deep-ocean);
   --accent-foreground: var(--skeleton-bone);
 
   --destructive: #E05252;
 
-  --border: var(--border-default);
-  --input: var(--border-default);
+  --border: var(--border-default-value);
+  --input: var(--border-default-value);
   --ring: var(--rust-signal);
 
-  /* ── Chart palette (derived from brand) ── */
+  /* ── Charts ── */
   --chart-1: var(--rust-signal);
   --chart-2: var(--deep-ocean);
   --chart-3: #2A7A6E;
-  --chart-4: var(--fog-gray);
+  --chart-4: #888888;
   --chart-5: #8B5E3C;
 
   /* ── Sidebar ── */
-  --sidebar: var(--atlantic-black);
-  --sidebar-foreground: var(--skeleton-bone);
+  --sidebar: var(--skeleton-bone);
+  --sidebar-foreground: var(--atlantic-black);
   --sidebar-primary: var(--rust-signal);
-  --sidebar-primary-foreground: var(--skeleton-bone);
+  --sidebar-primary-foreground: #FFFFFF;
   --sidebar-accent: var(--deep-ocean);
   --sidebar-accent-foreground: var(--skeleton-bone);
-  --sidebar-border: var(--border-subtle);
+  --sidebar-border: var(--border-subtle-value);
   --sidebar-ring: var(--rust-signal);
 }
 
-/* Dark class mirrors :root — site is always dark */
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK THEME
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .dark {
   --radius: 0.625rem;
 
@@ -146,13 +150,14 @@
   --fog-gray: #D9D7D2;
   --deep-ocean: #16353D;
   --rust-signal: #C56A4A;
+
   --surface-01: #1A1C1E;
   --surface-02: #222426;
-  --border-subtle: rgba(217, 215, 210, 0.08);
-  --border-default: rgba(217, 215, 210, 0.15);
-  --text-primary: #F6F4EF;
-  --text-secondary: rgba(246, 244, 239, 0.55);
-  --text-muted: rgba(246, 244, 239, 0.3);
+  --border-subtle-value: rgba(217, 215, 210, 0.08);
+  --border-default-value: rgba(217, 215, 210, 0.15);
+  --text-primary-value: #F6F4EF;
+  --text-secondary-value: rgba(246, 244, 239, 0.55);
+  --text-muted-value: rgba(246, 244, 239, 0.3);
 
   --background: var(--atlantic-black);
   --foreground: var(--skeleton-bone);
@@ -170,15 +175,15 @@
   --secondary-foreground: var(--skeleton-bone);
 
   --muted: var(--surface-02);
-  --muted-foreground: var(--text-secondary);
+  --muted-foreground: var(--text-secondary-value);
 
   --accent: var(--deep-ocean);
   --accent-foreground: var(--skeleton-bone);
 
   --destructive: #E05252;
 
-  --border: var(--border-default);
-  --input: var(--border-default);
+  --border: var(--border-default-value);
+  --input: var(--border-default-value);
   --ring: var(--rust-signal);
 
   --chart-1: var(--rust-signal);
@@ -193,7 +198,7 @@
   --sidebar-primary-foreground: var(--skeleton-bone);
   --sidebar-accent: var(--deep-ocean);
   --sidebar-accent-foreground: var(--skeleton-bone);
-  --sidebar-border: var(--border-subtle);
+  --sidebar-border: var(--border-subtle-value);
   --sidebar-ring: var(--rust-signal);
 }
 
@@ -214,7 +219,6 @@
   }
 
   html {
-    color-scheme: dark;
     scroll-behavior: smooth;
   }
 }
@@ -271,29 +275,29 @@
   }
 
   .text-brand-muted {
-    color: var(--text-secondary);
+    color: var(--text-secondary-value);
   }
 
   .border-brand-subtle {
-    border-color: var(--border-subtle);
+    border-color: var(--border-subtle-value);
   }
 
   .border-brand-default {
-    border-color: var(--border-default);
+    border-color: var(--border-default-value);
   }
 
   /* ── Subtle grid background pattern ── */
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(217, 215, 210, 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(217, 215, 210, 0.04) 1px, transparent 1px);
+      linear-gradient(to right, var(--border-subtle-value) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-subtle-value) 1px, transparent 1px);
     background-size: 64px 64px;
   }
 
   .bg-grid-dense {
     background-image:
-      linear-gradient(to right, rgba(217, 215, 210, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(217, 215, 210, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, var(--border-default-value) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border-default-value) 1px, transparent 1px);
     background-size: 32px 32px;
   }
 
@@ -304,37 +308,35 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   Custom scrollbar — dark theme
+   Custom scrollbar
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Webkit (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--atlantic-black);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--surface-02);
   border-radius: 4px;
-  border: 2px solid var(--atlantic-black);
+  border: 2px solid var(--background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(217, 215, 210, 0.2);
+  background: var(--fog-gray);
 }
 
 ::-webkit-scrollbar-corner {
-  background: var(--atlantic-black);
+  background: var(--background);
 }
 
-/* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--surface-02) var(--atlantic-black);
+  scrollbar-color: var(--surface-02) var(--background);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -342,6 +344,6 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 ::selection {
-  background-color: rgba(197, 106, 74, 0.3);
-  color: var(--skeleton-bone);
+  background-color: rgba(197, 106, 74, 0.25);
+  color: var(--foreground);
 }

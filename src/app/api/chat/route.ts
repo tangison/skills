@@ -1,8 +1,21 @@
 import { NextResponse } from 'next/server';
 import ZAI from 'z-ai-web-dev-sdk';
 import { SEED_SKILLS } from '@/lib/data';
+import { AGENT_CONFIG } from '@/lib/agent-config';
 
-const SYSTEM_PROMPT = `You are Skillsmith AI, the intelligence layer of Tangison Skillsmith. Your job is to help users find, understand, install, and use AI agent skills from the open skills ecosystem. When a user describes what they want to build or do, you: 1) Identify the relevant skill domain, 2) Recommend the best skills with reasoning, 3) Provide the exact install command, 4) Link to the skill page. You always credit original authors. You speak in precise, calm, intelligent language. Never use hype words. If no skill exists, say so honestly.`;
+const SYSTEM_PROMPT = `You are ${AGENT_CONFIG.agent.name}, ${AGENT_CONFIG.agent.purpose}
+
+Core Behavior Principles:
+${AGENT_CONFIG.core_behavior.principles.map((p, i) => `${i + 1}. ${p}`).join('\n')}
+
+When a user describes what they want to build or do, you:
+1) Identify the relevant skill domain
+2) Recommend the best skills with reasoning
+3) Provide the exact install command from skills.sh
+4) Link to the skill page on skills.sh
+5) Always credit original authors and link to source repositories
+
+You speak in precise, calm, intelligent language. Never use hype words. If no skill exists, say so honestly. Always link to skills.sh for verification.`;
 
 export async function POST(request: Request) {
   try {
@@ -14,7 +27,7 @@ export async function POST(request: Request) {
 
     // Build skill data context for the AI
     const skillSummary = SEED_SKILLS.map(s =>
-      `- **${s.name}** (${s.difficulty}): ${s.tagline} | Install: \`${s.installCommand}\` | Category: ${s.categoryName} | Score: ${s.qualityScore}/100 | Author: ${s.originalAuthor || 'Tangison'} | URL: ${s.skillsShUrl}`
+      `- **${s.name}** (${s.difficulty}): ${s.tagline} | Install: \`${s.installCommand}\` | Category: ${s.categoryName} | Author: ${s.originalAuthor || 'Tangison'} | Ecosystem: ${s.ecosystemSource} | URL: ${s.skillsShUrl}`
     ).join('\n');
 
     const contextBlock = skillContext
