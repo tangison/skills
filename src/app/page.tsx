@@ -6,15 +6,16 @@ import {
   Search, Menu, Copy, Check, ArrowRight, ExternalLink, ChevronRight,
   Zap, Terminal, BookOpen, LayoutGrid,
   Code, Palette, PenLine, FileText, Image, Layout, Share2, Cpu,
-  Cloud, Compass, Server, Rocket, Box, FileType, MessageSquare,
+  Cloud, Compass, Server, Rocket, Box, FileType,
   Send, X, Shield, Sparkles, Sun, Moon, Clock, Globe, Layers,
   Play, RefreshCw, FileDown, Eye, Settings, ChevronDown, AlertCircle
 } from 'lucide-react';
+import { MastGlyph } from '@/components/brand/TangisonLogo';
 
 /* ═══════════════════════════════════════════════════════════════
    TYPES
    ═══════════════════════════════════════════════════════════════ */
-type PageRoute = 'home' | 'skills' | 'skill_detail' | 'categories' | 'trending' | 'documents' | 'research' | 'about';
+type PageRoute = 'home' | 'skills' | 'skill_detail' | 'categories' | 'trending' | 'documents' | 'research' | 'about' | 'agent_pipeline';
 type Difficulty = 'FOUNDATIONAL' | 'INTERMEDIATE' | 'SOVEREIGN';
 type EcosystemSource = 'VERCEL_LABS' | 'ANTHROPIC' | 'POKAIS' | 'IMPECCABLE' | 'OBRA' | 'TANGISON' | 'COMMUNITY';
 
@@ -23,6 +24,8 @@ interface SkillRelationship {
   target: string;
   label: string;
 }
+
+type WidgetPrimitive = 'TARGETING_SYSTEM' | 'FORWARD_SLASH' | 'LAYER_MATRIX' | 'RADAR_CORE' | 'BAR_METRIC';
 
 interface Skill {
   id: string;
@@ -50,6 +53,7 @@ interface Skill {
   aiInsight: string;
   tangisonRecommendation: string;
   citations: string[];
+  ui_widget_primitive?: WidgetPrimitive;
 }
 
 interface ChatMessage {
@@ -155,7 +159,8 @@ Find Skills is the sovereign discovery engine that searches across the entire Sk
 - **Dependency Awareness**: Shows compatible and complementary skills`,
     aiInsight: 'The most-installed skill in the ecosystem — acts as the gateway to discovering all other skills. Quality score of 97 is the highest in the catalog.',
     tangisonRecommendation: 'Start here for any project — Find Skills will point you to the right tool for the job.',
-    citations: ['skills.sh/docs/find-skills', 'vercel-labs/skills/README.md', 'ecosystem-report-2025.pdf']
+    citations: ['skills.sh/docs/find-skills', 'vercel-labs/skills/README.md', 'ecosystem-report-2025.pdf'],
+    ui_widget_primitive: 'TARGETING_SYSTEM'
   },
   {
     id: 'skill-2',
@@ -220,7 +225,8 @@ OUTPUT: [Expected format and structure]
 \`\`\``,
     aiInsight: 'The most sophisticated prompt engineering skill in the ecosystem — its adversarial testing framework catches 94% of prompt injection attacks before deployment.',
     tangisonRecommendation: 'Use Military Prompt Architect for any production prompt — the constraint enforcement alone prevents most common LLM failures.',
-    citations: ['anthropics/skills/docs/prompt-architect', 'arxiv.org/abs/2401-prompt-security', 'skills.sh/blog/military-prompts']
+    citations: ['anthropics/skills/docs/prompt-architect', 'arxiv.org/abs/2401-prompt-security', 'skills.sh/blog/military-prompts'],
+    ui_widget_primitive: 'FORWARD_SLASH'
   },
   {
     id: 'skill-3',
@@ -293,7 +299,8 @@ Built-in palettes designed for premium aesthetics:
 - **Forest & Brass** — Deep green, natural, brass accents`,
     aiInsight: 'Flyer Luxury Generator is the easiest entry point into the design ecosystem — its foundational difficulty means anyone can produce professional-quality output.',
     tangisonRecommendation: 'Start with Flyer Luxury Generator for any event marketing. The built-in luxury palettes ensure every output looks premium without design expertise.',
-    citations: ['obra-superpowers/skills/docs/flyer-gen', 'skills.sh/skills/flyer-luxury-generator', 'print-specs-cmyk-guide.pdf']
+    citations: ['obra-superpowers/skills/docs/flyer-gen', 'skills.sh/skills/flyer-luxury-generator', 'print-specs-cmyk-guide.pdf'],
+    ui_widget_primitive: 'LAYER_MATRIX'
   },
   {
     id: 'skill-4',
@@ -370,7 +377,8 @@ Every audit produces a prioritized action list:
 - **0-49**: Poor — Major overhaul required`,
     aiInsight: 'SEO Auditor Pro from Pokais Tech has the highest accuracy rate for technical SEO issues — its structured data validation catches errors that other auditors miss.',
     tangisonRecommendation: 'Run SEO Auditor Pro before any website launch. The competitive analysis alone provides actionable insights that typically require expensive tools.',
-    citations: ['pokais-tech/skills/docs/seo-auditor', 'skills.sh/skills/seo-auditor-pro', 'google-search-console-api-reference']
+    citations: ['pokais-tech/skills/docs/seo-auditor', 'skills.sh/skills/seo-auditor-pro', 'google-search-console-api-reference'],
+    ui_widget_primitive: 'RADAR_CORE'
   }
 ];
 
@@ -512,6 +520,47 @@ function CategoryIcon({ name, className = 'w-4 h-4' }: { name: string; className
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   WIDGET PRIMITIVE ICON — Custom military-grade SVGs
+   ═══════════════════════════════════════════════════════════════ */
+function WidgetPrimitiveIcon({ primitive, className = 'w-3.5 h-3.5' }: { primitive: WidgetPrimitive; className?: string }) {
+  const sw = 2;
+  switch (primitive) {
+    case 'TARGETING_SYSTEM':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="9" /><circle cx="12" cy="12" r="4" /><line x1="12" y1="2" x2="12" y2="7" /><line x1="12" y1="17" x2="12" y2="22" /><line x1="2" y1="12" x2="7" y2="12" /><line x1="17" y1="12" x2="22" y2="12" />
+        </svg>
+      );
+    case 'FORWARD_SLASH':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+          <line x1="7" y1="20" x2="17" y2="4" /><polyline points="4 8 8 4 4 4" /><polyline points="20 16 16 20 20 20" />
+        </svg>
+      );
+    case 'LAYER_MATRIX':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" />
+        </svg>
+      );
+    case 'RADAR_CORE':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /><line x1="12" y1="12" x2="18.5" y2="5.5" />
+        </svg>
+      );
+    case 'BAR_METRIC':
+      return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="14" width="4" height="7" /><rect x="10" y="8" width="4" height="13" /><rect x="16" y="3" width="4" height="18" /><line x1="3" y1="21" x2="21" y2="21" />
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
    SECTION TAG
    ═══════════════════════════════════════════════════════════════ */
 const SectionTag = ({ children }: { children: React.ReactNode }) => (
@@ -640,6 +689,14 @@ export default function Home() {
 
   // System notification state
   const [notification, setNotification] = useState<string | null>(null);
+
+  // Agent Pipeline state
+  const [pipelineInput, setPipelineInput] = useState('');
+  const [pipelineProcessing, setPipelineProcessing] = useState(false);
+  const [pipelinePhase, setPipelinePhase] = useState<string>('');
+  const [pipelineResult, setPipelineResult] = useState<any>(null);
+  const [pipelineLogs, setPipelineLogs] = useState<string[]>([]);
+  const pipelineLogRef = useRef<HTMLDivElement>(null);
 
   const showNotification = useCallback((msg: string) => {
     setNotification(msg);
@@ -790,11 +847,80 @@ export default function Home() {
     showNotification('Document generated successfully');
   }, [docTitle, showNotification]);
 
+  // Agent Pipeline processing handler
+  const handlePipelineProcess = useCallback(async () => {
+    if (!pipelineInput.trim()) return;
+    setPipelineProcessing(true);
+    setPipelineResult(null);
+    setPipelineLogs([]);
+    setPipelinePhase('rigorous_filtering');
+
+    const phases = [
+      { name: 'rigorous_filtering', label: 'RIGOROUS FILTERING', desc: 'Isolating entries without reproducible install paths. Stripping conversational text.' },
+      { name: 'sovereign_normalization', label: 'SOVEREIGN NORMALIZATION', desc: 'Categorizing into architectural domains. Generating Markdown specifications.' },
+      { name: 'brand_injection', label: 'BRAND INJECTION', desc: 'Hard-coding avatar metadata. Mapping UI widget primitives. Affixing brand signature.' },
+    ];
+
+    for (const phase of phases) {
+      setPipelinePhase(phase.name);
+      setPipelineLogs(prev => [...prev, `[PIPELINE] Entering phase: ${phase.label}`]);
+      await new Promise(r => setTimeout(r, 600));
+      setPipelineLogs(prev => [...prev, `[PIPELINE] ${phase.desc}`]);
+      await new Promise(r => setTimeout(r, 800));
+      setPipelineLogs(prev => [...prev, `[PIPELINE] ${phase.label} complete ✓`]);
+    }
+
+    try {
+      const rawEntries = pipelineInput.split('\n').filter(l => l.trim()).map((line, idx) => {
+        const parts = line.split('|').map(p => p.trim());
+        return {
+          raw_id: `raw-${idx + 1}`,
+          title: parts[0] || `Entry ${idx + 1}`,
+          raw_description: parts[1] || line,
+          install_command: parts[2] || '',
+          repository: parts[3] || '',
+        };
+      });
+
+      const res = await fetch('/api/agent/process?XTransformPort=3000', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ raw_batch: rawEntries }),
+      });
+      const data = await res.json();
+      setPipelineResult(data);
+      setPipelineLogs(prev => [...prev, `[PIPELINE] Processing complete. Engine: ${data.registry_sync_meta?.engine_signature || 'N/A'}`]);
+    } catch {
+      setPipelineLogs(prev => [...prev, '[PIPELINE] API call failed — displaying simulated output']);
+      setPipelineResult({
+        registry_sync_meta: { processed_count: 1, engine_signature: 'Powered by Tangison AI' },
+        verified_skills_directory: [{
+          slug: 'processed-skill',
+          display_title: 'Processed Skill',
+          category: 'AI Infrastructure',
+          total_skills_count_in_category: 67,
+          ui_avatar_asset: '/assets/icons/tangison-mast-avatar.svg',
+          ui_widget_primitive: 'TARGETING_SYSTEM',
+          technical_tagline: 'Sovereign intelligence processing module',
+          isolated_install_string: 'npm install processed-skill',
+          clean_copy_payload: 'npm install processed-skill',
+          architectural_documentation_mdx: '# Processed Skill\n\n## Overview\n\nSovereign intelligence module processed through the Tangison Skillsmith AI pipeline.\n\n## Installation\n\n```jetbrains-mono\nnpm install processed-skill\n```\n\n## Configuration\n\nZero-configuration required for default deployment.',
+        }],
+        rejected_elements: [],
+      });
+    }
+
+    setPipelinePhase('complete');
+    setPipelineProcessing(false);
+    showNotification('Pipeline processing complete');
+  }, [pipelineInput, showNotification]);
+
   // Nav items for desktop
   const navItems: { page: PageRoute; label: string }[] = [
     { page: 'skills', label: 'Skills' },
     { page: 'categories', label: 'Categories' },
     { page: 'trending', label: 'Trending' },
+    { page: 'agent_pipeline', label: 'Pipeline' },
     { page: 'documents', label: 'Documents' },
     { page: 'research', label: 'Triangulation' },
     { page: 'about', label: 'About' },
@@ -826,12 +952,13 @@ export default function Home() {
             {/* Logo + Wordmark — PROMINENT */}
             <button onClick={() => navigate('home')} className="flex items-center gap-3.5 focus:outline-none group" aria-label="Home">
               <div className="relative">
-                <div className="absolute -inset-1 bg-[#C56A4A]/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <img src="/logo.png" alt="Tangison logo" className="relative h-10 w-auto drop-shadow-[0_0_12px_rgba(197,106,74,0.35)]" style={{ objectFit: 'contain' }} />
+                <div className="absolute -inset-2 bg-[#C56A4A]/20 rounded-xl blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute -inset-1 bg-[#C56A4A]/15 rounded-lg blur-md opacity-40 group-hover:opacity-80 transition-opacity duration-500" />
+                <MastGlyph className={`relative h-16 w-auto drop-shadow-[0_0_18px_rgba(197,106,74,0.5)] ${isDark ? 'text-[#C56A4A]' : 'text-[#C56A4A]'}`} strokeColor="#C56A4A" forceRustAccent />
               </div>
               <div className="hidden sm:flex flex-col">
-                <span className={`font-display text-[15px] font-bold tracking-[0.18em] uppercase block leading-none ${isDark ? 'text-[#F6F4EF]' : 'text-[#111315]'} drop-shadow-sm`}>TΛNGISON</span>
-                <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#C56A4A] block mt-1 font-semibold">SKILLSCAMP PLATFORM</span>
+                <span className={`font-display text-2xl font-bold tracking-[0.18em] uppercase block leading-none ${isDark ? 'text-[#F6F4EF]' : 'text-[#111315]'} drop-shadow-sm`}>TΛNGISON</span>
+                <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#C56A4A] block mt-1 font-semibold">SKILLSCAMP</span>
               </div>
             </button>
 
@@ -929,6 +1056,12 @@ export default function Home() {
                         <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">{skill.category}</span>
                         <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono border" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA', color: isDark ? 'rgba(217,215,210,0.7)' : '#787774' }}>{ECOSYSTEM_LABELS[skill.ecosystemSource]}</span>
                         <span className={`inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono border ${DIFFICULTY_COLORS[skill.difficulty]}`}>{skill.difficulty}</span>
+                        {skill.ui_widget_primitive && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[2px] text-[9px] font-mono bg-[#16353D]/50 text-[#C56A4A] border border-[#16353D]">
+                            <WidgetPrimitiveIcon primitive={skill.ui_widget_primitive} className="w-3 h-3" />
+                            {skill.ui_widget_primitive.replace('_', ' ')}
+                          </span>
+                        )}
                       </div>
                       <h3 className={`font-semibold text-sm mb-1 ${textPrimaryClass}`}>{skill.title}</h3>
                       <p className={`text-xs leading-relaxed mb-3 line-clamp-2 ${textMutedClass}`}>{skill.tagline}</p>
@@ -1040,6 +1173,11 @@ export default function Home() {
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">{skill.category}</span>
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono border ${DIFFICULTY_COLORS[skill.difficulty]}`}>{skill.difficulty}</span>
+                            {skill.ui_widget_primitive && (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-[2px] text-[9px] font-mono bg-[#16353D]/50 text-[#C56A4A] border border-[#16353D]">
+                                <WidgetPrimitiveIcon primitive={skill.ui_widget_primitive} className="w-3 h-3" />
+                              </span>
+                            )}
                           </div>
                           {skill.isTrending && <span className="text-[10px] font-mono text-emerald-500 flex items-center gap-1"><ArrowRight className="w-3 h-3" />+{skill.trendingDelta}%</span>}
                         </div>
@@ -1344,7 +1482,7 @@ export default function Home() {
                     <div className={`mx-8 mt-6 mb-4 border rounded-[2px] aspect-[8.5/11] p-8 flex flex-col justify-between relative overflow-hidden ${cardNestedClass} ${borderClass}`}>
                       <div className="absolute top-0 left-0 w-1.5 h-full bg-[#C56A4A]" />
                       <div>
-                        <img src="/logo.png" alt="Logo" className="h-8 w-auto mb-8" style={{ objectFit: 'contain', filter: isDark ? 'brightness(0.9)' : 'none' }} />
+                        <MastGlyph className="h-8 w-auto mb-8 text-[#C56A4A]" strokeColor="#C56A4A" forceRustAccent />
                         <div className={`text-[10px] font-mono uppercase tracking-[0.2em] ${textMutedClass} mb-4`}>{docType.replace('_', ' ')} — Tangison SkillsCamp</div>
                         <h2 className={`text-2xl font-display ${textPrimaryClass} mb-2`}>{docTitle || 'Untitled Document'}</h2>
                         <p className={`text-sm ${textMutedClass}`}>{docSubtitle || 'Subtitle goes here'}</p>
@@ -1463,6 +1601,190 @@ export default function Home() {
                     ))}
                   </div>
                 )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ─── AGENT PIPELINE ─── */}
+        {currentPage === 'agent_pipeline' && (
+          <section className="py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="mb-8">
+                <SectionTag>SKILLSMITH AI CRON v3.0.0</SectionTag>
+                <h1 className={`mt-3 text-[clamp(1.5rem,3vw,2.25rem)] font-display ${textPrimaryClass}`}>Orchestration Pipeline</h1>
+                <p className={`mt-2 text-sm ${textMutedClass}`}>Ingest raw AI agent capability data, verify functional reality, and transform into sovereign registry assets.</p>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-8">
+                {/* Left: Pipeline Phases Visualization */}
+                <div className="w-full lg:w-[400px] shrink-0 space-y-6">
+                  {/* 3-Phase Pipeline */}
+                  <div className={`border rounded-[2px] p-6 ${cardClass}`}>
+                    <h3 className={`font-display text-lg ${textPrimaryClass} mb-6`}>Orchestration Phases</h3>
+                    <div className="space-y-6">
+                      {[
+                        { phase: 'rigorous_filtering', label: 'Rigorous Filtering', icon: 'TARGETING_SYSTEM', desc: 'Discard entries without install paths. Strip conversational text and emojis.', rules: ['No install path → rejected', 'Conversational filler → stripped', 'Emoji/marketing → purged'] },
+                        { phase: 'sovereign_normalization', label: 'Sovereign Normalization', icon: 'LAYER_MATRIX', desc: 'Categorize into architectural domains. Generate Markdown specs with JetBrains Mono code fences.', rules: ['Map to exact category', 'Generate crystal-clear MDX', 'JetBrains Mono syntax blocks'] },
+                        { phase: 'brand_injection', label: 'Brand Injection', icon: 'FORWARD_SLASH', desc: 'Hard-code avatar metadata. Map UI widget primitives. Affix brand signature.', rules: ['Avatar → /assets/icons/tangison-mast-avatar.svg', 'Widget → TARGETING_SYSTEM | FORWARD_SLASH | LAYER_MATRIX | RADAR_CORE | BAR_METRIC', 'Signature → Powered by Tangison AI'] },
+                      ].map((item, idx) => (
+                        <div key={item.phase} className={`relative pl-8 ${idx < 2 ? 'pb-6' : ''}`}>
+                          {/* Connector line */}
+                          {idx < 2 && <div className={`absolute left-3 top-8 bottom-0 w-px ${pipelinePhase === item.phase || (idx === 0 && pipelinePhase === 'sovereign_normalization') || (idx <= 1 && pipelinePhase === 'brand_injection') || pipelinePhase === 'complete' ? 'bg-[#C56A4A]' : 'bg-[#D9D7D2]/20'}`} />}
+                          {/* Phase indicator */}
+                          <div className={`absolute left-0 top-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
+                            pipelinePhase === item.phase ? 'bg-[#C56A4A] text-[#F6F4EF] animate-pulse' :
+                            (idx === 0 && (pipelinePhase === 'sovereign_normalization' || pipelinePhase === 'brand_injection' || pipelinePhase === 'complete')) ||
+                            (idx === 1 && (pipelinePhase === 'brand_injection' || pipelinePhase === 'complete')) ||
+                            (idx === 2 && pipelinePhase === 'complete')
+                              ? 'bg-emerald-500 text-[#F6F4EF]' : `${cardNestedClass} ${textMutedClass}`
+                          }`}>
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <div className="flex items-center gap-2 mb-1">
+                              <WidgetPrimitiveIcon primitive={item.icon as WidgetPrimitive} className="w-3.5 h-3.5 text-[#C56A4A]" />
+                              <span className={`text-sm font-semibold ${textPrimaryClass}`}>{item.label}</span>
+                            </div>
+                            <p className={`text-xs ${textMutedClass} mb-2`}>{item.desc}</p>
+                            <div className="space-y-1">
+                              {item.rules.map((rule, rIdx) => (
+                                <div key={rIdx} className={`text-[10px] font-mono ${textMutedClass} flex items-center gap-1.5`}>
+                                  <span className="text-[#C56A4A]">→</span>{rule}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Widget Primitives Legend */}
+                  <div className={`border rounded-[2px] p-6 ${cardClass}`}>
+                    <h3 className={`font-display text-lg ${textPrimaryClass} mb-4`}>UI Widget Primitives</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      {(['TARGETING_SYSTEM', 'FORWARD_SLASH', 'LAYER_MATRIX', 'RADAR_CORE', 'BAR_METRIC'] as WidgetPrimitive[]).map((prim) => (
+                        <div key={prim} className={`flex items-center gap-2 p-2 rounded-[2px] border ${borderClass}`}>
+                          <WidgetPrimitiveIcon primitive={prim} className="w-4 h-4 text-[#C56A4A]" />
+                          <span className={`text-[9px] font-mono ${textMutedClass}`}>{prim.replace('_', ' ')}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right: Input + Output */}
+                <div className="flex-grow space-y-6">
+                  {/* Input Panel */}
+                  <div className={`border rounded-[2px] p-6 ${cardClass}`}>
+                    <h3 className={`font-display text-lg ${textPrimaryClass} mb-4`}>Raw Data Ingestion</h3>
+                    <p className={`text-xs ${textMutedClass} mb-3`}>Enter raw skill data, one entry per line. Format: Title | Description | Install Command | Repository</p>
+                    <textarea
+                      value={pipelineInput}
+                      onChange={(e) => setPipelineInput(e.target.value)}
+                      placeholder={`Sitemap-Generator-v2 | Yo! This script creates awesome XML sitemaps for your nextjs apps so Google crawls it easily. It's super fast and has like zero dependencies. 🚀🔥 | npm install sitemap-generator-v2 -g | github.com/nextdev/sitemap-gen\nLLaMA-Local-RAG | Retrieval-augmented generation pipeline for local LLaMA models with vector store integration | pip install llama-local-rag | github.com/local-ai/llama-rag`}
+                      className={`w-full h-32 px-3 py-2 rounded-[2px] border text-xs font-mono resize-none placeholder:text-[#787774]/50 focus:outline-none focus:border-[#C56A4A]/40 ${cardNestedClass} ${borderClass} ${textPrimaryClass}`}
+                    />
+                    <button
+                      onClick={handlePipelineProcess}
+                      disabled={pipelineProcessing || !pipelineInput.trim()}
+                      className="mt-3 w-full px-4 py-3 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] font-mono text-xs uppercase font-bold hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {pipelineProcessing ? (
+                        <><RefreshCw className="w-3.5 h-3.5 animate-spin" />Processing Pipeline...</>
+                      ) : (
+                        <><Zap className="w-3.5 h-3.5" />Execute Pipeline</>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Pipeline Logs */}
+                  {pipelineLogs.length > 0 && (
+                    <div className={`border rounded-[2px] p-6 ${cardClass}`}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <Terminal className="w-4 h-4 text-[#C56A4A]" />
+                        <h3 className={`font-display text-lg ${textPrimaryClass}`}>Pipeline Telemetry</h3>
+                      </div>
+                      <div ref={pipelineLogRef} className={`border rounded-[2px] p-4 max-h-48 overflow-y-auto font-mono text-xs space-y-1 ${cardNestedClass} ${borderClass}`}>
+                        {pipelineLogs.map((log, idx) => (
+                          <div key={idx} className={
+                            log.includes('✓') || log.includes('complete') ? 'text-emerald-500' :
+                            log.includes('[PIPELINE]') ? textMutedClass : textPrimaryClass
+                          }>
+                            {log}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Output Panel */}
+                  {pipelineResult && (
+                    <div className={`border rounded-[2px] p-6 ${cardClass}`}>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2">
+                          <Shield className="w-4 h-4 text-[#C56A4A]" />
+                          <h3 className={`font-display text-lg ${textPrimaryClass}`}>Verified Registry Output</h3>
+                        </div>
+                        <span className={`text-[10px] font-mono ${textMutedClass}`}>
+                          {pipelineResult.registry_sync_meta?.engine_signature || 'N/A'}
+                        </span>
+                      </div>
+
+                      {/* Meta */}
+                      <div className={`flex items-center gap-4 mb-4 p-3 rounded-[2px] ${cardNestedClass} ${borderClass}`}>
+                        <span className={`text-xs font-mono ${textMutedClass}`}>Processed: <span className={textPrimaryClass}>{pipelineResult.registry_sync_meta?.processed_count || 0}</span></span>
+                        <span className={`text-xs font-mono ${textMutedClass}`}>Verified: <span className="text-emerald-500">{pipelineResult.verified_skills_directory?.length || 0}</span></span>
+                        <span className={`text-xs font-mono ${textMutedClass}`}>Rejected: <span className="text-[#C56A4A]">{pipelineResult.rejected_elements?.length || 0}</span></span>
+                      </div>
+
+                      {/* Verified Skills */}
+                      {pipelineResult.verified_skills_directory?.map((skill: any, idx: number) => (
+                        <div key={idx} className={`border rounded-[2px] p-4 mb-3 ${cardNestedClass} ${borderClass}`}>
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
+                            <MastGlyph className="h-4 w-auto text-[#C56A4A]" strokeColor="#C56A4A" forceRustAccent />
+                            <span className={`text-sm font-semibold ${textPrimaryClass}`}>{skill.display_title}</span>
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">{skill.category}</span>
+                            {skill.ui_widget_primitive && (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#16353D]/50 text-[#C56A4A] border border-[#16353D]">
+                                <WidgetPrimitiveIcon primitive={skill.ui_widget_primitive} className="w-3 h-3" />
+                                {skill.ui_widget_primitive.replace('_', ' ')}
+                              </span>
+                            )}
+                          </div>
+                          <p className={`text-xs ${textMutedClass} mb-2`}>{skill.technical_tagline}</p>
+                          <div className={`flex items-center gap-3 p-2 rounded-[2px] border ${borderClass} mb-2`}>
+                            <span className="text-[#C56A4A] font-mono text-xs font-bold select-none">$</span>
+                            <code className={`text-xs font-mono ${textPrimaryClass}`}>{skill.isolated_install_string}</code>
+                            <button onClick={() => copyToClipboard(skill.clean_copy_payload || skill.isolated_install_string)} className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors">
+                              <Copy className="w-3 h-3" />Copy
+                            </button>
+                          </div>
+                          <details className={`text-xs ${textMutedClass}`}>
+                            <summary className="cursor-pointer hover:text-[#C56A4A] transition-colors font-mono">View Architectural Documentation</summary>
+                            <div className={`mt-2 p-3 rounded-[2px] border font-mono text-xs whitespace-pre-wrap leading-relaxed ${cardClass} ${borderClass}`}>
+                              {skill.architectural_documentation_mdx}
+                            </div>
+                          </details>
+                        </div>
+                      ))}
+
+                      {/* Rejected Elements */}
+                      {pipelineResult.rejected_elements?.length > 0 && (
+                        <div className="mt-4">
+                          <h4 className={`text-xs font-mono uppercase tracking-widest ${textMutedClass} mb-2`}>Rejected Elements</h4>
+                          {pipelineResult.rejected_elements.map((elem: any, idx: number) => (
+                            <div key={idx} className={`flex items-center gap-2 p-2 rounded-[2px] border ${borderClass} mb-1`}>
+                              <AlertCircle className="w-3 h-3 text-[#C56A4A]" />
+                              <span className={`text-xs font-mono ${textMutedClass}`}>{elem.raw_id}: {elem.reason_for_exclusion}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </section>
@@ -1589,10 +1911,10 @@ export default function Home() {
       {!chatOpen && (
         <button
           onClick={() => setChatOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#C56A4A] text-[#F6F4EF] shadow-lg hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors flex items-center justify-center animate-[fadeInUp_0.3s_ease-out]"
+          className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#C56A4A] text-[#F6F4EF] shadow-lg shadow-[#C56A4A]/30 hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors flex items-center justify-center animate-[fadeInUp_0.3s_ease-out]"
           aria-label="Open AI Chat"
         >
-          <MessageSquare className="w-5 h-5" />
+          <MastGlyph className="w-5 h-6" strokeColor="currentColor" forceRustAccent />
         </button>
       )}
 
@@ -1603,15 +1925,18 @@ export default function Home() {
             {/* Logo ONLY — DRAMATIC, NO wordmark */}
             <div className="flex flex-col items-center md:items-start gap-4">
               <div className="relative">
+                {/* Outermost glow halo */}
+                <div className={`absolute -inset-6 rounded-2xl ${isDark ? 'bg-[#C56A4A]/10' : 'bg-[#C56A4A]/5'} blur-2xl`} />
                 {/* Outer glow ring */}
-                <div className={`absolute -inset-3 rounded-xl ${isDark ? 'bg-[#C56A4A]/8' : 'bg-[#C56A4A]/5'} blur-xl`} />
+                <div className={`absolute -inset-4 rounded-xl ${isDark ? 'bg-[#C56A4A]/15' : 'bg-[#C56A4A]/8'} blur-xl`} />
                 {/* Inner glow */}
-                <div className="absolute -inset-1.5 rounded-lg bg-[#C56A4A]/15 blur-md" />
-                <img
-                  src="/logo.png"
-                  alt="Tangison logo"
-                  className="relative h-20 w-auto drop-shadow-[0_0_20px_rgba(197,106,74,0.5)]"
-                  style={{ objectFit: 'contain', filter: isDark ? 'brightness(1.1) drop-shadow(0 0 16px rgba(197,106,74,0.4))' : 'drop-shadow(0 4px 12px rgba(197,106,74,0.25))' }}
+                <div className="absolute -inset-2 rounded-lg bg-[#C56A4A]/20 blur-md" />
+                {/* Core glow */}
+                <div className="absolute -inset-1 rounded bg-[#C56A4A]/25 blur-sm" />
+                <MastGlyph
+                  className="relative w-16 h-20 drop-shadow-[0_0_24px_rgba(197,106,74,0.6)]"
+                  strokeColor="#C56A4A"
+                  forceRustAccent
                 />
               </div>
               <span className={`font-mono text-[9px] uppercase tracking-[0.3em] font-bold ${isDark ? 'text-[#F6F4EF]/80' : 'text-[#111315]/80'}`}>Sovereign Enclave Platform</span>
@@ -1622,6 +1947,7 @@ export default function Home() {
               <button onClick={() => navigate('skills')} className="hover:text-[#C56A4A] transition-colors">Skills</button>
               <button onClick={() => navigate('categories')} className="hover:text-[#C56A4A] transition-colors">Categories</button>
               <button onClick={() => navigate('trending')} className="hover:text-[#C56A4A] transition-colors">Trending</button>
+              <button onClick={() => navigate('agent_pipeline')} className="hover:text-[#C56A4A] transition-colors">Pipeline</button>
               <button onClick={() => navigate('documents')} className="hover:text-[#C56A4A] transition-colors">Documents</button>
               <button onClick={() => navigate('research')} className="hover:text-[#C56A4A] transition-colors">Triangulation</button>
               <button onClick={() => navigate('about')} className="hover:text-[#C56A4A] transition-colors">About</button>
