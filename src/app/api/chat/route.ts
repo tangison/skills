@@ -40,10 +40,10 @@ export async function POST(request: Request) {
     const zai = await ZAI.create();
     const result = await zai.chat.completions.create({
       messages: [
-        { role: 'system', content: fullSystemPrompt },
+        { role: 'assistant', content: fullSystemPrompt },
         ...messages.map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
       ],
-      model: 'claude-sonnet-4-20250514',
+      thinking: { type: 'disabled' },
     });
 
     // Extract the assistant's reply text
