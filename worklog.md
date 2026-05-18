@@ -127,3 +127,158 @@ Stage Summary:
 - All fixable issues addressed
 - Platform properly labeled as Beta
 - Zero lint errors
+
+---
+Task ID: 2
+Agent: SEO+Quality Audit Agent
+Task: Comprehensive SEO+Quality audit of all source files (READ-ONLY)
+
+Work Log:
+- Read /home/z/my-project/worklog.md (prior task history)
+- Audited src/app/page.tsx (2087 lines) — main SPA, 25+ useState hooks, 198 hardcoded hex colors
+- Audited src/app/layout.tsx — metadata, fonts, JSON-LD, Google verification placeholder
+- Audited src/app/globals.css — theme token system (light/dark), utility classes defined but unused in page.tsx
+- Audited src/components/brand/TangisonLogo.tsx — MastGlyph SVG with dead ternary (forceRustAccent)
+- Audited src/app/robots.ts — dynamic robots.txt generation
+- Audited src/app/sitemap.ts — dynamic sitemap.xml with 5 URLs
+- Audited src/middleware.ts — security headers (CSP, X-Frame-Options, etc.)
+- Audited all API routes: chat, rewrite, agent/process, skills, skills/[id]/copy, search, root
+- Audited src/lib/data.ts — SEED_SKILLS (10 skills) with fictional stats
+- Audited src/lib/agent-config.ts — agent configuration with persona inconsistency
+- Audited src/lib/types.ts — TypeScript interfaces
+- Audited src/lib/db.ts — Prisma client with query logging in production
+- Audited public/ — 6 static assets
+- Ran grep analysis for: `any` types (7 instances), hardcoded colors (198), em-dash usage (25+), "sovereign" overuse (18+), TODO/FIXME (0), `<img>` tags (0)
+- Wrote comprehensive audit report to /home/z/my-project/AUDIT_REPORT.md
+
+Critical Findings:
+🔴 Entire app is single 'use client' component — zero server-rendered content for crawlers
+🔴 All navigation uses <button onClick> — zero crawlable <a href> links
+🔴 198 hardcoded hex colors bypass CSS custom property theme system
+🔴 Google site verification is placeholder string
+🔴 Fictional install counts and GitHub stars presented as factual data
+
+Quality Scores:
+- P0 Crawlability: 5/6 (B+)
+- P1 Technical SEO: 4/8 (D+)
+- P2 On-Page: 3/7 (D)
+- P3 Content Quality: 2/5 (D-)
+- P4 Schema: 2/5 (D)
+- Accessibility: 2/4 (D)
+- Performance: 1/4 (F)
+- Theming: 1/4 (F)
+- Responsive: 3/4 (B)
+- Anti-Patterns: 1/4 (F)
+
+Top 5 Recommended Actions:
+1. Convert to Next.js file-based routing with server components
+2. Replace fictional data with verified data or qualitative labels
+3. Replace Google site verification placeholder
+4. Consolidate duplicate data sources (INITIAL_SKILLS vs SEED_SKILLS)
+5. Replace 198 hardcoded hex colors with CSS custom property utility classes
+
+---
+Task ID: 4-a
+Agent: SEO + Accessibility Fix Agent
+Task: Fix critical SEO and accessibility issues (layout metadata, robots.txt, sitemap.xml, page a11y, type safety)
+
+Work Log:
+- Updated src/app/layout.tsx:
+  - Removed placeholder Google site verification (`google: "google-site-verification-placeholder"`)
+  - Updated meta description to: "The open directory for AI agent skills. Browse, install, and deploy modular skills from Vercel Labs, Anthropic, Obra, and more."
+  - Updated OpenGraph description to match new meta description
+  - Updated Twitter description to: "The open directory for AI agent skills. Browse, install, and deploy modular skills."
+  - Updated WebSite JSON-LD description to match new description
+  - Added SoftwareApplication JSON-LD schema alongside existing WebSite schema
+  - Added separate `<script type="application/ld+json">` for SoftwareApplication schema in body
+- Removed src/app/robots.ts (dynamic version conflicting with static file requirement)
+- Removed src/app/sitemap.ts (dynamic version conflicting with static file requirement)
+- Created public/robots.txt with User-agent *, Allow /, Disallow /api/, Sitemap reference
+- Created public/sitemap.xml with single URL entry for skills.tangison.com (lastmod 2025-03-04, daily, priority 1.0)
+- Updated src/app/page.tsx:
+  - Updated skip-to-content link text: "Skip to content" → "Skip to main content"
+  - Updated skip-to-content link styling: focus:text-[#F6F4EF] → focus:text-white, focus:rounded-[2px] → focus:rounded, removed focus:font-mono focus:text-xs
+  - Updated mobile menu aria-label: "Toggle navigation menu" → "Toggle menu"
+  - Updated chat toggle aria-label: "Open AI Chat" → "Open AI assistant"
+  - Updated close chat aria-label: "Close chat" → "Close assistant"
+  - Updated copy button aria-labels: `Copy ${skill.installCommand}` → "Copy to clipboard" (5 instances)
+  - Added aria-label="Copy to clipboard" to skill detail copy buttons (3 buttons that previously had no aria-label)
+  - Added role="navigation" to the desktop nav element
+  - Replaced `any` type: `useState<any>(null)` → `useState<Record<string, unknown> | null>(null)`
+- Ran bun run lint — passed with zero errors
+- Dev server compiles successfully with no errors
+
+SEO Issues Addressed:
+✅ Google site verification placeholder removed
+✅ Meta description updated to be specific and under 160 chars (137 chars)
+✅ OpenGraph description matches meta description
+✅ Twitter description updated to match
+✅ SoftwareApplication JSON-LD schema added as separate script tag
+✅ Static robots.txt created (with Disallow: /api/)
+✅ Static sitemap.xml created with proper XML structure
+
+Accessibility Issues Addressed:
+✅ Skip-to-content link updated with correct text and styling
+✅ Icon-only buttons have proper aria-labels (theme toggle, menu, chat, copy)
+✅ nav element has explicit role="navigation"
+✅ Copy buttons all have aria-label="Copy to clipboard"
+
+Type Safety:
+✅ Replaced `any` type with `Record<string, unknown> | null`
+
+---
+Task ID: 4-b
+Agent: Beta Labeling + AI Slop Fix Agent
+Task: Mark platform as BETA and fix AI slop in copy
+
+Work Log:
+- Updated dismissible Beta Banner:
+  - Restyled from `bg-[#16353D]` dark teal to `bg-[#C56A4A]/10 border-b border-[#C56A4A]/20 text-sm`
+  - Updated text: "SkillsCamp is in Beta — features are in active development" → "⚠ SkillsCamp is in early beta. Features are under active development. Data shown is illustrative."
+  - Restructured layout: flex with text left, dismiss button right
+  - Banner now always visible (not conditional on feature flag)
+- Added BETA/ALPHA badges to section titles (consistent style: `text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20`):
+  - Hero SectionTag: added "beta" badge after TANGISON SKILLSCAMP
+  - Skills Directory h1: "Skills Directory β"
+  - AI Rewrite Engine label: "AI Rewrite Engine β"
+  - Document Engine h1: "Document Engine β"
+  - Automation Telemetry h3: "Automation β" (changed from ALPHA)
+  - Agent Pipeline h1: "Agent Pipeline α"
+  - Research h1: "Research β" (changed from ALPHA)
+  - Chat header: updated to consistent badge style
+- Removed old-style BETA/ALPHA badges from SectionTags ( DOCUMENT CREATION ENGINE, DEEP RESEARCH TRIANGULATION, SKILLSMITH AI CRON)
+- Added SKILL DATA — BETA ILLUSTRATIVE DATA disclaimer comment above INITIAL_SKILLS declaration
+- Added "~" prefix to all displayed fictional stats in UI:
+  - Install counts on trending cards, directory cards, trending page, detail sidebar
+  - GitHub stars on directory cards
+  - Quality scores on detail sidebar
+  - Category/skill counts in hero section
+  - Added "(illustrative)" to categories page subtitle
+- Updated footer: added `v0.1.0-beta` version span next to copyright
+- Fixed em-dash overuse (25+ instances → ~10 appropriate uses):
+  - Taglines: "—" → ":" for skill taglines
+  - aiInsight: "—" → ":" for all skill insights
+  - contentMdx: "—" → ":" for overview descriptions
+  - Hero text: "skills — no installation" → "skills: no installation"
+  - About page: two em-dashes → colons
+  - Chat fallback: "—" → ":" in recommendation format
+  - Pipeline error: "—" → ":"
+  - Kept em-dashes in: code comments, Architecture list items, terminal title, document template
+- Fixed generic superlatives:
+  - "complete control" → "full control" (PDF contentMdx)
+  - "complete document workflows" → "full document workflows" (PDF tangisonRecommendation)
+  - "The most-installed" → "One of the most-installed" (Find Skills aiInsight)
+  - "the most popular" → "one of the most popular" (Systematic Debugging aiInsight)
+  - "the most-starred" → "one of the most-starred" (Brainstorming aiInsight)
+  - "essential" → "useful" (PDF aiInsight)
+- Fixed vague/gateway language:
+  - "acts as the gateway to discovering" → "discovers" (Find Skills aiInsight)
+  - "is the gateway to contributing back" → "lets you contribute back" (Skill Creator aiInsight)
+- Added "~" prefix to all fictional stat numbers in contentMdx:
+  - (~424.9K installs), (~196K stars), (~1.2M total installs), (~1.6M total installs), (~19K stars), (~214.7K installs), (~107.7K installs), (~100.3K installs)
+- Restored proper aria-labels on Copy buttons (regression from prior agent):
+  - "Copy to clipboard" → `Copy ${skill.installCommand}` for install command copy buttons
+  - Added "Copy skill content as prompt" for content copy button
+  - Added "Copy install command" for pipeline copy button
+- Ran bun run lint — passed with zero errors
+- Dev server compiles successfully

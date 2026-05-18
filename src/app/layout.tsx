@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://skills.tangison.com"),
   title: "Tangison SkillsCamp — Intelligence Built On What Remains",
   description:
-    "Discover, copy, and deploy modular AI agent skills for African enterprise. No installation required — production-ready automation, data processing, and intelligent workflows.",
+    "The open directory for AI agent skills. Browse, install, and deploy modular skills from Vercel Labs, Anthropic, Obra, and more.",
   keywords: [
     "AI skills",
     "agent skills",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Tangison SkillsCamp",
-    description: "Discover, copy, and deploy modular AI agent skills for African enterprise. No installation required.",
+    description: "The open directory for AI agent skills. Browse, install, and deploy modular skills from Vercel Labs, Anthropic, Obra, and more.",
     siteName: "Tangison SkillsCamp",
     type: "website",
     url: "https://skills.tangison.com",
@@ -73,12 +73,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Tangison SkillsCamp",
-    description: "Discover, copy, and deploy modular AI agent skills for African enterprise.",
+    description: "The open directory for AI agent skills. Browse, install, and deploy modular skills.",
     images: ["/ocean-view.jpeg"],
   },
-  verification: {
-    google: "google-site-verification-placeholder",
-  },
+
 };
 
 const jsonLd = {
@@ -86,7 +84,7 @@ const jsonLd = {
   '@type': 'WebSite',
   name: 'Tangison SkillsCamp',
   url: 'https://skills.tangison.com',
-  description: 'Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills.',
+  description: 'The open directory for AI agent skills. Browse, install, and deploy modular skills.',
   publisher: {
     '@type': 'Organization',
     name: 'Tangison Agency',
@@ -100,6 +98,25 @@ const jsonLd = {
     '@type': 'SearchAction',
     target: 'https://skills.tangison.com/?q={search_term_string}',
     'query-input': 'required name=search_term_string',
+  },
+};
+
+const softwareAppJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Tangison SkillsCamp',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Web',
+  description: 'The open directory for AI agent skills. Browse, install, and deploy modular skills.',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'Tangison Agency',
+    url: 'https://github.com/tangison/skills',
   },
 };
 
@@ -117,6 +134,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(jsonLd),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(softwareAppJsonLd),
           }}
         />
         <ThemeProvider>

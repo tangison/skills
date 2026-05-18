@@ -102,13 +102,18 @@ const SKILL_CATEGORIES = [
   { name: "AI Infrastructure", icon: "Infra", count: 42 }
 ];
 
+/* ═══════════════════════════════════════════════════════════════
+   SKILL DATA — BETA ILLUSTRATIVE DATA
+   Install counts, GitHub stars, and quality scores are illustrative
+   and will be replaced with live ecosystem data in production.
+   ═══════════════════════════════════════════════════════════════ */
 const INITIAL_SKILLS: Skill[] = [
   {
     id: 'skill-1',
     slug: 'find-skills',
     title: 'Find Skills',
     category: 'AI Infrastructure',
-    tagline: 'The sovereign discovery engine — search the entire open agent skills ecosystem',
+    tagline: 'The sovereign discovery engine: search the open agent skills ecosystem',
     difficulty: 'FOUNDATIONAL',
     installCount: 1600000,
     githubStars: 19000,
@@ -143,7 +148,7 @@ const trending = await findSkills({ trending: true, limit: 10 });`,
 
 ## Overview
 
-Find Skills is the #1 installed skill in the open agent skills ecosystem. It provides sovereign discovery across all connected registries — Vercel Labs, Anthropic, Obra Superpowers, and more.
+Find Skills is the #1 installed skill in the open agent skills ecosystem. It provides sovereign discovery across all connected registries: Vercel Labs, Anthropic, Obra Superpowers, and more.
 
 ## Architecture
 
@@ -160,9 +165,9 @@ npx skills add vercel-labs/skills
 
 ## Source
 
-Repository: github.com/vercel-labs/skills (19K stars)
+Repository: github.com/vercel-labs/skills (~19K stars)
 Ecosystem: skills.sh/vercel-labs/skills`,
-    aiInsight: 'The most-installed skill in the ecosystem at 1.6M installs — acts as the gateway to discovering all other skills across 40+ registries.',
+    aiInsight: 'One of the most-installed skills in the ecosystem at ~1.6M installs: discovers skills across 40+ registries.',
     tangisonRecommendation: 'Start here for any project. Find Skills will point you to the right tool for the job across the entire open ecosystem.',
     citations: ['skills.sh/vercel-labs/skills', 'github.com/vercel-labs/skills', 'docs.skills.sh/find-skills']
   },
@@ -171,7 +176,7 @@ Ecosystem: skills.sh/vercel-labs/skills`,
     slug: 'frontend-design',
     title: 'Frontend Design',
     category: 'React',
-    tagline: 'Production-grade frontend from specifications — React, Next.js, Vue, Svelte',
+    tagline: 'Production-grade frontend from specifications: React, Next.js, Vue, Svelte',
     difficulty: 'INTERMEDIATE',
     installCount: 424900,
     githubStars: 8200,
@@ -207,7 +212,7 @@ const output = await frontendDesign({
 
 ## Overview
 
-Frontend Design is the #2 most-installed skill (424.9K installs) from the Anthropic skills registry. It generates production-ready frontend code from design specifications.
+Frontend Design is the #2 most-installed skill (~424.9K installs) from the Anthropic skills registry. It generates production-ready frontend code from design specifications.
 
 ## Supported Frameworks
 
@@ -225,8 +230,8 @@ npx skills add anthropics/skills
 ## Source
 
 Repository: github.com/anthropics/skills
-Ecosystem: skills.sh/anthropics/skills (18 skills, 1.6M total installs)`,
-    aiInsight: 'The second most-installed skill at 424.9K installs — its output often passes code review without modifications.',
+Ecosystem: skills.sh/anthropics/skills (18 skills, ~1.6M total installs)`,
+    aiInsight: 'The second most-installed skill at ~424.9K installs: its output often passes code review without modifications.',
     tangisonRecommendation: 'Pair with Find Skills for end-to-end discovery and build workflows.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   },
@@ -265,7 +270,7 @@ const ideas = await brainstorming({
 
 ## Overview
 
-Brainstorming is the #1 skill from Obra Superpowers (164.9K installs) — the agentic skills framework with 196K GitHub stars. It provides structured ideation and creative problem-solving.
+Brainstorming is the #1 skill from Obra Superpowers (~164.9K installs): the agentic skills framework with ~196K GitHub stars. It provides structured ideation and creative problem-solving.
 
 ## Installation
 
@@ -275,9 +280,9 @@ npx skills add obra/superpowers
 
 ## Source
 
-Repository: github.com/obra/superpowers (196K stars)
-Ecosystem: skills.sh/obra/superpowers (14 skills, 1.2M total installs)`,
-    aiInsight: 'Part of the Obra Superpowers framework — 196K GitHub stars makes it the most-starred skills repository in the ecosystem.',
+Repository: github.com/obra/superpowers (~196K stars)
+Ecosystem: skills.sh/obra/superpowers (14 skills, ~1.2M total installs)`,
+    aiInsight: 'Part of the Obra Superpowers framework: ~196K GitHub stars makes it one of the most-starred skills repositories in the ecosystem.',
     tangisonRecommendation: 'Start every project with Brainstorming from Obra Superpowers. The structured ideation framework prevents scope creep.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
   },
@@ -323,7 +328,7 @@ await skillCreator.publish({
 
 ## Overview
 
-Skill Creator (214.7K installs) from Anthropic enables building and publishing custom agent skills to the open ecosystem.
+Skill Creator (~214.7K installs) from Anthropic enables building and publishing custom agent skills to the open ecosystem.
 
 ## Installation
 
@@ -335,7 +340,7 @@ npx skills add anthropics/skills
 
 Repository: github.com/anthropics/skills
 Ecosystem: skills.sh/anthropics/skills`,
-    aiInsight: 'Skill Creator is the gateway to contributing back to the ecosystem — 214.7K installs shows strong community participation.',
+    aiInsight: 'Skill Creator lets you contribute back to the ecosystem: ~214.7K installs indicates community participation.',
     tangisonRecommendation: 'Use Skill Creator to build Tangison-specific skills and publish them to github.com/tangison/skills.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills', 'agentskills.io']
   },
@@ -374,7 +379,7 @@ const result = await systematicDebugging({
 
 ## Overview
 
-Systematic Debugging (100.3K installs) from Obra Superpowers applies methodical debugging methodology — eliminate root causes, not symptoms.
+Systematic Debugging (~100.3K installs) from Obra Superpowers applies methodical debugging methodology: eliminate root causes, not symptoms.
 
 ## Installation
 
@@ -384,9 +389,9 @@ npx skills add obra/superpowers
 
 ## Source
 
-Repository: github.com/obra/superpowers (196K stars)
-Ecosystem: skills.sh/obra/superpowers (14 skills, 1.2M total installs)`,
-    aiInsight: 'Part of Obra Superpowers — the most popular debugging methodology in the ecosystem with 100.3K installs.',
+Repository: github.com/obra/superpowers (~196K stars)
+Ecosystem: skills.sh/obra/superpowers (14 skills, ~1.2M total installs)`,
+    aiInsight: 'Part of Obra Superpowers: one of the most popular debugging methodologies in the ecosystem with ~100.3K installs.',
     tangisonRecommendation: 'Use Systematic Debugging for any production issue. The binary-search approach eliminates guesswork.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
   },
@@ -427,7 +432,7 @@ const pdf = await pdfSkill.create({
 
 ## Overview
 
-PDF (107.7K installs) from Anthropic provides complete control over PDF document creation and manipulation.
+PDF (~107.7K installs) from Anthropic provides full control over PDF document creation and manipulation.
 
 ## Installation
 
@@ -438,9 +443,9 @@ npx skills add anthropics/skills
 ## Source
 
 Repository: github.com/anthropics/skills
-Ecosystem: skills.sh/anthropics/skills (18 skills, 1.6M total installs)`,
-    aiInsight: 'PDF is part of the Anthropic document suite — its form generation and digital signature features make it essential for compliance workflows.',
-    tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for complete document workflows.',
+Ecosystem: skills.sh/anthropics/skills (18 skills, ~1.6M total installs)`,
+    aiInsight: 'PDF is part of the Anthropic document suite: its form generation and digital signature features make it useful for compliance workflows.',
+    tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for full document workflows.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   }
 ];
@@ -761,7 +766,7 @@ export default function Home() {
   const [pipelineInput, setPipelineInput] = useState('');
   const [pipelineProcessing, setPipelineProcessing] = useState(false);
   const [pipelinePhase, setPipelinePhase] = useState<string>('');
-  const [pipelineResult, setPipelineResult] = useState<any>(null);
+  const [pipelineResult, setPipelineResult] = useState<Record<string, unknown> | null>(null);
   const [pipelineLogs, setPipelineLogs] = useState<string[]>([]);
   const pipelineLogRef = useRef<HTMLDivElement>(null);
 
@@ -837,7 +842,7 @@ export default function Home() {
       else matchedSkill = INITIAL_SKILLS[Math.floor(Math.random() * INITIAL_SKILLS.length)];
 
       const reply = matchedSkill
-        ? `For that use case, I recommend **${matchedSkill.title}** — ${matchedSkill.tagline}\n\nInstall: \`${matchedSkill.installCommand}\`\n\n${matchedSkill.aiInsight}`
+        ? `For that use case, I recommend **${matchedSkill.title}**: ${matchedSkill.tagline}\n\nInstall: \`${matchedSkill.installCommand}\`\n\n${matchedSkill.aiInsight}`
         : 'I can help you find the right skill. Try describing what you want to build.';
       setChatMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
     }
@@ -961,7 +966,7 @@ export default function Home() {
       setPipelineResult(data);
       setPipelineLogs(prev => [...prev, `[PIPELINE] Processing complete. Engine: ${data.registry_sync_meta?.engine_signature || 'N/A'}`]);
     } catch {
-      setPipelineLogs(prev => [...prev, '[PIPELINE] API call failed — displaying simulated output']);
+      setPipelineLogs(prev => [...prev, '[PIPELINE] API call failed: displaying simulated output']);
       setPipelineResult({
         registry_sync_meta: { processed_count: 1, engine_signature: 'Powered by Tangison AI' },
         verified_skills_directory: [{
@@ -1006,8 +1011,8 @@ export default function Home() {
   return (
     <div className={`min-h-screen flex flex-col ${canvasClass} font-sans antialiased`}>
       {/* Skip to content */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#C56A4A] focus:text-[#F6F4EF] focus:font-mono focus:text-xs focus:rounded-[2px]">
-        Skip to content
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#C56A4A] focus:text-white focus:rounded">
+        Skip to main content
       </a>
 
       {/* Subtle grid background */}
@@ -1015,10 +1020,10 @@ export default function Home() {
 
       {/* Beta Banner */}
       {!betaDismissed && (
-        <div className="bg-[#16353D] text-[#F6F4EF] text-[11px] font-mono text-center py-2 px-4 relative z-50">
-          <span className="tracking-wider uppercase">SkillsCamp is in <span className="text-[#C56A4A] font-bold">Beta</span> — features are in active development</span>
-          <button onClick={() => setBetaDismissed(true)} className="ml-4 text-[#F6F4EF]/60 hover:text-[#F6F4EF] transition-colors" aria-label="Dismiss beta banner">
-            <X className="w-3 h-3 inline" />
+        <div className="bg-[#C56A4A]/10 border-b border-[#C56A4A]/20 text-sm font-mono px-4 py-2.5 relative z-50 flex items-center justify-between">
+          <span className="text-[#C56A4A]">⚠ SkillsCamp is in early beta. Features are under active development. Data shown is illustrative.</span>
+          <button onClick={() => setBetaDismissed(true)} className="text-[#C56A4A]/60 hover:text-[#C56A4A] transition-colors shrink-0 ml-4" aria-label="Dismiss beta banner">
+            <X className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -1051,7 +1056,7 @@ export default function Home() {
             </button>
 
             {/* Desktop Nav */}
-            <nav className={`hidden md:flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest ${textMutedClass}`}>
+            <nav role="navigation" className={`hidden md:flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest ${textMutedClass}`}>
               {navItems.map(({ page, label }) => (
                 <button key={page} onClick={() => navigate(page)} className={`transition-colors duration-200 ${currentPage === page ? 'text-[#C56A4A] font-bold' : isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}>
                   {label}
@@ -1074,7 +1079,7 @@ export default function Home() {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`md:hidden p-2 ${textMutedClass} ${isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}
-                aria-label="Toggle navigation menu"
+                aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -1105,20 +1110,23 @@ export default function Home() {
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                   <div className="lg:col-span-7">
-                    <SectionTag>TANGISON SKILLSCAMP // V0.1.0-BETA</SectionTag>
+                    <div className="flex items-center">
+                      <SectionTag>TANGISON SKILLSCAMP // V0.1.0-BETA</SectionTag>
+                      <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span>
+                    </div>
                     <h1 className={`mt-6 text-[clamp(3rem,6vw,5.5rem)] font-display leading-[1.05] tracking-tight ${textPrimaryClass}`}>
                       Intelligence <br />built on what <span className="italic font-normal text-[#C56A4A]">remains.</span>
                     </h1>
                     <p className={`mt-6 text-lg ${textMutedClass} leading-relaxed max-w-xl font-sans`}>
-                      Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills — no installation required.
+                      Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills: no installation required.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-widest font-bold">
                       <button onClick={() => navigate('skills')} className="bg-[#C56A4A] text-[#F6F4EF] px-8 py-4 hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors rounded-[2px]">Explore Skills</button>
                       <button onClick={() => navigate('categories')} className={`bg-transparent border ${borderClass} ${textPrimaryClass} px-8 py-4 hover:border-[#C56A4A] transition-colors rounded-[2px]`}>Browse Ecosystems</button>
                     </div>
                     <div className={`mt-10 flex items-center gap-6 text-xs font-mono ${textMutedClass}`}>
-                      <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-[#C56A4A]" />{SKILL_CATEGORIES.length} categories</span>
-                      <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5 text-[#C56A4A]" />{INITIAL_SKILLS.length} verified skills</span>
+                      <span className="flex items-center gap-1.5"><Zap className="w-3.5 h-3.5 text-[#C56A4A]" />~{SKILL_CATEGORIES.length} categories</span>
+                      <span className="flex items-center gap-1.5"><Terminal className="w-3.5 h-3.5 text-[#C56A4A]" />~{INITIAL_SKILLS.length} verified skills</span>
                     </div>
                   </div>
                   <div className="lg:col-span-5 hidden lg:block">
@@ -1155,7 +1163,7 @@ export default function Home() {
                       <h3 className={`font-semibold text-sm mb-1 ${textPrimaryClass}`}>{skill.title}</h3>
                       <p className={`text-xs leading-relaxed mb-3 line-clamp-2 ${textMutedClass}`}>{skill.tagline}</p>
                       <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA' }}>
-                        <span className={`text-[10px] font-mono ${textMutedClass}`}>{skill.installCount.toLocaleString()} installs</span>
+                        <span className={`text-[10px] font-mono ${textMutedClass}`}>~{skill.installCount.toLocaleString()} installs</span>
                         <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors" aria-label={`Copy ${skill.installCommand}`}>
                           <Copy className="w-3 h-3" />Copy
                         </button>
@@ -1219,7 +1227,7 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>VERIFIED CAPABILITIES</SectionTag>
-                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Skills Directory</h1>
+                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Skills Directory <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span></h1>
               </div>
               <div className="flex flex-col lg:flex-row gap-8">
                 {/* Sidebar Filters */}
@@ -1273,7 +1281,7 @@ export default function Home() {
                         <h3 className={`font-semibold text-sm mb-1 group-hover:text-[#C56A4A] transition-colors ${textPrimaryClass}`}>{skill.title}</h3>
                         <p className={`text-xs leading-relaxed mb-3 line-clamp-2 ${textMutedClass}`}>{skill.tagline}</p>
                         <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA' }}>
-                          <span className={`text-[10px] font-mono ${textMutedClass}`}>{skill.installCount.toLocaleString()} installs · ★ {skill.githubStars.toLocaleString()}</span>
+                          <span className={`text-[10px] font-mono ${textMutedClass}`}>~{skill.installCount.toLocaleString()} installs · ★ ~{skill.githubStars.toLocaleString()}</span>
                           <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors" aria-label={`Copy ${skill.installCommand}`}>
                             <Copy className="w-3 h-3" />Copy
                           </button>
@@ -1308,8 +1316,8 @@ export default function Home() {
                     <div><span className={`text-[10px] font-mono uppercase ${textMutedClass} block mb-1`}>Repository</span><a href={skill.sourceUrl} target="_blank" rel="noopener noreferrer" className="text-[#C56A4A] hover:underline truncate block">{skill.repositoryName}</a></div>
                     <div><span className={`text-[10px] font-mono uppercase ${textMutedClass} block mb-1`}>Skills.sh</span><a href={skill.skillsShUrl} target="_blank" rel="noopener noreferrer" className="text-[#C56A4A] hover:underline">View on skills.sh ↗</a></div>
                     <div className="flex justify-between"><span className={`text-[10px] font-mono uppercase ${textMutedClass}`}>License</span><span className={`font-mono px-1.5 py-0.5 rounded-[2px] ${cardNestedClass} ${textPrimaryClass}`}>{skill.license}</span></div>
-                    <div className="flex justify-between"><span className={`text-[10px] font-mono uppercase ${textMutedClass}`}>Quality</span><span className="font-mono text-[#C56A4A]">{skill.qualityScore}/100</span></div>
-                    <div className="flex justify-between"><span className={`text-[10px] font-mono uppercase ${textMutedClass}`}>Installs</span><span className={`font-mono ${textPrimaryClass}`}>{skill.installCount.toLocaleString()}</span></div>
+                    <div className="flex justify-between"><span className={`text-[10px] font-mono uppercase ${textMutedClass}`}>Quality</span><span className="font-mono text-[#C56A4A]">~{skill.qualityScore}/100</span></div>
+                    <div className="flex justify-between"><span className={`text-[10px] font-mono uppercase ${textMutedClass}`}>Installs</span><span className={`font-mono ${textPrimaryClass}`}>~{skill.installCount.toLocaleString()}</span></div>
                   </div>
                   {skill.dependencies.length > 0 && (
                     <div className={`border-t pt-4 ${borderClass}`}>
@@ -1340,7 +1348,7 @@ export default function Home() {
                     <h1 className={`mt-4 text-4xl md:text-5xl font-display tracking-tight ${textPrimaryClass}`}>{skill.title}</h1>
                     <p className={`mt-3 text-sm font-sans ${textMutedClass} max-w-2xl`}>{skill.tagline}</p>
                     <div className="absolute top-8 right-8">
-                      <button onClick={() => copyToClipboard(skill.contentMdx)} className="inline-flex items-center gap-2 px-4 py-2 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] font-mono text-xs uppercase font-bold hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors">
+                      <button onClick={() => copyToClipboard(skill.contentMdx)} className="inline-flex items-center gap-2 px-4 py-2 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] font-mono text-xs uppercase font-bold hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors" aria-label="Copy skill content as prompt">
                         <Copy className="w-3.5 h-3.5" />Copy as Prompt
                       </button>
                     </div>
@@ -1353,7 +1361,7 @@ export default function Home() {
                     </div>
                     <div className="flex items-center gap-3">
                       <span className={`text-[10px] font-mono ${textMutedClass} hidden sm:inline`}>Run this in your project terminal</span>
-                      <button onClick={() => copyToClipboard(skill.installCommand)} className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[2px] text-xs font-mono border ${borderClass} hover:border-[#C56A4A]/30 transition-colors ${textPrimaryClass}`}>
+                      <button onClick={() => copyToClipboard(skill.installCommand)} className={`inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[2px] text-xs font-mono border ${borderClass} hover:border-[#C56A4A]/30 transition-colors ${textPrimaryClass}`} aria-label={`Copy ${skill.installCommand}`}>
                         <Copy className="w-3.5 h-3.5" />Copy
                       </button>
                     </div>
@@ -1411,8 +1419,8 @@ export default function Home() {
                   <div className={`border rounded-[2px] p-5 ${cardClass}`}>
                     <div className="flex items-center gap-2 mb-3">
                       <RefreshCw className="w-4 h-4 text-[#C56A4A]" />
-                      <span className={`text-xs font-mono uppercase tracking-widest ${textMutedClass}`}>AI Rewrite</span>
-                      <span className="ml-1 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
+                      <span className={`text-xs font-mono uppercase tracking-widest ${textMutedClass}`}>AI Rewrite Engine</span>
+                      <span className="ml-1 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span>
                     </div>
                     <div className="space-y-2 mb-3">
                       {rewriteFunctions.map((fn) => (
@@ -1445,7 +1453,7 @@ export default function Home() {
               <div className="mb-8">
                 <SectionTag>SYSTEM CLASSIFICATION</SectionTag>
                 <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>All Categories</h1>
-                <p className={`mt-2 text-sm ${textMutedClass}`}>{SKILL_CATEGORIES.length} domains of sovereign intelligence</p>
+                <p className={`mt-2 text-sm ${textMutedClass}`}>{SKILL_CATEGORIES.length} domains of sovereign intelligence (illustrative)</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {SKILL_CATEGORIES.map((cat) => (
@@ -1493,7 +1501,7 @@ export default function Home() {
                       <div className="text-emerald-500 text-sm font-mono font-bold flex items-center gap-1 justify-end">
                         <ArrowRight className="w-3.5 h-3.5" />+{skill.trendingDelta}%
                       </div>
-                      <div className={`text-[10px] font-mono ${textMutedClass}`}>{skill.installCount.toLocaleString()} installs</div>
+                      <div className={`text-[10px] font-mono ${textMutedClass}`}>~{skill.installCount.toLocaleString()} installs</div>
                     </div>
                   </button>
                 ))}
@@ -1508,8 +1516,7 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>DOCUMENT CREATION ENGINE</SectionTag>
-                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
-                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Create Documents</h1>
+                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Document Engine <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span></h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Generate branded documents with AI-powered content and layout</p>
               </div>
               <div className="flex flex-col lg:flex-row gap-8">
@@ -1616,8 +1623,7 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>DEEP RESEARCH TRIANGULATION</SectionTag>
-                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">ALPHA</span>
-                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Research Triangulation</h1>
+                <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Research <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span></h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Multi-source verification and citation tracking</p>
               </div>
 
@@ -1666,8 +1672,7 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-[#C56A4A]" />
-                    <h3 className={`font-display text-lg ${textPrimaryClass}`}>Automation Telemetry</h3>
-                    <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">ALPHA</span>
+                    <h3 className={`font-display text-lg ${textPrimaryClass}`}>Automation <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span></h3>
                   </div>
                   <span className={`text-[10px] font-mono ${textMutedClass}`}>{AUTOMATION_JOBS.length} cron jobs</span>
                 </div>
@@ -1705,8 +1710,7 @@ export default function Home() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>SKILLSMITH AI CRON v0.1.0-BETA</SectionTag>
-                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
-                <h1 className={`mt-3 text-[clamp(1.5rem,3vw,2.25rem)] font-display ${textPrimaryClass}`}>Orchestration Pipeline</h1>
+                <h1 className={`mt-3 text-[clamp(1.5rem,3vw,2.25rem)] font-display ${textPrimaryClass}`}>Agent Pipeline <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">alpha</span></h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Ingest raw AI agent capability data, verify functional reality, and transform into sovereign registry assets.</p>
               </div>
 
@@ -1851,7 +1855,7 @@ export default function Home() {
                           <div className={`flex items-center gap-3 p-2 rounded-[2px] border ${borderClass} mb-2`}>
                             <span className="text-[#C56A4A] font-mono text-xs font-bold select-none">$</span>
                             <code className={`text-xs font-mono ${textPrimaryClass}`}>{skill.isolated_install_string}</code>
-                            <button onClick={() => copyToClipboard(skill.clean_copy_payload || skill.isolated_install_string)} className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors">
+                            <button onClick={() => copyToClipboard(skill.clean_copy_payload || skill.isolated_install_string)} className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors" aria-label="Copy install command">
                               <Copy className="w-3 h-3" />Copy
                             </button>
                           </div>
@@ -1894,10 +1898,10 @@ export default function Home() {
               </h1>
               <div className={`space-y-6 text-sm ${textMutedClass} leading-relaxed`}>
                 <p>
-                  Tangison SkillsCamp is a sovereign intelligence infrastructure platform. We discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem — skills.sh, Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, and beyond.
+                  Tangison SkillsCamp is a sovereign intelligence infrastructure platform. We discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem: skills.sh, Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, and beyond.
                 </p>
                 <p>
-                  Every skill in our catalog is sourced honestly — we credit original authors, link back to original repositories (vercel-labs/skills, anthropics/skills, obra/superpowers), and link to skills.sh. We enhance skills without stealing attribution, acting as an intelligence layer above the ecosystem.
+                  Every skill in our catalog is sourced honestly: we credit original authors, link back to original repositories (vercel-labs/skills, anthropics/skills, obra/superpowers), and link to skills.sh. We enhance skills without stealing attribution, acting as an intelligence layer above the ecosystem.
                 </p>
                 <p>
                   Our platform is built on the principle that intelligence infrastructure should be accessible, verifiable, and sovereign. No vendor lock-in. No hidden dependencies. Just modular, composable skills that work across the entire open ecosystem.
@@ -1961,9 +1965,9 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className={`text-xs font-mono uppercase tracking-widest ${textPrimaryClass}`}>SkillsCamp AI</span>
-              <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
+              <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span>
             </div>
-            <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`} aria-label="Close chat">
+            <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`} aria-label="Close assistant">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -2007,7 +2011,7 @@ export default function Home() {
         <button
           onClick={() => setChatOpen(true)}
           className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#C56A4A] text-[#F6F4EF] shadow-lg shadow-[#C56A4A]/30 hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors flex items-center justify-center animate-[fadeInUp_0.3s_ease-out]"
-          aria-label="Open AI Chat"
+          aria-label="Open AI assistant"
         >
           <MastGlyph className="w-5 h-6" strokeColor="currentColor" forceRustAccent />
         </button>
@@ -2063,7 +2067,7 @@ export default function Home() {
               <span className={textMutedClass}>Tangison Agency</span>
               <span className="text-emerald-500 font-bold">AI-Powered</span>
             </div>
-            <span>© 2026 TANGISON GROUP. ALL RIGHTS SECURED.</span>
+            <span>© 2026 TANGISON GROUP. ALL RIGHTS SECURED. <span className="text-[10px] font-mono opacity-60">v0.1.0-beta</span></span>
           </div>
         </div>
       </footer>
