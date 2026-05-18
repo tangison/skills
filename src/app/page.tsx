@@ -82,24 +82,24 @@ interface Ecosystem {
    DATA CONSTANTS
    ═══════════════════════════════════════════════════════════════ */
 const SKILL_CATEGORIES = [
-  { name: "Website Planning", icon: "Planning", count: 14 },
-  { name: "Website Auditing", icon: "Auditing", count: 8 },
-  { name: "SEO", icon: "SEO", count: 18 },
-  { name: "Copywriting", icon: "Copywriting", count: 32 },
-  { name: "Prompt Engineering", icon: "Prompt", count: 67 },
-  { name: "Image Generation", icon: "ImageGen", count: 24 },
-  { name: "Flyer Design", icon: "Flyer", count: 12 },
-  { name: "Social Media", icon: "Social", count: 38 },
-  { name: "Document Design", icon: "DocDesign", count: 19 },
-  { name: "PDF Generation", icon: "PDFGen", count: 7 },
-  { name: "Research", icon: "Research", count: 28 },
-  { name: "Automation", icon: "Automation", count: 54 },
-  { name: "Deployment", icon: "Deployment", count: 31 },
-  { name: "Next.js", icon: "Nextjs", count: 89 },
-  { name: "React", icon: "ReactIcon", count: 112 },
-  { name: "TypeScript", icon: "TypeScriptIcon", count: 76 },
-  { name: "Brand Systems", icon: "Brand", count: 15 },
-  { name: "AI Infrastructure", icon: "Infra", count: 42 }
+  { name: "Website Planning", icon: "Planning", count: 14, description: "Strategic site architecture, sitemap design, and information hierarchy for web projects" },
+  { name: "Website Auditing", icon: "Auditing", count: 8, description: "Performance audits, accessibility checks, SEO analysis, and compliance verification" },
+  { name: "SEO", icon: "SEO", count: 18, description: "Search optimization, keyword research, meta management, and crawlability improvements" },
+  { name: "Copywriting", icon: "Copywriting", count: 32, description: "Persuasive writing, brand voice, content strategy, and conversion-focused copy" },
+  { name: "Prompt Engineering", icon: "Prompt", count: 67, description: "Crafting effective AI prompts, system instructions, and prompt optimization techniques" },
+  { name: "Image Generation", icon: "ImageGen", count: 24, description: "AI image creation, style transfer, visual asset generation, and art direction" },
+  { name: "Flyer Design", icon: "Flyer", count: 12, description: "Event flyers, promotional materials, poster layout, and print-ready design" },
+  { name: "Social Media", icon: "Social", count: 38, description: "Content calendars, platform optimization, engagement strategies, and analytics" },
+  { name: "Document Design", icon: "DocDesign", count: 19, description: "Professional document layout, templates, typography systems, and brand consistency" },
+  { name: "PDF Generation", icon: "PDFGen", count: 7, description: "Automated PDF creation, form generation, document merging, and digital signatures" },
+  { name: "Research", icon: "Research", count: 28, description: "Academic search, source verification, citation tracking, and literature reviews" },
+  { name: "Automation", icon: "Automation", count: 54, description: "Workflow orchestration, cron scheduling, batch processing, and pipeline automation" },
+  { name: "Deployment", icon: "Deployment", count: 31, description: "CI/CD pipelines, hosting configuration, environment management, and release workflows" },
+  { name: "Next.js", icon: "Nextjs", count: 89, description: "App Router, Server Components, middleware, API routes, and Next.js-specific patterns" },
+  { name: "React", icon: "ReactIcon", count: 112, description: "Component architecture, hooks, state management, and React ecosystem integration" },
+  { name: "TypeScript", icon: "TypeScriptIcon", count: 76, description: "Type safety, generics, utility types, declaration files, and TypeScript patterns" },
+  { name: "Brand Systems", icon: "Brand", count: 15, description: "Design tokens, brand guidelines, visual identity, and style guide enforcement" },
+  { name: "AI Infrastructure", icon: "Infra", count: 42, description: "Model deployment, inference optimization, vector stores, and AI system architecture" }
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -146,16 +146,45 @@ const trending = await findSkills({ trending: true, limit: 10 });`,
     ],
     contentMdx: `# Find Skills
 
+## When to Use This Skill
+
+Use Find Skills when:
+
+- **Discovery tasks** — Searching for AI agent capabilities across the open ecosystem
+- **Ecosystem exploration** — Browsing what's available in skills.sh, Vercel Labs, Anthropic, Obra, and more
+- **Skill evaluation** — Comparing install counts, quality scores, and ecosystem sources before committing
+- **Project planning** — Understanding what modular capabilities exist before building from scratch
+
 ## Overview
 
-Find Skills is the #1 installed skill in the open agent skills ecosystem. It provides sovereign discovery across all connected registries: Vercel Labs, Anthropic, Obra Superpowers, and more.
+Find Skills provides sovereign discovery across all connected registries. It is the entry point for the entire SkillsCamp workflow: every other skill in this directory was first located through Find Skills.
 
 ## Architecture
 
-1. **Natural Language Query** — Describe what you want in plain language
-2. **Multi-Registry Search** — Scans vercel-labs/skills, anthropics/skills, obra/superpowers, and 40+ sources
-3. **Quality Scoring** — Composite rank from install count, GitHub stars, verification status
-4. **Semantic Matching** — Matches intent, not just keywords
+| Phase | Mode | Key Question | Output |
+|-------|------|-------------|--------|
+| Query | Diverge | What does the user need? | Natural language intent |
+| Scan | Diverge | What exists across registries? | Raw candidate list |
+| Score | Converge | Which are highest quality? | Ranked results |
+| Present | Converge | What should the user see? | Verified skill cards |
+
+## Core Principles
+
+| Principle | Description |
+|-----------|-------------|
+| Intent-first | Match what the user means, not just keywords |
+| Multi-registry | Never limit to a single source |
+| Quality-weighted | Score combines installs, stars, verification |
+| Honest attribution | Always credit original authors |
+
+## Search Methods
+
+| Method | Duration | Best For |
+|--------|----------|----------|
+| Natural language | Instant | Exploratory discovery |
+| Category filter | Instant | Browsing a specific domain |
+| Trending scan | Instant | Finding what's gaining momentum |
+| Direct slug lookup | Instant | Installing a known skill |
 
 ## Installation
 
@@ -163,9 +192,15 @@ Find Skills is the #1 installed skill in the open agent skills ecosystem. It pro
 npx skills add vercel-labs/skills
 \`\`\`
 
+## Integration
+
+- **Upstream**: Use before any other skill — Find Skills locates what you need
+- **Downstream**: Pass results to Frontend Design, Skill Creator, or Brainstorming
+- **Complementary**: Pair with Brainstorming to ideate before searching
+
 ## Source
 
-Repository: github.com/vercel-labs/skills (~19K stars)
+Repository: github.com/vercel-labs/skills
 Ecosystem: skills.sh/vercel-labs/skills`,
     aiInsight: 'One of the most-installed skills in the ecosystem at ~1.6M installs: discovers skills across 40+ registries.',
     tangisonRecommendation: 'Start here for any project. Find Skills will point you to the right tool for the job across the entire open ecosystem.',
@@ -210,16 +245,44 @@ const output = await frontendDesign({
     ],
     contentMdx: `# Frontend Design
 
+## When to Use This Skill
+
+Use Frontend Design when:
+
+- **UI generation** — Producing production-grade frontend code from design specifications
+- **Rapid prototyping** — Going from concept to working interface in minutes
+- **Design system implementation** — Translating Figma/Sketch designs into component code
+- **Framework migration** — Rebuilding an existing UI in a different framework
+
 ## Overview
 
-Frontend Design is the #2 most-installed skill (~424.9K installs) from the Anthropic skills registry. It generates production-ready frontend code from design specifications.
+Frontend Design generates production-ready frontend code from structured specifications. It supports the four major frontend frameworks and produces code that follows framework conventions, accessibility standards, and performance best practices.
 
 ## Supported Frameworks
 
-- Next.js (App Router + RSC)
-- React (Vite, CRA)
-- Vue (Nuxt, standalone)
-- Svelte (SvelteKit)
+| Framework | Router | Styling | Status |
+|-----------|--------|---------|--------|
+| Next.js | App Router + RSC | Tailwind CSS | Primary |
+| React | Vite / CRA | Tailwind / CSS | Supported |
+| Vue | Nuxt / Standalone | Tailwind / Scoped | Supported |
+| Svelte | SvelteKit | Tailwind / Scoped | Supported |
+
+## Generation Phases
+
+| Phase | Input | Process | Output |
+|-------|-------|---------|--------|
+| Spec parsing | JSON specification | Validate structure, extract pages/sections | Internal component tree |
+| Layout generation | Component tree | Generate responsive layouts with grid/flex | JSX/Vue/Svelte templates |
+| Style application | Theme + design system | Apply Tailwind classes, responsive breakpoints | Styled components |
+| Accessibility pass | Generated components | Add ARIA labels, semantic HTML, keyboard nav | Accessible components |
+| Code output | Final components | Format, organize imports, generate files | Production code |
+
+## Quality Standards
+
+- All generated components include ARIA attributes
+- Responsive design at mobile, tablet, desktop breakpoints
+- Tailwind CSS classes follow utility-first conventions
+- Component structure follows framework best practices
 
 ## Installation
 
@@ -227,10 +290,16 @@ Frontend Design is the #2 most-installed skill (~424.9K installs) from the Anthr
 npx skills add anthropics/skills
 \`\`\`
 
+## Integration
+
+- **Upstream**: Find Skills to discover, then Frontend Design to build
+- **Downstream**: Systematic Debugging to fix generated code, Skill Creator to package
+- **Complementary**: Pair with PDF skill for design documentation
+
 ## Source
 
 Repository: github.com/anthropics/skills
-Ecosystem: skills.sh/anthropics/skills (18 skills, ~1.6M total installs)`,
+Ecosystem: skills.sh/anthropics/skills`,
     aiInsight: 'The second most-installed skill at ~424.9K installs: its output often passes code review without modifications.',
     tangisonRecommendation: 'Pair with Find Skills for end-to-end discovery and build workflows.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
@@ -268,9 +337,45 @@ const ideas = await brainstorming({
     ],
     contentMdx: `# Brainstorming
 
+## When to Use This Skill
+
+Use Brainstorming when:
+
+- **Structured ideation** — Generating ideas within defined constraints and frameworks
+- **Problem framing** — Refining a vague challenge into actionable opportunities
+- **Creative blocks** — Breaking through stagnant thinking with structured prompts
+- **Team alignment** — Getting cross-functional teams to converge on direction
+
 ## Overview
 
-Brainstorming is the #1 skill from Obra Superpowers (~164.9K installs): the agentic skills framework with ~196K GitHub stars. It provides structured ideation and creative problem-solving.
+Brainstorming provides structured ideation and creative problem-solving. It is part of the Obra Superpowers framework, an agentic skills framework that emphasizes methodical approaches over free-form thinking.
+
+## Ideation Framework
+
+| Phase | Mode | Activity | Output |
+|-------|------|----------|--------|
+| Diverge | Expand | Generate maximum ideas without judgment | Raw idea list |
+| Cluster | Organize | Group similar ideas, identify themes | Idea clusters |
+| Evaluate | Converge | Score ideas against constraints | Ranked shortlist |
+| Refine | Focus | Develop top ideas into actionable plans | Action items |
+
+## Ideation Techniques
+
+| Technique | Description | When to Use |
+|-----------|-------------|-------------|
+| Classic Brainstorm | Free association, no judgment | Starting point, warming up |
+| SCAMPER | Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse | Improving existing solutions |
+| Worst Idea | Generate intentionally bad ideas | When stuck, breaking mental blocks |
+| Constraint-based | Add artificial constraints to spark creativity | Too many options, analysis paralysis |
+| Analogy | How would [X industry] solve this? | Cross-domain innovation |
+
+## Workshop Template
+
+1. **Define the challenge** (5 min) — Write a clear "How Might We" statement
+2. **Silent brainstorm** (10 min) — Individual idea generation, one per sticky note
+3. **Share and build** (15 min) — Present ideas, build on others using "Yes, and..."
+4. **Cluster and vote** (10 min) — Group themes, dot-vote on favorites
+5. **Action plan** (10 min) — Top 3 ideas get owners and next steps
 
 ## Installation
 
@@ -278,10 +383,16 @@ Brainstorming is the #1 skill from Obra Superpowers (~164.9K installs): the agen
 npx skills add obra/superpowers
 \`\`\`
 
+## Integration
+
+- **Upstream**: Find Skills for research before ideating
+- **Downstream**: Frontend Design to build what you ideated, Skill Creator to package
+- **Complementary**: Systematic Debugging to evaluate ideas for feasibility
+
 ## Source
 
-Repository: github.com/obra/superpowers (~196K stars)
-Ecosystem: skills.sh/obra/superpowers (14 skills, ~1.2M total installs)`,
+Repository: github.com/obra/superpowers
+Ecosystem: skills.sh/obra/superpowers`,
     aiInsight: 'Part of the Obra Superpowers framework: ~196K GitHub stars makes it one of the most-starred skills repositories in the ecosystem.',
     tangisonRecommendation: 'Start every project with Brainstorming from Obra Superpowers. The structured ideation framework prevents scope creep.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
@@ -326,15 +437,52 @@ await skillCreator.publish({
     ],
     contentMdx: `# Skill Creator
 
+## When to Use This Skill
+
+Use Skill Creator when:
+
+- **Building custom skills** — Creating your own AI agent capabilities for the open ecosystem
+- **Publishing workflows** — Packaging internal tools as shareable skills
+- **Skill architecture** — Designing skills with proper install paths, dependencies, and documentation
+- **Community contribution** — Contributing back to the ecosystem with new capabilities
+
 ## Overview
 
-Skill Creator (~214.7K installs) from Anthropic enables building and publishing custom agent skills to the open ecosystem.
+Skill Creator enables building and publishing custom agent skills to the open ecosystem. It provides templates, validation, and a publish workflow that handles registry submission, metadata generation, and quality scoring.
+
+## Skill Architecture
+
+Every skill published through Skill Creator follows this structure:
+
+| Component | Required | Description |
+|-----------|----------|-------------|
+| Install command | Yes | Reproducible installation path (npm, pip, npx) |
+| Manifest | Yes | Skill metadata: name, version, author, category |
+| Documentation | Yes | MDX content with Overview, Usage, Installation |
+| Dependencies | No | List of required companion skills |
+| Test suite | Recommended | Verification that the skill works as described |
+| Examples | Recommended | Code examples showing common usage patterns |
+
+## Creation Phases
+
+| Phase | Activity | Output |
+|-------|----------|--------|
+| Template selection | Choose language/framework starter | Scaffolded skill project |
+| Implementation | Write skill logic and documentation | Functional skill with docs |
+| Validation | Run quality checks against ecosystem standards | Pass/fail report |
+| Publishing | Submit to skills.sh registry | Live, installable skill |
 
 ## Installation
 
 \`\`\`jetbrains-mono
 npx skills add anthropics/skills
 \`\`\`
+
+## Integration
+
+- **Upstream**: Find Skills to check if a similar skill already exists
+- **Downstream**: Published skills appear in Find Skills search results
+- **Complementary**: Frontend Design for creating UI-focused skills, Brainstorming for skill ideation
 
 ## Source
 
@@ -377,9 +525,45 @@ const result = await systematicDebugging({
     ],
     contentMdx: `# Systematic Debugging
 
+## When to Use This Skill
+
+Use Systematic Debugging when:
+
+- **Production issues** — Diagnosing bugs in live systems without guesswork
+- **Performance problems** — Finding root causes of slowness, memory leaks, or crashes
+- **Complex failures** — Issues where multiple systems interact and the cause is unclear
+- **Recurring bugs** — Problems that keep coming back after surface-level fixes
+
 ## Overview
 
-Systematic Debugging (~100.3K installs) from Obra Superpowers applies methodical debugging methodology: eliminate root causes, not symptoms.
+Systematic Debugging applies methodical debugging methodology: eliminate root causes, not symptoms. It is part of the Obra Superpowers framework and emphasizes binary search approaches over random experimentation.
+
+## Debugging Methodology
+
+| Phase | Mode | Activity | Output |
+|-------|------|----------|--------|
+| Reproduce | Observe | Confirm the bug exists and create a minimal reproduction | Bug report |
+| Isolate | Converge | Narrow down the scope using binary search | Affected code path |
+| Diagnose | Analyze | Identify the root cause in the isolated path | Root cause |
+| Fix | Act | Apply the minimal change that addresses the root cause | Patch |
+| Verify | Confirm | Reproduce the original bug — it should no longer occur | Confirmed fix |
+
+## Debugging Techniques
+
+| Technique | Description | When to Use |
+|-----------|-------------|-------------|
+| Binary search | Bisect the code to find the failing change | Regression bugs |
+| Rubber duck | Explain the code line by line to find the flaw | Logic errors |
+| Log analysis | Add strategic logging to trace execution | Intermittent issues |
+| Diff comparison | Compare working vs broken versions | Recent changes broke something |
+| Environment isolation | Test in different environments | Environment-specific bugs |
+
+## Anti-patterns to Avoid
+
+- **Shotgun debugging** — Changing multiple things at once hoping one works
+- **Fixing symptoms** — Patching the visible error without finding the root cause
+- **Assuming causation** — Correlation between events is not causation
+- **Skipping reproduction** — If you can't reproduce it, you can't verify the fix
 
 ## Installation
 
@@ -387,10 +571,16 @@ Systematic Debugging (~100.3K installs) from Obra Superpowers applies methodical
 npx skills add obra/superpowers
 \`\`\`
 
+## Integration
+
+- **Upstream**: Find Skills to locate debugging tools, Brainstorming to ideate solutions
+- **Downstream**: Verified fixes can be packaged as skills via Skill Creator
+- **Complementary**: Frontend Design when debugging UI issues
+
 ## Source
 
-Repository: github.com/obra/superpowers (~196K stars)
-Ecosystem: skills.sh/obra/superpowers (14 skills, ~1.2M total installs)`,
+Repository: github.com/obra/superpowers
+Ecosystem: skills.sh/obra/superpowers`,
     aiInsight: 'Part of Obra Superpowers: one of the most popular debugging methodologies in the ecosystem with ~100.3K installs.',
     tangisonRecommendation: 'Use Systematic Debugging for any production issue. The binary-search approach eliminates guesswork.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
@@ -430,9 +620,38 @@ const pdf = await pdfSkill.create({
     ],
     contentMdx: `# PDF
 
+## When to Use This Skill
+
+Use PDF when:
+
+- **Document generation** — Creating professional PDF documents with precise layout control
+- **Report automation** — Generating branded reports, proposals, and analyses programmatically
+- **Form creation** — Building fillable PDF forms with field validation
+- **Document manipulation** — Merging, splitting, or modifying existing PDF documents
+
 ## Overview
 
-PDF (~107.7K installs) from Anthropic provides full control over PDF document creation and manipulation.
+PDF provides full control over PDF document creation and manipulation. Part of the Anthropic document suite, it handles layout, typography, branding, and compliance requirements for professional document workflows.
+
+## Document Types
+
+| Type | Layout | Best For |
+|------|--------|----------|
+| Report | Multi-section with headers/footers | Analysis, findings, research |
+| Proposal | Cover + structured sections | Business proposals, pitches |
+| Invoice | Tabular with totals | Billing, financial documents |
+| Form | Fields with validation | Data collection, applications |
+| Certificate | Centered, decorative | Awards, completions, credentials |
+
+## Generation Pipeline
+
+| Phase | Input | Process | Output |
+|-------|-------|---------|--------|
+| Template selection | Document type | Load layout and style rules | Template instance |
+| Content injection | Data + text | Fill template with provided content | Populated document |
+| Brand application | Brand system | Apply colors, fonts, logos | Branded document |
+| Rendering | PDF engine | Convert to PDF with precise layout | Binary PDF |
+| Post-processing | PDF binary | Add metadata, bookmarks, compression | Final PDF |
 
 ## Installation
 
@@ -440,10 +659,16 @@ PDF (~107.7K installs) from Anthropic provides full control over PDF document cr
 npx skills add anthropics/skills
 \`\`\`
 
+## Integration
+
+- **Upstream**: Find Skills to discover, Document Engine (SkillsCamp) to configure
+- **Downstream**: Generated PDFs can be attached to reports or distributed
+- **Complementary**: Pair with DOCX and PPTX from the same registry for full document workflows
+
 ## Source
 
 Repository: github.com/anthropics/skills
-Ecosystem: skills.sh/anthropics/skills (18 skills, ~1.6M total installs)`,
+Ecosystem: skills.sh/anthropics/skills`,
     aiInsight: 'PDF is part of the Anthropic document suite: its form generation and digital signature features make it useful for compliance workflows.',
     tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for full document workflows.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
@@ -626,6 +851,155 @@ function WidgetPrimitiveIcon({ primitive, className = 'w-3.5 h-3.5' }: { primiti
     default:
       return null;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIMPLE MDX RENDERER — Renders markdown-like contentMdx with
+   proper formatting: headers, tables, lists, code blocks, paragraphs
+   ═══════════════════════════════════════════════════════════════ */
+function SimpleMdxRenderer({ content, textPrimaryClass, textMutedClass, cardNestedClass, borderClass }: {
+  content: string;
+  textPrimaryClass: string;
+  textMutedClass: string;
+  cardNestedClass: string;
+  borderClass: string;
+}) {
+  const lines = content.split('\n');
+  const elements: React.ReactNode[] = [];
+  let i = 0;
+  let key = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // Code blocks
+    if (trimmed.startsWith('```')) {
+      const lang = trimmed.slice(3).trim();
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing ```
+      elements.push(
+        <div key={key++} className={`my-4 border rounded-[2px] overflow-hidden ${borderClass}`}>
+          {lang && <div className={`px-4 py-1.5 text-[10px] font-mono uppercase tracking-wider ${textMutedClass} border-b ${borderClass} ${cardNestedClass}`}>{lang}</div>}
+          <pre className={`p-4 font-mono text-xs overflow-x-auto ${cardNestedClass} ${textMutedClass}`}>{codeLines.join('\n')}</pre>
+        </div>
+      );
+      continue;
+    }
+
+    // Tables
+    if (trimmed.startsWith('|') && i + 1 < lines.length && lines[i + 1].trim().startsWith('|--')) {
+      const tableRows: string[][] = [];
+      while (i < lines.length && lines[i].trim().startsWith('|')) {
+        if (!lines[i].trim().startsWith('|--')) {
+          tableRows.push(lines[i].split('|').filter(c => c.trim()).map(c => c.trim()));
+        }
+        i++;
+      }
+      const headers = tableRows[0] || [];
+      elements.push(
+        <div key={key++} className="my-4 overflow-x-auto">
+          <table className="w-full text-xs border-collapse">
+            <thead>
+              <tr className={`border-b ${borderClass}`}>
+                {headers.map((h, hi) => <th key={hi} className={`text-left py-2 px-3 font-mono uppercase tracking-wider ${textMutedClass} font-normal`}>{h}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.slice(1).map((row, ri) => (
+                <tr key={ri} className={`border-b ${borderClass}`}>
+                  {row.map((cell, ci) => <td key={ci} className={`py-2 px-3 font-mono ${textPrimaryClass}`}>{cell}</td>)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      continue;
+    }
+
+    // Headers
+    if (trimmed.startsWith('# ')) {
+      elements.push(<h1 key={key++} className={`text-2xl font-display mt-8 mb-3 first:mt-0 ${textPrimaryClass}`}>{trimmed.slice(2)}</h1>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('## ')) {
+      elements.push(<h2 key={key++} className={`text-lg font-display mt-6 mb-2 ${textPrimaryClass}`}>{trimmed.slice(3)}</h2>);
+      i++; continue;
+    }
+    if (trimmed.startsWith('### ')) {
+      elements.push(<h3 key={key++} className={`text-base font-semibold mt-4 mb-2 ${textPrimaryClass}`}>{trimmed.slice(4)}</h3>);
+      i++; continue;
+    }
+
+    // List items
+    if (trimmed.startsWith('- ')) {
+      const listItems: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith('- ')) {
+        listItems.push(lines[i].trim().slice(2));
+        i++;
+      }
+      elements.push(
+        <ul key={key++} className="my-2 ml-4 space-y-1">
+          {listItems.map((item, li) => (
+            <li key={li} className={`text-sm ${textMutedClass} list-disc`}>
+              {item.split(/(\*\*.*?\*\*|`.*?`)/).map((part, pi) => {
+                if (part.startsWith('**') && part.endsWith('**')) return <strong key={pi} className={textPrimaryClass}>{part.slice(2, -2)}</strong>;
+                if (part.startsWith('`') && part.endsWith('`')) return <code key={pi} className={`px-1.5 py-0.5 rounded text-[11px] font-mono ${cardNestedClass}`}>{part.slice(1, -1)}</code>;
+                return part;
+              })}
+            </li>
+          ))}
+        </ul>
+      );
+      continue;
+    }
+
+    // Empty lines
+    if (trimmed === '') { i++; continue; }
+
+    // Numbered list items
+    if (/^\d+\.\s/.test(trimmed)) {
+      const listItems: string[] = [];
+      while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
+        listItems.push(lines[i].trim().replace(/^\d+\.\s/, ''));
+        i++;
+      }
+      elements.push(
+        <ol key={key++} className="my-2 ml-4 space-y-1 list-decimal">
+          {listItems.map((item, li) => (
+            <li key={li} className={`text-sm ${textMutedClass}`}>
+              {item.split(/(\*\*.*?\*\*|`.*?`)/).map((part, pi) => {
+                if (part.startsWith('**') && part.endsWith('**')) return <strong key={pi} className={textPrimaryClass}>{part.slice(2, -2)}</strong>;
+                if (part.startsWith('`') && part.endsWith('`')) return <code key={pi} className={`px-1.5 py-0.5 rounded text-[11px] font-mono ${cardNestedClass}`}>{part.slice(1, -1)}</code>;
+                return part;
+              })}
+            </li>
+          ))}
+        </ol>
+      );
+      continue;
+    }
+
+    // Paragraphs
+    elements.push(
+      <p key={key++} className={`text-sm ${textMutedClass} mb-2`}>
+        {trimmed.split(/(\*\*.*?\*\*|`.*?`)/).map((part, pi) => {
+          if (part.startsWith('**') && part.endsWith('**')) return <strong key={pi} className={textPrimaryClass}>{part.slice(2, -2)}</strong>;
+          if (part.startsWith('`') && part.endsWith('`')) return <code key={pi} className={`px-1.5 py-0.5 rounded text-[11px] font-mono ${cardNestedClass}`}>{part.slice(1, -1)}</code>;
+          return part;
+        })}
+      </p>
+    );
+    i++;
+  }
+
+  return <>{elements}</>;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1372,8 +1746,14 @@ export default function Home() {
                       <button onClick={() => setDetailTab('enhanced')} className={`pb-4 -mb-[17px] ${detailTab === 'enhanced' ? 'text-[#C56A4A] border-b-2 border-[#C56A4A] font-bold' : 'hover:text-[#F6F4EF]'}`}>Tangison Enhanced</button>
                       <button onClick={() => setDetailTab('original')} className={`pb-4 -mb-[17px] ${detailTab === 'original' ? 'text-[#C56A4A] border-b-2 border-[#C56A4A] font-bold' : 'hover:text-[#F6F4EF]'}`}>Original Source</button>
                     </div>
-                    <div className={`border rounded-[2px] p-6 font-mono text-xs overflow-x-auto whitespace-pre-wrap leading-relaxed ${cardNestedClass} ${borderClass} ${textMutedClass}`}>
-                      {detailTab === 'enhanced' ? skill.contentMdx : skill.contentMdx}
+                    <div className={`border rounded-[2px] p-6 overflow-x-auto leading-relaxed ${cardNestedClass} ${borderClass}`}>
+                      <SimpleMdxRenderer
+                        content={detailTab === 'enhanced' ? skill.contentMdx : skill.usageExamples}
+                        textPrimaryClass={textPrimaryClass}
+                        textMutedClass={textMutedClass}
+                        cardNestedClass={cardNestedClass}
+                        borderClass={borderClass}
+                      />
                     </div>
                     {skill.usageExamples && (
                       <div className={`pt-4 border-t ${borderClass}`}>
@@ -1468,7 +1848,7 @@ export default function Home() {
                       </div>
                     </div>
                     <div className={`text-xs ${textMutedClass} leading-relaxed`}>
-                      Explore {cat.count} verified skills in the {cat.name.toLowerCase()} domain.
+                      {cat.description}
                     </div>
                   </button>
                 ))}
@@ -1485,6 +1865,11 @@ export default function Home() {
                 <SectionTag>LIVE SIGNAL</SectionTag>
                 <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Top Trending Capabilities</h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Skills gaining momentum across the ecosystem</p>
+                <div className="flex gap-2 mt-4">
+                  {['24h', '7d', '30d', 'All'].map((period) => (
+                    <button key={period} className={`px-3 py-1.5 rounded-[2px] text-[10px] font-mono uppercase tracking-wider border transition-colors ${period === 'All' ? 'bg-[#C56A4A] text-[#F6F4EF] border-[#C56A4A]' : `${borderClass} ${textMutedClass} hover:border-[#C56A4A]/50`}`}>{period}</button>
+                  ))}
+                </div>
               </div>
               <div className="space-y-3">
                 {[...INITIAL_SKILLS].sort((a, b) => b.trendingDelta - a.trendingDelta).map((skill, idx) => (
@@ -1593,10 +1978,10 @@ export default function Home() {
                     <div className={`mx-8 mb-4 border rounded-[2px] aspect-[8.5/11] p-8 ${cardNestedClass} ${borderClass}`}>
                       <h3 className={`text-sm font-mono uppercase tracking-widest ${textMutedClass} mb-6`}>Table of Contents</h3>
                       <div className="space-y-3">
-                        {['1. Executive Summary', '2. Analysis & Findings', '3. Methodology', '4. Recommendations', '5. Appendices'].map((item) => (
+                        {['1. Executive Summary', '2. Analysis & Findings', '3. Methodology', '4. Recommendations', '5. Appendices'].map((item, idx) => (
                           <div key={item} className={`flex items-center justify-between text-sm ${textPrimaryClass}`}>
                             <span>{item}</span>
-                            <span className={`text-xs font-mono ${textMutedClass}`}>{Math.floor(Math.random() * 10) + 1}</span>
+                            <span className={`text-xs font-mono ${textMutedClass}`}>{idx + 2}</span>
                           </div>
                         ))}
                       </div>
@@ -1664,6 +2049,32 @@ export default function Home() {
                       <p className="text-[10px] mt-1 opacity-70">{conf.desc}</p>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Research Search */}
+              <div className={`border rounded-[2px] p-6 mb-12 ${cardClass}`}>
+                <h3 className={`font-display text-lg ${textPrimaryClass} mb-4`}>Research Query</h3>
+                <div className="flex gap-3 mb-4">
+                  <input
+                    type="text"
+                    placeholder="Enter a research question or claim to verify..."
+                    className={`flex-grow px-4 py-3 rounded-[2px] border text-sm font-mono placeholder:text-[#787774]/50 focus:outline-none focus:border-[#C56A4A]/40 ${cardNestedClass} ${borderClass} ${textPrimaryClass}`}
+                  />
+                  <button className="px-6 py-3 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] font-mono text-xs uppercase font-bold hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors flex items-center gap-2 shrink-0">
+                    <Search className="w-3.5 h-3.5" />Search
+                  </button>
+                </div>
+                <div className="flex gap-2 mb-6">
+                  {['All Sources', 'Academic', 'News', 'Primary', 'Reference'].map((source) => (
+                    <button key={source} className={`px-3 py-1.5 rounded-[2px] text-[10px] font-mono uppercase tracking-wider border transition-colors ${source === 'All Sources' ? 'bg-[#C56A4A] text-[#F6F4EF] border-[#C56A4A]' : `${borderClass} ${textMutedClass} hover:border-[#C56A4A]/50`}`}>{source}</button>
+                  ))}
+                </div>
+                {/* Results placeholder */}
+                <div className={`border rounded-[2px] p-8 text-center ${cardNestedClass} ${borderClass}`}>
+                  <Globe className={`w-8 h-8 mx-auto mb-3 ${textMutedClass}`} />
+                  <p className={`text-sm font-mono ${textMutedClass}`}>Enter a query to begin multi-source research</p>
+                  <p className={`text-[10px] font-mono mt-2 ${textMutedClass}`}>Results will show with confidence levels and inline citations</p>
                 </div>
               </div>
 
@@ -1947,6 +2358,50 @@ export default function Home() {
                     <div key={fn.id} className={`flex items-center gap-3 text-sm ${textPrimaryClass}`}>
                       <span className={`w-2 h-2 rounded-full ${fn.enabled ? 'bg-emerald-500' : 'bg-[#787774]/30'}`} />
                       <span>{fn.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={`mt-12 border-t pt-8 ${borderClass}`}>
+                <SectionTag>ROADMAP</SectionTag>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { phase: 'v0.1.0', status: 'current', items: ['Skill directory with verified ecosystem data', 'AI chat assistant with LLM integration', 'Agent pipeline (3-phase Skillsmith)', 'Document engine with template preview', 'Research triangulation framework'] },
+                    { phase: 'v0.2.0', status: 'planned', items: ['Live ecosystem data sync via cron jobs', 'Real-time trending from skills.sh API', 'User authentication and saved skills', 'Document export (PDF, DOCX, PPTX)'] },
+                    { phase: 'v0.3.0', status: 'planned', items: ['Custom skill publishing workflow', 'Team collaboration and shared workspaces', 'API access for external integrations', 'Advanced search with semantic matching'] },
+                  ].map((milestone) => (
+                    <div key={milestone.phase} className={`border rounded-[2px] p-4 ${cardClass}`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-sm font-mono font-bold text-[#C56A4A]">{milestone.phase}</span>
+                        <span className={`text-[9px] font-mono uppercase px-2 py-0.5 rounded ${milestone.status === 'current' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-[#787774]/10 text-[#787774] border border-[#787774]/20'}`}>{milestone.status}</span>
+                      </div>
+                      <ul className="space-y-1">
+                        {milestone.items.map((item, idx) => (
+                          <li key={idx} className={`text-xs ${textMutedClass} flex items-center gap-2`}>
+                            <span className={`w-1 h-1 rounded-full ${milestone.status === 'current' ? 'bg-emerald-500' : 'bg-[#787774]/30'}`} />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className={`mt-12 border-t pt-8 ${borderClass}`}>
+                <SectionTag>VERSION HISTORY</SectionTag>
+                <div className="mt-4 space-y-3">
+                  {[
+                    { version: '0.1.0-beta', date: '2025-03', changes: 'Initial beta release with 6 verified skills, AI chat, agent pipeline, document engine, and research framework' },
+                    { version: '0.0.1-alpha', date: '2025-02', changes: 'Internal alpha with basic skill directory and navigation' },
+                  ].map((release) => (
+                    <div key={release.version} className={`flex gap-4 text-sm ${textPrimaryClass}`}>
+                      <span className="font-mono text-xs text-[#C56A4A] shrink-0 mt-0.5">{release.version}</span>
+                      <div>
+                        <span className={`text-xs font-mono ${textMutedClass}`}>{release.date}</span>
+                        <p className={`text-xs ${textMutedClass} mt-0.5`}>{release.changes}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
