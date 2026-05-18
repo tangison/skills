@@ -1,0 +1,347 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource/jetbrains-mono/400.css";
+@import "@fontsource/jetbrains-mono/500.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* ── Shadcn/UI semantic tokens ── */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ── Tangison brand tokens ── */
+  --color-atlantic-black: #111315;
+  --color-skeleton-bone: #F6F4EF;
+  --color-fog-gray: #D9D7D2;
+  --color-deep-ocean: #16353D;
+  --color-rust-signal: #C56A4A;
+  --color-surface-01: #1A1C1E;
+  --color-surface-02: #222426;
+  --color-border-subtle: rgba(217, 215, 210, 0.08);
+  --color-border-default: rgba(217, 215, 210, 0.15);
+  --color-text-primary: #F6F4EF;
+  --color-text-secondary: rgba(246, 244, 239, 0.55);
+  --color-text-muted: rgba(246, 244, 239, 0.3);
+
+  /* ── Radii ── */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* ── Font families ── */
+  --font-sans: "Inter", "Satoshi", ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Satoshi", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-editorial: "Cabinet Grotesk", "Inter", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Tangison Skillsmith — Dark-first brand tokens
+   :root IS the dark theme; .dark mirrors it for compatibility
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --radius: 0.625rem;
+
+  /* ── Core palette references ── */
+  --atlantic-black: #111315;
+  --skeleton-bone: #F6F4EF;
+  --fog-gray: #D9D7D2;
+  --deep-ocean: #16353D;
+  --rust-signal: #C56A4A;
+  --surface-01: #1A1C1E;
+  --surface-02: #222426;
+  --border-subtle: rgba(217, 215, 210, 0.08);
+  --border-default: rgba(217, 215, 210, 0.15);
+  --text-primary: #F6F4EF;
+  --text-secondary: rgba(246, 244, 239, 0.55);
+  --text-muted: rgba(246, 244, 239, 0.3);
+
+  /* ── Shadcn/UI semantic mappings ── */
+  --background: var(--atlantic-black);
+  --foreground: var(--skeleton-bone);
+
+  --card: var(--surface-01);
+  --card-foreground: var(--skeleton-bone);
+
+  --popover: var(--surface-01);
+  --popover-foreground: var(--skeleton-bone);
+
+  --primary: var(--rust-signal);
+  --primary-foreground: var(--skeleton-bone);
+
+  --secondary: var(--surface-02);
+  --secondary-foreground: var(--skeleton-bone);
+
+  --muted: var(--surface-02);
+  --muted-foreground: var(--text-secondary);
+
+  --accent: var(--deep-ocean);
+  --accent-foreground: var(--skeleton-bone);
+
+  --destructive: #E05252;
+
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: var(--rust-signal);
+
+  /* ── Chart palette (derived from brand) ── */
+  --chart-1: var(--rust-signal);
+  --chart-2: var(--deep-ocean);
+  --chart-3: #2A7A6E;
+  --chart-4: var(--fog-gray);
+  --chart-5: #8B5E3C;
+
+  /* ── Sidebar ── */
+  --sidebar: var(--atlantic-black);
+  --sidebar-foreground: var(--skeleton-bone);
+  --sidebar-primary: var(--rust-signal);
+  --sidebar-primary-foreground: var(--skeleton-bone);
+  --sidebar-accent: var(--deep-ocean);
+  --sidebar-accent-foreground: var(--skeleton-bone);
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: var(--rust-signal);
+}
+
+/* Dark class mirrors :root — site is always dark */
+.dark {
+  --radius: 0.625rem;
+
+  --atlantic-black: #111315;
+  --skeleton-bone: #F6F4EF;
+  --fog-gray: #D9D7D2;
+  --deep-ocean: #16353D;
+  --rust-signal: #C56A4A;
+  --surface-01: #1A1C1E;
+  --surface-02: #222426;
+  --border-subtle: rgba(217, 215, 210, 0.08);
+  --border-default: rgba(217, 215, 210, 0.15);
+  --text-primary: #F6F4EF;
+  --text-secondary: rgba(246, 244, 239, 0.55);
+  --text-muted: rgba(246, 244, 239, 0.3);
+
+  --background: var(--atlantic-black);
+  --foreground: var(--skeleton-bone);
+
+  --card: var(--surface-01);
+  --card-foreground: var(--skeleton-bone);
+
+  --popover: var(--surface-01);
+  --popover-foreground: var(--skeleton-bone);
+
+  --primary: var(--rust-signal);
+  --primary-foreground: var(--skeleton-bone);
+
+  --secondary: var(--surface-02);
+  --secondary-foreground: var(--skeleton-bone);
+
+  --muted: var(--surface-02);
+  --muted-foreground: var(--text-secondary);
+
+  --accent: var(--deep-ocean);
+  --accent-foreground: var(--skeleton-bone);
+
+  --destructive: #E05252;
+
+  --border: var(--border-default);
+  --input: var(--border-default);
+  --ring: var(--rust-signal);
+
+  --chart-1: var(--rust-signal);
+  --chart-2: var(--deep-ocean);
+  --chart-3: #2A7A6E;
+  --chart-4: var(--fog-gray);
+  --chart-5: #8B5E3C;
+
+  --sidebar: var(--atlantic-black);
+  --sidebar-foreground: var(--skeleton-bone);
+  --sidebar-primary: var(--rust-signal);
+  --sidebar-primary-foreground: var(--skeleton-bone);
+  --sidebar-accent: var(--deep-ocean);
+  --sidebar-accent-foreground: var(--skeleton-bone);
+  --sidebar-border: var(--border-subtle);
+  --sidebar-ring: var(--rust-signal);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Base layer
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Custom utility classes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer utilities {
+  /* ── Typography ── */
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .font-editorial {
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* ── Brand color shortcuts ── */
+  .text-brand {
+    color: var(--rust-signal);
+  }
+
+  .bg-atlantic {
+    background-color: var(--atlantic-black);
+  }
+
+  .bg-surface-1 {
+    background-color: var(--surface-01);
+  }
+
+  .bg-surface-2 {
+    background-color: var(--surface-02);
+  }
+
+  .bg-deep-ocean {
+    background-color: var(--deep-ocean);
+  }
+
+  .text-skeleton {
+    color: var(--skeleton-bone);
+  }
+
+  .text-fog {
+    color: var(--fog-gray);
+  }
+
+  .text-brand-muted {
+    color: var(--text-secondary);
+  }
+
+  .border-brand-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  .border-brand-default {
+    border-color: var(--border-default);
+  }
+
+  /* ── Subtle grid background pattern ── */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(217, 215, 210, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(217, 215, 210, 0.04) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .bg-grid-dense {
+    background-image:
+      linear-gradient(to right, rgba(217, 215, 210, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(217, 215, 210, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* ── Focus ring ── */
+  .ring-brand {
+    --tw-ring-color: var(--rust-signal);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Custom scrollbar — dark theme
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--atlantic-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-02);
+  border-radius: 4px;
+  border: 2px solid var(--atlantic-black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(217, 215, 210, 0.2);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--atlantic-black);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-02) var(--atlantic-black);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Selection styling
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+::selection {
+  background-color: rgba(197, 106, 74, 0.3);
+  color: var(--skeleton-bone);
+}

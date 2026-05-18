@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum EcosystemSource {
+  VERCEL_LABS
+  ANTHROPIC
+  POKAIS
+  IMPECCABLE
+  OBRA
+  TANGISON
+  COMMUNITY
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String
+  icon        String
+  skillCount  Int     @default(0)
+  sortOrder   Int     @default(0)
+  skills      Skill[]
+}
+
+model Skill {
+  id                 String           @id @default(cuid())
+  slug               String           @unique
+  name               String
+  tagline            String
+  description        String
+  content            String
+  tangisonRewrite    String?
+  installCommand     String
+  categoryId         String
+  category           Category         @relation(fields: [categoryId], references: [id])
+  tags               String
+  difficulty         Difficulty       @default(INTERMEDIATE)
+  originalAuthor     String?
+  sourceUrl          String?
+  skillsShUrl        String?
+  githubRepo         String?
+  license            String?
+  ecosystemSource    EcosystemSource  @default(COMMUNITY)
+  installCount       Int              @default(0)
+  githubStars        Int              @default(0)
+  qualityScore       Int              @default(0)
+  isTangisonOriginal Boolean          @default(false)
+  isVerified         Boolean          @default(false)
+  isTrending         Boolean          @default(false)
+  viewCount          Int              @default(0)
+  copyCount          Int              @default(0)
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+}
