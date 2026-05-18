@@ -754,6 +754,9 @@ export default function Home() {
   // System notification state
   const [notification, setNotification] = useState<string | null>(null);
 
+  // Beta banner dismiss state
+  const [betaDismissed, setBetaDismissed] = useState(false);
+
   // Agent Pipeline state
   const [pipelineInput, setPipelineInput] = useState('');
   const [pipelineProcessing, setPipelineProcessing] = useState(false);
@@ -1002,8 +1005,23 @@ export default function Home() {
      ═══════════════════════════════════════════════════════════════ */
   return (
     <div className={`min-h-screen flex flex-col ${canvasClass} font-sans antialiased`}>
+      {/* Skip to content */}
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#C56A4A] focus:text-[#F6F4EF] focus:font-mono focus:text-xs focus:rounded-[2px]">
+        Skip to content
+      </a>
+
       {/* Subtle grid background */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 bg-[radial-gradient(currentColor_1px,transparent_1px)] [background-size:24px_24px]" />
+
+      {/* Beta Banner */}
+      {!betaDismissed && (
+        <div className="bg-[#16353D] text-[#F6F4EF] text-[11px] font-mono text-center py-2 px-4 relative z-50">
+          <span className="tracking-wider uppercase">SkillsCamp is in <span className="text-[#C56A4A] font-bold">Beta</span> — features are in active development</span>
+          <button onClick={() => setBetaDismissed(true)} className="ml-4 text-[#F6F4EF]/60 hover:text-[#F6F4EF] transition-colors" aria-label="Dismiss beta banner">
+            <X className="w-3 h-3 inline" />
+          </button>
+        </div>
+      )}
 
       {/* ═══ SYSTEM NOTIFICATION ═══ */}
       {notification && (
@@ -1025,7 +1043,10 @@ export default function Home() {
               </div>
               <div className="hidden sm:flex flex-col">
                 <span className={`font-display text-2xl font-bold tracking-[0.18em] uppercase block leading-none ${isDark ? 'text-[#F6F4EF]' : 'text-[#111315]'} drop-shadow-sm`}>TΛNGISON</span>
-                <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#C56A4A] block mt-1 font-semibold">SKILLSCAMP</span>
+                <div className="flex items-center mt-1 gap-2">
+                  <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#C56A4A] font-semibold">SKILLSCAMP</span>
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded-[2px] text-[8px] font-mono font-bold bg-[#C56A4A] text-[#F6F4EF] uppercase tracking-wider">Beta</span>
+                </div>
               </div>
             </button>
 
@@ -1053,6 +1074,7 @@ export default function Home() {
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className={`md:hidden p-2 ${textMutedClass} ${isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}
+                aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -1073,17 +1095,17 @@ export default function Home() {
       </header>
 
       {/* ═══ MAIN ═══ */}
-      <main className="flex-1 relative z-10">
+      <main id="main-content" className="flex-1 relative z-10" role="main">
 
         {/* ─── HOME ─── */}
         {currentPage === 'home' && (
           <div>
             {/* HERO — Terminal animation, no ocean-view background */}
-            <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+            <section className="relative min-h-[90vh] flex items-center overflow-hidden" aria-label="Hero">
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                   <div className="lg:col-span-7">
-                    <SectionTag>TANGISON SKILLSCAMP // V1.8.0</SectionTag>
+                    <SectionTag>TANGISON SKILLSCAMP // V0.1.0-BETA</SectionTag>
                     <h1 className={`mt-6 text-[clamp(3rem,6vw,5.5rem)] font-display leading-[1.05] tracking-tight ${textPrimaryClass}`}>
                       Intelligence <br />built on what <span className="italic font-normal text-[#C56A4A]">remains.</span>
                     </h1>
@@ -1107,7 +1129,7 @@ export default function Home() {
             </section>
 
             {/* TRENDING SKILLS */}
-            <section className={`py-20 border-t ${borderClass}`}>
+            <section className={`py-20 border-t ${borderClass}`} aria-label="Trending Skills">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between mb-8">
                   <div>
@@ -1118,7 +1140,7 @@ export default function Home() {
                 </div>
                 <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: 'none' }}>
                   {INITIAL_SKILLS.filter(s => s.isTrending).map((skill) => (
-                    <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`min-w-[300px] max-w-[320px] text-left p-5 border rounded-[2px] transition-all duration-200 hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`}>
+                    <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`min-w-[300px] max-w-[320px] text-left p-5 border rounded-[2px] transition-all duration-200 hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`} aria-label={`View ${skill.title} details`}>
                       <div className="flex items-center gap-2 mb-3 flex-wrap">
                         <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">{skill.category}</span>
                         <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono border" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA', color: isDark ? 'rgba(217,215,210,0.7)' : '#787774' }}>{ECOSYSTEM_LABELS[skill.ecosystemSource]}</span>
@@ -1134,7 +1156,7 @@ export default function Home() {
                       <p className={`text-xs leading-relaxed mb-3 line-clamp-2 ${textMutedClass}`}>{skill.tagline}</p>
                       <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA' }}>
                         <span className={`text-[10px] font-mono ${textMutedClass}`}>{skill.installCount.toLocaleString()} installs</span>
-                        <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors">
+                        <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors" aria-label={`Copy ${skill.installCommand}`}>
                           <Copy className="w-3 h-3" />Copy
                         </button>
                       </div>
@@ -1145,7 +1167,7 @@ export default function Home() {
             </section>
 
             {/* CATEGORIES GRID */}
-            <section className={`py-20 border-t ${borderClass}`} style={{ backgroundColor: isDark ? 'rgba(26,28,30,0.5)' : 'rgba(237,234,229,0.3)' }}>
+            <section className={`py-20 border-t ${borderClass}`} style={{ backgroundColor: isDark ? 'rgba(26,28,30,0.5)' : 'rgba(237,234,229,0.3)' }} aria-label="Skill Categories">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="mb-8">
                   <SectionTag>SYSTEM CLASSIFICATION</SectionTag>
@@ -1153,7 +1175,7 @@ export default function Home() {
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {SKILL_CATEGORIES.map((cat) => (
-                    <button key={cat.name} onClick={() => { setDirCategory(cat.name); navigate('skills'); }} className={`group p-5 border rounded-[2px] transition-all text-left hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`}>
+                    <button key={cat.name} onClick={() => { setDirCategory(cat.name); navigate('skills'); }} className={`group p-5 border rounded-[2px] transition-all text-left hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`} aria-label={`Browse ${cat.name} skills`}>
                       <div className="w-8 h-8 rounded-[2px] bg-[#16353D]/50 flex items-center justify-center mb-3 text-[#C56A4A]">
                         <CategoryIcon name={cat.icon} className="w-4 h-4" />
                       </div>
@@ -1166,7 +1188,7 @@ export default function Home() {
             </section>
 
             {/* ECOSYSTEM SOURCES */}
-            <section className={`py-16 border-t ${borderClass}`}>
+            <section className={`py-16 border-t ${borderClass}`} aria-label="Supported Ecosystems">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <p className={`text-[10px] font-mono uppercase tracking-[0.2em] ${textMutedClass} mb-8`}>Built honestly on the open ecosystem</p>
                 <div className="flex flex-wrap justify-center gap-4 md:gap-8 opacity-60">
@@ -1178,7 +1200,7 @@ export default function Home() {
             </section>
 
             {/* AI CTA */}
-            <section className="py-20 bg-[#16353D]">
+            <section className="py-20 bg-[#16353D]" aria-label="AI Assistant Call to Action">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-10">
                 <div className="space-y-4 max-w-xl">
                   <SectionTag>EMBEDDED INTELLIGENCE</SectionTag>
@@ -1193,7 +1215,7 @@ export default function Home() {
 
         {/* ─── SKILLS DIRECTORY ─── */}
         {currentPage === 'skills' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="Skills Directory">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>VERIFIED CAPABILITIES</SectionTag>
@@ -1235,7 +1257,7 @@ export default function Home() {
                   </div>
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                     {filteredSkills.map((skill) => (
-                      <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`group w-full text-left p-5 border rounded-[2px] transition-all duration-200 hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`}>
+                      <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`group w-full text-left p-5 border rounded-[2px] transition-all duration-200 hover:border-l-[#C56A4A] hover:border-l-2 ${cardClass}`} aria-label={`View ${skill.title} details`}>
                         <div className="flex items-start justify-between gap-3 mb-3">
                           <div className="flex items-center gap-2 flex-wrap">
                             <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] text-[10px] font-mono bg-[#C56A4A]/10 text-[#C56A4A] border border-[#C56A4A]/20">{skill.category}</span>
@@ -1252,7 +1274,7 @@ export default function Home() {
                         <p className={`text-xs leading-relaxed mb-3 line-clamp-2 ${textMutedClass}`}>{skill.tagline}</p>
                         <div className="flex items-center justify-between pt-3 border-t" style={{ borderColor: isDark ? 'rgba(217,215,210,0.1)' : '#EAEAEA' }}>
                           <span className={`text-[10px] font-mono ${textMutedClass}`}>{skill.installCount.toLocaleString()} installs · ★ {skill.githubStars.toLocaleString()}</span>
-                          <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors">
+                          <button onClick={(e) => { e.stopPropagation(); copyToClipboard(skill.installCommand); }} className="inline-flex items-center gap-1 px-2 py-1 rounded-[2px] text-[10px] font-mono border bg-[#C56A4A]/10 text-[#C56A4A] border-[#C56A4A]/20 hover:bg-[#C56A4A] hover:text-[#F6F4EF] transition-colors" aria-label={`Copy ${skill.installCommand}`}>
                             <Copy className="w-3 h-3" />Copy
                           </button>
                         </div>
@@ -1390,6 +1412,7 @@ export default function Home() {
                     <div className="flex items-center gap-2 mb-3">
                       <RefreshCw className="w-4 h-4 text-[#C56A4A]" />
                       <span className={`text-xs font-mono uppercase tracking-widest ${textMutedClass}`}>AI Rewrite</span>
+                      <span className="ml-1 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
                     </div>
                     <div className="space-y-2 mb-3">
                       {rewriteFunctions.map((fn) => (
@@ -1417,7 +1440,7 @@ export default function Home() {
 
         {/* ─── CATEGORIES ─── */}
         {currentPage === 'categories' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="All Categories">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>SYSTEM CLASSIFICATION</SectionTag>
@@ -1426,7 +1449,7 @@ export default function Home() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {SKILL_CATEGORIES.map((cat) => (
-                  <button key={cat.name} onClick={() => { setDirCategory(cat.name); navigate('skills'); }} className={`group p-6 border rounded-[2px] transition-all text-left hover:border-[#C56A4A]/50 ${cardClass}`}>
+                  <button key={cat.name} onClick={() => { setDirCategory(cat.name); navigate('skills'); }} className={`group p-6 border rounded-[2px] transition-all text-left hover:border-[#C56A4A]/50 ${cardClass}`} aria-label={`Browse ${cat.name} skills`}>
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-[2px] bg-[#16353D]/50 flex items-center justify-center text-[#C56A4A]">
                         <CategoryIcon name={cat.icon} className="w-5 h-5" />
@@ -1448,7 +1471,7 @@ export default function Home() {
 
         {/* ─── TRENDING ─── */}
         {currentPage === 'trending' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="Trending Capabilities">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>LIVE SIGNAL</SectionTag>
@@ -1457,7 +1480,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 {[...INITIAL_SKILLS].sort((a, b) => b.trendingDelta - a.trendingDelta).map((skill, idx) => (
-                  <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`group w-full flex items-center gap-6 p-5 border rounded-[2px] transition-all text-left hover:border-[#C56A4A]/50 ${cardClass}`}>
+                  <button key={skill.id} onClick={() => navigate('skill_detail', skill.id)} className={`group w-full flex items-center gap-6 p-5 border rounded-[2px] transition-all text-left hover:border-[#C56A4A]/50 ${cardClass}`} aria-label={`View ${skill.title} details`}>
                     <span className={`text-3xl font-display font-bold w-12 text-center ${idx === 0 ? 'text-[#C56A4A]' : textMutedClass}`}>{idx + 1}</span>
                     <div className="flex-grow min-w-0">
                       <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -1481,10 +1504,11 @@ export default function Home() {
 
         {/* ─── DOCUMENTS ─── */}
         {currentPage === 'documents' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="Document Creation">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>DOCUMENT CREATION ENGINE</SectionTag>
+                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
                 <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Create Documents</h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Generate branded documents with AI-powered content and layout</p>
               </div>
@@ -1588,10 +1612,11 @@ export default function Home() {
 
         {/* ─── RESEARCH (TRIANGULATION) ─── */}
         {currentPage === 'research' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="Research Triangulation">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
                 <SectionTag>DEEP RESEARCH TRIANGULATION</SectionTag>
+                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">ALPHA</span>
                 <h1 className={`mt-3 text-3xl font-display ${textPrimaryClass}`}>Research Triangulation</h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Multi-source verification and citation tracking</p>
               </div>
@@ -1642,6 +1667,7 @@ export default function Home() {
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-[#C56A4A]" />
                     <h3 className={`font-display text-lg ${textPrimaryClass}`}>Automation Telemetry</h3>
+                    <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">ALPHA</span>
                   </div>
                   <span className={`text-[10px] font-mono ${textMutedClass}`}>{AUTOMATION_JOBS.length} cron jobs</span>
                 </div>
@@ -1675,10 +1701,11 @@ export default function Home() {
 
         {/* ─── AGENT PIPELINE ─── */}
         {currentPage === 'agent_pipeline' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="Agent Orchestration Pipeline">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
-                <SectionTag>SKILLSMITH AI CRON v3.0.0</SectionTag>
+                <SectionTag>SKILLSMITH AI CRON v0.1.0-BETA</SectionTag>
+                <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
                 <h1 className={`mt-3 text-[clamp(1.5rem,3vw,2.25rem)] font-display ${textPrimaryClass}`}>Orchestration Pipeline</h1>
                 <p className={`mt-2 text-sm ${textMutedClass}`}>Ingest raw AI agent capability data, verify functional reality, and transform into sovereign registry assets.</p>
               </div>
@@ -1859,7 +1886,7 @@ export default function Home() {
 
         {/* ─── ABOUT ─── */}
         {currentPage === 'about' && (
-          <section className="py-12">
+          <section className="py-12" aria-label="About Tangison SkillsCamp">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <SectionTag>ABOUT TANGISON SKILLSCAMP</SectionTag>
               <h1 className={`mt-3 text-[clamp(2rem,4vw,3rem)] font-display ${textPrimaryClass} mb-6`}>
@@ -1928,14 +1955,15 @@ export default function Home() {
 
       {/* ═══ AI CHAT WIDGET ═══ */}
       {chatOpen && (
-        <div className={`fixed bottom-6 right-6 z-50 w-[360px] max-h-[520px] border rounded-[4px] shadow-2xl shadow-black/30 flex flex-col animate-[fadeInUp_0.3s_ease-out] ${cardClass}`}>
+        <div className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[360px] max-h-[520px] border rounded-[4px] shadow-2xl shadow-black/30 flex flex-col animate-[fadeInUp_0.3s_ease-out] ${cardClass}`}>
           {/* Chat Header */}
           <div className={`flex items-center justify-between p-4 border-b ${borderClass}`}>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className={`text-xs font-mono uppercase tracking-widest ${textPrimaryClass}`}>SkillsCamp AI</span>
+              <span className="ml-2 text-[9px] font-mono text-[#C56A4A] bg-[#C56A4A]/10 px-1.5 py-0.5 rounded-[2px] border border-[#C56A4A]/20">BETA</span>
             </div>
-            <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`}>
+            <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`} aria-label="Close chat">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -1967,7 +1995,7 @@ export default function Home() {
               placeholder="Ask about skills..."
               className={`flex-grow px-3 py-2 rounded-[2px] text-xs font-mono placeholder:text-[#787774]/50 focus:outline-none ${cardNestedClass} ${textPrimaryClass}`}
             />
-            <button onClick={handleChatSend} disabled={isAiTyping || !chatInput.trim()} className="p-2 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors disabled:opacity-50">
+            <button onClick={handleChatSend} disabled={isAiTyping || !chatInput.trim()} className="p-2 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors disabled:opacity-50" aria-label="Send message">
               <Send className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -1986,7 +2014,7 @@ export default function Home() {
       )}
 
       {/* ═══ FOOTER ═══ */}
-      <footer className={`border-t ${footerClass}`}>
+      <footer className={`border-t mt-auto ${footerClass}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
             {/* Logo ONLY — DRAMATIC, NO wordmark */}
@@ -2011,21 +2039,21 @@ export default function Home() {
 
             {/* Platform Links */}
             <div className="flex flex-wrap gap-x-8 gap-y-2 text-xs font-mono uppercase tracking-widest">
-              <button onClick={() => navigate('skills')} className="hover:text-[#C56A4A] transition-colors">Skills</button>
-              <button onClick={() => navigate('categories')} className="hover:text-[#C56A4A] transition-colors">Categories</button>
-              <button onClick={() => navigate('trending')} className="hover:text-[#C56A4A] transition-colors">Trending</button>
-              <button onClick={() => navigate('agent_pipeline')} className="hover:text-[#C56A4A] transition-colors">Pipeline</button>
-              <button onClick={() => navigate('documents')} className="hover:text-[#C56A4A] transition-colors">Documents</button>
-              <button onClick={() => navigate('research')} className="hover:text-[#C56A4A] transition-colors">Triangulation</button>
-              <button onClick={() => navigate('about')} className="hover:text-[#C56A4A] transition-colors">About</button>
+              <button onClick={() => navigate('skills')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Skills">Skills</button>
+              <button onClick={() => navigate('categories')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Categories">Categories</button>
+              <button onClick={() => navigate('trending')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Trending">Trending</button>
+              <button onClick={() => navigate('agent_pipeline')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Pipeline">Pipeline</button>
+              <button onClick={() => navigate('documents')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Documents">Documents</button>
+              <button onClick={() => navigate('research')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to Triangulation">Triangulation</button>
+              <button onClick={() => navigate('about')} className="hover:text-[#C56A4A] transition-colors" aria-label="Navigate to About">About</button>
             </div>
 
             {/* Legal Links */}
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-mono uppercase tracking-widest">
               <a href="https://skills.sh" target="_blank" rel="noopener noreferrer" className="hover:text-[#C56A4A] transition-colors">Skills.sh</a>
               <a href="https://github.com/vercel-labs/skills" target="_blank" rel="noopener noreferrer" className="hover:text-[#C56A4A] transition-colors">GitHub</a>
-              <span>Privacy</span>
-              <span>Terms</span>
+              <span className="opacity-50 cursor-default">Privacy (Coming Soon)</span>
+              <span className="opacity-50 cursor-default">Terms (Coming Soon)</span>
             </div>
           </div>
 
