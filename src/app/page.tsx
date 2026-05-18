@@ -681,7 +681,7 @@ export default function Home() {
     return true;
   });
 
-  // AI Chat handler
+  // AI Chat handler — uses real LLM via /api/chat
   const handleChatSend = useCallback(async () => {
     if (!chatInput.trim() || isAiTyping) return;
     const userMsg = chatInput.trim();
@@ -689,50 +689,70 @@ export default function Home() {
     setChatInput('');
     setIsAiTyping(true);
 
-    // Simulated AI response based on keyword matching
-    setTimeout(() => {
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [...chatMessages.slice(-8), { role: 'user', content: userMsg }],
+        }),
+      });
+      const data = await res.json();
+      const reply = data.reply || 'I encountered an issue. Please try again.';
+      setChatMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+    } catch {
+      // Fallback to local keyword matching if API fails
       const lower = userMsg.toLowerCase();
       let matchedSkill: Skill | null = null;
       if (lower.includes('seo') || lower.includes('audit')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'seo-auditor-pro') || null;
       else if (lower.includes('prompt') || lower.includes('military')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'military-prompt-architect') || null;
       else if (lower.includes('flyer') || lower.includes('design') || lower.includes('poster')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'flyer-luxury-generator') || null;
       else if (lower.includes('find') || lower.includes('discover') || lower.includes('search')) matchedSkill = INITIAL_SKILLS.find(s => s.slug === 'find-skills') || null;
-      else if (lower.includes('document') || lower.includes('pdf') || lower.includes('report')) matchedSkill = INITIAL_SKILLS[0];
       else matchedSkill = INITIAL_SKILLS[Math.floor(Math.random() * INITIAL_SKILLS.length)];
 
       const reply = matchedSkill
         ? `For that use case, I recommend **${matchedSkill.title}** — ${matchedSkill.tagline}\n\nInstall: \`${matchedSkill.installCommand}\`\n\n${matchedSkill.aiInsight}`
-        : 'I can help you find the right skill. Try describing what you want to build — e.g., "I need SEO auditing" or "I want to create luxury flyers".';
+        : 'I can help you find the right skill. Try describing what you want to build.';
       setChatMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
-      setIsAiTyping(false);
-    }, 1200 + Math.random() * 800);
-  }, [chatInput, isAiTyping]);
+    }
+    setIsAiTyping(false);
+  }, [chatInput, isAiTyping, chatMessages]);
 
-  // AI Rewrite handler
+  // AI Rewrite handler — uses real LLM via /api/rewrite
   const handleAIRewrite = useCallback(async () => {
     if (!rewriteInput.trim()) return;
     setRewriteLoading(true);
     setRewriteOutput('');
 
     const enabledFns = rewriteFunctions.filter(f => f.enabled).map(f => f.id);
-    const steps = enabledFns.length;
 
-    let output = rewriteInput;
-
-    // Simulate step-by-step rewrite
-    for (let i = 0; i < steps; i++) {
-      await new Promise(r => setTimeout(r, 600));
-      const fn = enabledFns[i];
-      if (fn === 'clarity') output = output.replace(/\bvery\b/gi, '').replace(/\breally\b/gi, '').replace(/\bbasically\b/gi, '');
-      if (fn === 'remove-ai') output = output.replace(/\bleverage\b/gi, 'use').replace(/\bsynergy\b/gi, 'cooperation').replace(/\binnovative\b/gi, 'new').replace(/\bseamlessly\b/gi, '');
-      if (fn === 'structure') output = `## Overview\n\n${output}\n\n## Summary\n\nRewritten with ${enabledFns.join(', ')}.`;
-      if (fn === 'format') output = output.replace(/\n{3,}/g, '\n\n');
-      if (fn === 'standards') output = `<!-- Tangison Enhanced -->\n${output}`;
-      if (fn === 'clean-code') output = output.replace(/```(\w+)/g, '```typescript');
-      if (fn === 'simplify') output = output.replace(/\bin order to\b/gi, 'to').replace(/\bdue to the fact that\b/gi, 'because');
+    try {
+      const res = await fetch('/api/rewrite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: rewriteInput, functions: enabledFns }),
+      });
+      const data = await res.json();
+      if (data.rewritten) {
+        setRewriteOutput(data.rewritten);
+      } else {
+        throw new Error('Empty rewrite response');
+      }
+    } catch {
+      // Fallback to local simulated rewrite if API fails
+      let output = rewriteInput;
+      for (const fn of enabledFns) {
+        await new Promise(r => setTimeout(r, 300));
+        if (fn === 'clarity') output = output.replace(/\bvery\b/gi, '').replace(/\breally\b/gi, '').replace(/\bbasically\b/gi, '');
+        if (fn === 'remove-ai') output = output.replace(/\bleverage\b/gi, 'use').replace(/\bsynergy\b/gi, 'cooperation').replace(/\binnovative\b/gi, 'new').replace(/\bseamlessly\b/gi, '');
+        if (fn === 'structure') output = `## Overview\n\n${output}\n\n## Summary\n\nRewritten with ${enabledFns.join(', ')}.`;
+        if (fn === 'format') output = output.replace(/\n{3,}/g, '\n\n');
+        if (fn === 'standards') output = `<!-- Tangison Enhanced -->\n${output}`;
+        if (fn === 'clean-code') output = output.replace(/```(\w+)/g, '```typescript');
+        if (fn === 'simplify') output = output.replace(/\bin order to\b/gi, 'to').replace(/\bdue to the fact that\b/gi, 'because');
+      }
+      setRewriteOutput(output);
     }
-
-    setRewriteOutput(output);
     setRewriteLoading(false);
   }, [rewriteInput, rewriteFunctions]);
 
@@ -803,19 +823,22 @@ export default function Home() {
       <header className={`sticky top-0 z-40 transition-all duration-300 backdrop-blur-md border-b ${headerClass}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo + Wordmark */}
-            <button onClick={() => navigate('home')} className="flex items-center gap-3 focus:outline-none" aria-label="Home">
-              <img src="/logo.png" alt="Tangison logo" className="h-8 w-auto" style={{ objectFit: 'contain' }} />
+            {/* Logo + Wordmark — PROMINENT */}
+            <button onClick={() => navigate('home')} className="flex items-center gap-3.5 focus:outline-none group" aria-label="Home">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-[#C56A4A]/20 rounded-lg blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <img src="/logo.png" alt="Tangison logo" className="relative h-10 w-auto drop-shadow-[0_0_12px_rgba(197,106,74,0.35)]" style={{ objectFit: 'contain' }} />
+              </div>
               <div className="hidden sm:flex flex-col">
-                <span className={`font-display text-sm font-bold tracking-[0.15em] ${textPrimaryClass} uppercase block leading-none`}>TΛNGISON</span>
-                <span className="text-[8px] font-mono tracking-widest uppercase text-[#C56A4A] block mt-0.5">SKILLSCAMP PLATFORM</span>
+                <span className={`font-display text-[15px] font-bold tracking-[0.18em] uppercase block leading-none ${isDark ? 'text-[#F6F4EF]' : 'text-[#111315]'} drop-shadow-sm`}>TΛNGISON</span>
+                <span className="text-[9px] font-mono tracking-[0.25em] uppercase text-[#C56A4A] block mt-1 font-semibold">SKILLSCAMP PLATFORM</span>
               </div>
             </button>
 
             {/* Desktop Nav */}
             <nav className={`hidden md:flex items-center gap-6 font-mono text-[10px] uppercase tracking-widest ${textMutedClass}`}>
               {navItems.map(({ page, label }) => (
-                <button key={page} onClick={() => navigate(page)} className={`hover:text-[#F6F4EF] transition-colors ${currentPage === page ? 'text-[#C56A4A] font-bold' : ''}`}>
+                <button key={page} onClick={() => navigate(page)} className={`transition-colors duration-200 ${currentPage === page ? 'text-[#C56A4A] font-bold' : isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}>
                   {label}
                 </button>
               ))}
@@ -826,7 +849,7 @@ export default function Home() {
               {/* Theme Toggle */}
               <button
                 onClick={() => setTheme(isDark ? 'light' : 'dark')}
-                className={`p-2 rounded-[2px] ${textMutedClass} hover:text-[#F6F4EF] border ${borderClass} transition-colors`}
+                className={`p-2 rounded-[2px] ${textMutedClass} border ${borderClass} transition-colors ${isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}
                 aria-label="Toggle theme"
               >
                 {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -835,7 +858,7 @@ export default function Home() {
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`md:hidden p-2 ${textMutedClass} hover:text-[#F6F4EF]`}
+                className={`md:hidden p-2 ${textMutedClass} ${isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}
               >
                 {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
@@ -846,7 +869,7 @@ export default function Home() {
           {mobileMenuOpen && (
             <div className={`md:hidden border-t ${borderClass} py-4 space-y-1`}>
               {navItems.map(({ page, label }) => (
-                <button key={page} onClick={() => navigate(page)} className={`flex items-center gap-3 w-full px-4 py-3 rounded-[2px] text-sm font-medium transition-colors ${currentPage === page ? 'text-[#C56A4A] bg-[#C56A4A]/10' : `${textMutedClass} hover:text-[#F6F4EF]`}`}>
+                <button key={page} onClick={() => navigate(page)} className={`flex items-center gap-3 w-full px-4 py-3 rounded-[2px] text-sm font-medium transition-colors ${currentPage === page ? 'text-[#C56A4A] bg-[#C56A4A]/10' : `${textMutedClass} ${isDark ? 'hover:text-[#F6F4EF]' : 'hover:text-[#111315]'}`}`}>
                   <ChevronRight className="w-4 h-4" />{label}
                 </button>
               ))}
@@ -1577,15 +1600,21 @@ export default function Home() {
       <footer className={`border-t ${footerClass}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
-            {/* Logo ONLY - large and standing out, NO wordmark */}
-            <div className="flex flex-col items-center md:items-start gap-3">
-              <img
-                src="/logo.png"
-                alt="Tangison logo"
-                className="h-16 w-auto"
-                style={{ objectFit: 'contain', filter: isDark ? 'brightness(0.85) drop-shadow(0 0 8px rgba(197,106,74,0.3))' : 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
-              />
-              <span className={`font-mono text-[9px] uppercase tracking-[0.25em] font-bold ${isDark ? 'text-[#F6F4EF]' : 'text-[#111111]'}`}>Sovereign Enclave Platform</span>
+            {/* Logo ONLY — DRAMATIC, NO wordmark */}
+            <div className="flex flex-col items-center md:items-start gap-4">
+              <div className="relative">
+                {/* Outer glow ring */}
+                <div className={`absolute -inset-3 rounded-xl ${isDark ? 'bg-[#C56A4A]/8' : 'bg-[#C56A4A]/5'} blur-xl`} />
+                {/* Inner glow */}
+                <div className="absolute -inset-1.5 rounded-lg bg-[#C56A4A]/15 blur-md" />
+                <img
+                  src="/logo.png"
+                  alt="Tangison logo"
+                  className="relative h-20 w-auto drop-shadow-[0_0_20px_rgba(197,106,74,0.5)]"
+                  style={{ objectFit: 'contain', filter: isDark ? 'brightness(1.1) drop-shadow(0 0 16px rgba(197,106,74,0.4))' : 'drop-shadow(0 4px 12px rgba(197,106,74,0.25))' }}
+                />
+              </div>
+              <span className={`font-mono text-[9px] uppercase tracking-[0.3em] font-bold ${isDark ? 'text-[#F6F4EF]/80' : 'text-[#111315]/80'}`}>Sovereign Enclave Platform</span>
             </div>
 
             {/* Platform Links */}
