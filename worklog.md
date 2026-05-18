@@ -22,3 +22,49 @@ Stage Summary:
 - Theming: All hover states properly themed for both light and dark modes
 - AI APIs: Both chat and rewrite now use real z-ai-web-dev-sdk with graceful fallbacks
 - Key files modified: page.tsx, /api/chat/route.ts, /api/rewrite/route.ts (new)
+
+---
+Task ID: 3
+Agent: full-stack-developer
+Task: Rewrite page.tsx — MastGlyph SVG everywhere, widget primitives, brand refinements
+
+Work Log:
+- Replaced all logo.png instances (3 total: header, document preview, footer) with MastGlyph component
+- Header: MastGlyph h-16 with double-layer glow, strokeColor=#C56A4A. TANGISON text-2xl. Subtitle just SKILLSCAMP (no PLATFORM)
+- Footer: MastGlyph w-16 h-20 with quad-layer dramatic glow. No wordmark image
+- Document preview: MastGlyph h-8 with strokeColor=#C56A4A
+- Chat toggle: MastGlyph instead of MessageSquare, with rust shadow
+- Added WidgetPrimitive type and 5 custom military-grade SVG icons
+- Added ui_widget_primitive field to Skill interface and INITIAL_SKILLS data
+- Added widget primitive badges to trending and skills directory cards
+- Lint passes clean
+
+Stage Summary:
+- All logo.png references eliminated — MastGlyph SVG used everywhere
+- Header: h-16 MastGlyph, text-2xl TANGISON, SKILLSCAMP only (no PLATFORM)
+- Footer: w-16 h-20 MastGlyph with quad-layer glow
+- Chat: MastGlyph icon instead of MessageSquare
+- 5 custom WidgetPrimitiveIcon SVGs + badges on skill cards
+
+---
+Task ID: 4-5
+Agent: main
+Task: Create agent processing API route + Pipeline UI page
+
+Work Log:
+- Created /api/agent/process/route.ts implementing Skillsmith AI Cron v3.0.0 pipeline
+- API implements 3-phase orchestration: rigorous_filtering, sovereign_normalization, brand_injection
+- Added agent_pipeline to PageRoute, Pipeline nav item, and full page section
+- Pipeline UI shows 3-phase visualization with animated progress, widget primitives legend, input/output panels
+- Pipeline processes raw skill data through filtering, normalization, brand injection via real LLM API
+- Verified output displays MastGlyph avatar, widget primitive badges, install commands, MDX documentation
+- Added Pipeline link to footer navigation
+- Updated TangisonLogo.tsx: exported MastGlyph with strokeColor and forceRustAccent props
+- Lint passes clean, dev server running without errors
+
+Stage Summary:
+- New API route: /api/agent/process — Skillsmith AI Cron v3.0.0 pipeline
+- New page view: Agent Pipeline with 3-phase orchestration visualization
+- Pipeline processes raw data through filtering → normalization → brand injection
+- Output shows MastGlyph avatar, widget primitive badges, install commands, MDX docs
+- Footer and nav updated with Pipeline link
