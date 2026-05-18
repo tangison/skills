@@ -24,9 +24,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tangison Skillsmith — Intelligence Built From Skills",
+  metadataBase: new URL("https://skills.tangison.com"),
+  title: "Tangison Skillsmith — Intelligence Built On What Remains",
   description:
-    "Sovereign AI skill infrastructure for African enterprise and beyond. Discover, verify, and deploy modular AI agent skills.",
+    "Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills — no installation required.",
   keywords: [
     "AI skills",
     "agent skills",
@@ -37,18 +38,20 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Tangison Agency" }],
   icons: {
-    icon: "/logo.svg",
+    icon: "/icon.png",
   },
   openGraph: {
     title: "Tangison Skillsmith",
-    description: "Intelligence built from skills. Sovereign AI skill infrastructure.",
+    description: "Sovereign intelligence infrastructure for African enterprise. Intelligence built on what remains.",
     siteName: "Tangison Skillsmith",
     type: "website",
+    images: [{ url: "/ocean-view.jpeg", width: 1200, height: 630, alt: "Tangison Skillsmith — Sovereign Intelligence Infrastructure" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tangison Skillsmith",
-    description: "Intelligence built from skills. Sovereign AI skill infrastructure.",
+    description: "Sovereign intelligence infrastructure for African enterprise.",
+    images: ["/ocean-view.jpeg"],
   },
 };
 

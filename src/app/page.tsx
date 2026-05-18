@@ -13,22 +13,16 @@ import { SEED_SKILLS, SKILL_CATEGORIES, SUPPORTED_ECOSYSTEMS } from '@/lib/data'
 import type { Skill, PageRoute, ChatMessage } from '@/lib/types';
 
 /* ═══════════════════════════════════════════════════════════════
-   TANGISON LOGO - Shipwreck Mast Glyph
+   TANGISON LOGO - Brand Asset
    ═══════════════════════════════════════════════════════════════ */
 function TangisonLogo({ className = 'w-8 h-8' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={className} aria-label="Tangison mast glyph">
-      {/* Main mast */}
-      <line x1="20" y1="4" x2="20" y2="44" stroke="currentColor" strokeWidth="2.5" />
-      {/* Horizontal cross-beam */}
-      <line x1="10" y1="18" x2="30" y2="18" stroke="currentColor" strokeWidth="2" />
-      {/* Diagonal sail spar */}
-      <line x1="12" y1="16" x2="28" y2="8" stroke="currentColor" strokeWidth="2" />
-      {/* Rust accent pennant */}
-      <path d="M28 8 L34 12 L30 16" stroke="#C56A4A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      {/* Base anchor point */}
-      <circle cx="20" cy="44" r="2" fill="currentColor" opacity="0.4" />
-    </svg>
+    <img
+      src="/logo.png"
+      alt="Tangison logo — shipwreck mast glyph representing resilience, direction, structure"
+      className={className}
+      style={{ objectFit: 'contain' }}
+    />
   );
 }
 
@@ -331,8 +325,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <button onClick={() => navigate('home')} className="flex items-center gap-3 focus:outline-none" aria-label="Home">
-              <TangisonLogo className="w-6 h-7 text-[#F6F4EF]" />
-              <div className="hidden sm:block">
+              <TangisonLogo className="h-8 w-auto" />
+              <div className="hidden sm:flex flex-col">
                 <span className="font-display text-sm font-bold tracking-[0.15em] text-[#F6F4EF] uppercase block leading-none">TANGISON</span>
                 <span className="text-[8px] font-mono tracking-widest uppercase text-[#C56A4A] block mt-0.5">SKILLSMITH</span>
               </div>
@@ -379,16 +373,23 @@ export default function Home() {
           <div>
             {/* HERO */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#111315] via-[#111315] to-[#16353D]/30 pointer-events-none" />
+              {/* Ocean-view background image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: "url('/ocean-view.jpeg')" }}
+              />
+              {/* Dark gradient overlay for readability */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#111315]/95 via-[#111315]/80 to-[#111315]/60 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#111315] via-transparent to-[#111315]/40 pointer-events-none" />
               <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-20">
                 <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
                   <div className="lg:col-span-7">
-                    <SectionTag>TANGISON SKILLSMITH // V1.0</SectionTag>
+                    <SectionTag>TANGISON SKILLSMITH // V1.8.0</SectionTag>
                     <h1 className="mt-6 text-[clamp(3rem,6vw,5.5rem)] font-display leading-[1.05] tracking-tight text-[#F6F4EF]">
-                      Intelligence <br />built from <span className="italic font-normal text-[#C56A4A]">skills.</span>
+                      Intelligence <br />built on what <span className="italic font-normal text-[#C56A4A]">remains.</span>
                     </h1>
                     <p className="mt-6 text-lg text-[rgba(246,244,239,0.55)] leading-relaxed max-w-xl font-sans">
-                      Discover, install, and deploy modular AI agent skills. Sovereign infrastructure for African enterprise and beyond.
+                      Sovereign intelligence infrastructure for African enterprise. Discover, copy, and deploy modular AI agent skills — no installation required.
                     </p>
                     <div className="mt-8 flex flex-wrap gap-4 font-mono text-xs uppercase tracking-widest font-bold">
                       <button onClick={() => navigate('skills')} className="bg-[#C56A4A] text-[#111315] px-8 py-4 hover:bg-[#F6F4EF] transition-colors rounded-[2px]">Explore Skills</button>
@@ -784,10 +785,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-4 space-y-4">
             <div className="flex items-center gap-3">
-              <TangisonLogo className="w-5 h-6 text-[#F6F4EF]" />
+              <TangisonLogo className="h-7 w-auto" />
               <span className="font-display text-base font-bold tracking-widest text-[#F6F4EF] uppercase">Tangison Agency</span>
             </div>
-            <p className="font-sans text-xs text-[rgba(246,244,239,0.45)] leading-relaxed max-w-xs font-light">Intelligence built from skills. Windhoek, Namibia.</p>
+            <p className="font-sans text-xs text-[rgba(246,244,239,0.45)] leading-relaxed max-w-xs font-light">Intelligence built on what remains. Windhoek, Namibia.</p>
           </div>
           <div className="md:col-span-2 space-y-2 font-mono text-[10px]">
             <span className="uppercase text-[#C56A4A] font-bold block mb-3">Platform</span>
