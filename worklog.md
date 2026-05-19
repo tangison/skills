@@ -343,3 +343,124 @@ Issues Addressed:
 ✅ skill-4 contentMdx: 11 lines → 53 lines (When to Use, Skill Architecture table, Creation Phases table, Integration)
 ✅ skill-5 contentMdx: 12 lines → 58 lines (When to Use, Debugging Methodology table, Debugging Techniques table, Anti-patterns, Integration)
 ✅ skill-6 contentMdx: 12 lines → 51 lines (When to Use, Document Types table, Generation Pipeline table, Integration)
+
+---
+Task ID: 8-a
+Agent: Systematic Debugging Skill Upgrade Agent
+Task: Upgrade Systematic Debugging skill (skill-5) to match Obra Superpowers SKILL.md specification depth
+
+Work Log:
+- Read /home/z/my-project/worklog.md (prior task history)
+- Read src/app/page.tsx — located skill-5 at lines 496-587
+- Updated tagline: 'Methodical debugging methodology that eliminates root causes, not symptoms' → 'Structured debugging methodology that mandates root cause investigation before attempting any fixes'
+- Updated usageExamples: replaced simple 5-line example with comprehensive 25-line example including:
+  - 4-phase process with constraints (maxFixAttempts, requireReproduction, blockSymptomPatching)
+  - Phase 1 Root Cause Investigation with gatherEvidence and layers/traceDataFlow/instrumentBoundaries
+  - Phase 3 Hypothesis Testing with testHypothesis including claim/test/controlGroup
+- Replaced entire contentMdx: 58 lines → ~177 lines matching Obra Superpowers SKILL.md specification:
+  - Added "When to Use This Skill" with 6 use cases + 5 ESPECIALLY-when scenarios
+  - Added "The Iron Law" section: NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
+  - Added "The Four Phases" table (Root Cause, Pattern, Hypothesis, Implementation)
+  - Added "Phase 1: Root Cause Investigation" with 5-step table (Read errors, Reproduce, Check changes, Gather evidence, Trace data flow)
+  - Added "Diagnostic Instrumentation for Multi-Component Systems" subsection
+  - Added "Backward Call-Stack Tracing" subsection
+  - Added "Phase 2: Pattern Analysis" with 4-step table
+  - Added "Phase 3: Hypothesis and Testing" with scientific method principles
+  - Added "Phase 4: Implementation" with 3-step table + "When Fix Does Not Work" subsection
+  - Added "The Architecture Question (3+ Failed Fixes)" subsection
+  - Added "Red Flags: STOP and Follow Process" with 8 warning signs
+  - Added "Common Rationalizations" table (6 excuses vs reality)
+  - Added "Supporting Techniques" section (Root cause tracing, Defense in depth, Condition-based waiting)
+  - Added "Related Skills" section (test-driven-development, verification-before-completion, brainstorming)
+  - Removed old "Integration" section (replaced by Related Skills)
+- Updated aiInsight: 'Part of Obra Superpowers: one of the most popular debugging methodologies...' → 'The Iron Law skill from Obra Superpowers: mandates root cause investigation before any fix attempts. After 3 failed fixes, stops and questions the architecture...'
+- Updated tangisonRecommendation: 'Use Systematic Debugging for any production issue. The binary-search approach eliminates guesswork.' → 'Apply the Iron Law on every issue: no fixes without root cause investigation first. When 3+ fixes fail, stop debugging and question the architecture.'
+- Ran bun run lint — passed with zero errors
+
+Changes Summary:
+✅ tagline: Updated to emphasize "mandates root cause investigation before attempting any fixes"
+✅ usageExamples: 5 lines → 25 lines with 4-phase process, constraints, and hypothesis testing
+✅ contentMdx: 58 lines → ~177 lines with Iron Law, 4-phase methodology, diagnostic instrumentation, architecture question, red flags, common rationalizations table
+✅ aiInsight: Updated to reference Iron Law and 3-failed-fixes architecture question
+✅ tangisonRecommendation: Updated to reference Iron Law and architecture questioning
+
+---
+Task ID: 8-b
+Agent: Remaining Skills Upgrade Agent
+Task: Upgrade 5 remaining skills (skill-1, skill-2, skill-3, skill-4, skill-6) to match Systematic Debugging SKILL.md specification depth
+
+Work Log:
+- Read /home/z/my-project/worklog.md (prior task history, tasks 1-8-a)
+- Read src/app/page.tsx — located all 6 skills, identified 5 needing upgrade (skill-5 already upgraded in task 8-a)
+- Upgraded skill-1 (Find Skills):
+  - tagline: 'The sovereign discovery engine: search the open agent skills ecosystem' → 'Sovereign discovery engine that searches 40+ registries with quality-weighted ranking and honest attribution'
+  - contentMdx: ~57 lines → ~97 lines, added:
+    - "Use this ESPECIALLY when" and "Do NOT use when" sections
+    - "The Discovery Principle" section
+    - "Architecture: 4-Phase Discovery Pipeline" (renamed from plain "Architecture")
+    - "Quality Scoring Formula" table with Signal/Weight/Source/Range columns
+    - "Search Methods" table expanded with Limitation column + Dependency graph method
+    - "Core Principles" table expanded with Violation column
+    - "Common Mistakes" table with Mistake/Consequence/Fix columns
+    - Integration expanded with specific cross-skill references
+  - aiInsight: Updated to reference 40+ registries, quality scoring, and gateway role
+  - tangisonRecommendation: Updated to emphasize searching before building from scratch
+- Upgraded skill-2 (Frontend Design):
+  - tagline: 'Production-grade frontend from specifications: React, Next.js, Vue, Svelte' → 'Generates production-grade frontend code from structured specifications with accessibility, responsive design, and framework conventions enforced'
+  - contentMdx: ~58 lines → ~88 lines, added:
+    - "Use this ESPECIALLY when" and "Do NOT use when" sections
+    - "The Specification Principle" section
+    - "Supported Frameworks" table expanded with Component Library column
+    - "Generation Pipeline: 5 Phases" (renamed, added "with tests" to output)
+    - "Quality Standards Enforced" table replacing bullet list (Standard/Implementation/Verification)
+    - "Common Specification Mistakes" table with Mistake/Consequence/Fix columns
+    - Integration expanded with specific cross-skill references
+  - aiInsight: Updated to reference accessibility review and framework-specific conventions
+  - tangisonRecommendation: Updated to reference ARIA attributes and responsive breakpoints
+- Upgraded skill-3 (Brainstorming):
+  - tagline: 'Structured ideation and creative problem-solving for any project' → 'Structured ideation methodology with diverge-converge phases, anti-pattern enforcement, and workshop facilitation templates'
+  - contentMdx: ~58 lines → ~98 lines, added:
+    - "Use this ESPECIALLY when" and "Do NOT use when" sections
+    - "The Divergence Principle" section
+    - "Ideation Framework: 4 Phases" (renamed)
+    - "Ideation Rules (Non-negotiable)" table with 7 rules including Violation column
+    - "Ideation Techniques" table expanded with Time column + Brainwriting and How Might We methods
+    - "Workshop Template: 50 Minutes" (renamed, added "aim for 10+ each" and "one by one")
+    - "Anti-patterns" table with Anti-pattern/Signal/Fix columns
+  - aiInsight: Updated to reference "defer judgment" and "go for quantity" rules
+  - tangisonRecommendation: Updated to reference diverge-converge framework and exploring options
+- Upgraded skill-4 (Skill Creator):
+  - tagline: 'Build and publish your own agent skills to the open ecosystem' → 'Build and publish agent skills with mandatory install paths, documentation standards, and registry validation'
+  - contentMdx: ~53 lines → ~93 lines, added:
+    - "Use this ESPECIALLY when" and "Do NOT use when" sections
+    - "The Contribution Principle" section (non-negotiable install path + documentation)
+    - "Skill Architecture: Required Components" table expanded with Validation column
+    - "Creation Pipeline: 4 Phases" table expanded with Gate column
+    - "Validation Rules" table with 5 rejection rules (Rule/Check/Rejection Reason)
+    - "Common Publishing Mistakes" table with Mistake/Consequence/Fix columns + Hardcoded secrets row
+  - aiInsight: Updated to reference documentation standards, install path validation, and specific rejection feedback
+  - tangisonRecommendation: Updated to reference checking Find Skills first
+- Upgraded skill-6 (PDF):
+  - tagline: 'Professional PDF creation and manipulation with precision layout control' → 'Professional PDF creation with template-based generation, form fields, digital signatures, and brand system enforcement'
+  - contentMdx: ~51 lines → ~97 lines, added:
+    - "Use this ESPECIALLY when" and "Do NOT use when" sections
+    - "The Template Principle" section
+    - "Document Types" table expanded with Key Features column
+    - "Generation Pipeline: 5 Phases" (renamed, added "spacing" to Brand application)
+    - "Brand System Enforcement" table with Element/Rule/Override columns
+    - "Form Field Validation" section with 5 validation rules
+    - "Common Generation Mistakes" table with Mistake/Consequence/Fix columns
+  - aiInsight: Updated to reference brand consistency, template systems, form validation, digital signatures
+  - tangisonRecommendation: Updated to reference Document Engine configuration
+- Ran bun run lint — passed with zero errors
+
+Changes Summary:
+✅ skill-1 (Find Skills): contentMdx ~57→~97 lines, +Quality Scoring Formula, +Common Mistakes, +Discovery Principle, expanded Search Methods and Core Principles
+✅ skill-2 (Frontend Design): contentMdx ~58→~88 lines, +Specification Principle, +Quality Standards Enforced table, +Common Specification Mistakes, expanded Supported Frameworks
+✅ skill-3 (Brainstorming): contentMdx ~58→~98 lines, +Divergence Principle, +Ideation Rules (7 non-negotiable), +Anti-patterns table, expanded Techniques with Time column
+✅ skill-4 (Skill Creator): contentMdx ~53→~93 lines, +Contribution Principle, +Validation Rules (5 rejection rules), +Common Publishing Mistakes, expanded Architecture with Validation column
+✅ skill-6 (PDF): contentMdx ~51→~97 lines, +Template Principle, +Brand System Enforcement table, +Form Field Validation, +Common Generation Mistakes, expanded Document Types
+✅ All 5 taglines updated with specific, descriptive language
+✅ All 5 aiInsight values updated with concrete claims
+✅ All 5 tangisonRecommendation values updated with actionable guidance
+✅ Lint: passed with zero errors

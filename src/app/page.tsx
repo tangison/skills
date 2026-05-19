@@ -113,7 +113,7 @@ const INITIAL_SKILLS: Skill[] = [
     slug: 'find-skills',
     title: 'Find Skills',
     category: 'AI Infrastructure',
-    tagline: 'The sovereign discovery engine: search the open agent skills ecosystem',
+    tagline: 'Sovereign discovery engine that searches 40+ registries with quality-weighted ranking and honest attribution',
     difficulty: 'FOUNDATIONAL',
     installCount: 1600000,
     githubStars: 19000,
@@ -151,15 +151,31 @@ const trending = await findSkills({ trending: true, limit: 10 });`,
 Use Find Skills when:
 
 - **Discovery tasks** — Searching for AI agent capabilities across the open ecosystem
-- **Ecosystem exploration** — Browsing what's available in skills.sh, Vercel Labs, Anthropic, Obra, and more
+- **Ecosystem exploration** — Browsing what is available in skills.sh, Vercel Labs, Anthropic, Obra, and more
 - **Skill evaluation** — Comparing install counts, quality scores, and ecosystem sources before committing
 - **Project planning** — Understanding what modular capabilities exist before building from scratch
+
+Use this ESPECIALLY when:
+
+- Starting a new project and need to know what exists
+- A teammate mentions a skill and you need to verify it
+- You are about to build something from scratch (check if it already exists)
+- You need to compare multiple skills for the same use case
+
+Do NOT use when:
+
+- You already know the exact skill slug (use direct install instead)
+- You need to create a new skill (use Skill Creator)
+
+## The Discovery Principle
+
+Never build from scratch when a verified skill already exists. Every hour spent discovering existing capabilities saves ten hours of redundant development.
 
 ## Overview
 
 Find Skills provides sovereign discovery across all connected registries. It is the entry point for the entire SkillsCamp workflow: every other skill in this directory was first located through Find Skills.
 
-## Architecture
+## Architecture: 4-Phase Discovery Pipeline
 
 | Phase | Mode | Key Question | Output |
 |-------|------|-------------|--------|
@@ -168,23 +184,45 @@ Find Skills provides sovereign discovery across all connected registries. It is 
 | Score | Converge | Which are highest quality? | Ranked results |
 | Present | Converge | What should the user see? | Verified skill cards |
 
-## Core Principles
+## Quality Scoring Formula
 
-| Principle | Description |
-|-----------|-------------|
-| Intent-first | Match what the user means, not just keywords |
-| Multi-registry | Never limit to a single source |
-| Quality-weighted | Score combines installs, stars, verification |
-| Honest attribution | Always credit original authors |
+The composite quality score combines three signals:
+
+| Signal | Weight | Source | Range |
+|--------|--------|--------|-------|
+| Install count | 40% | Registry download stats | 0 to millions |
+| GitHub stars | 30% | Repository metadata | 0 to hundreds of thousands |
+| Verification status | 30% | Manual + automated review | Verified, Community, Unverified |
+
+A skill with 1M installs and 10K stars scores differently than one with 100 installs and 5 stars, even if both are "verified."
 
 ## Search Methods
 
-| Method | Duration | Best For |
-|--------|----------|----------|
-| Natural language | Instant | Exploratory discovery |
-| Category filter | Instant | Browsing a specific domain |
-| Trending scan | Instant | Finding what's gaining momentum |
-| Direct slug lookup | Instant | Installing a known skill |
+| Method | Duration | Best For | Limitation |
+|--------|----------|----------|------------|
+| Natural language | Instant | Exploratory discovery | May return broad results |
+| Category filter | Instant | Browsing a specific domain | Requires knowing the category |
+| Trending scan | Instant | Finding what is gaining momentum | Recency-biased |
+| Direct slug lookup | Instant | Installing a known skill | Requires exact slug |
+| Dependency graph | Slow | Understanding skill relationships | Complex queries only |
+
+## Core Principles
+
+| Principle | Description | Violation |
+|-----------|-------------|----------|
+| Intent-first | Match what the user means, not just keywords | Returning "PDF reader" when user wants "PDF generator" |
+| Multi-registry | Never limit to a single source | Only searching Vercel Labs and missing Anthropic skills |
+| Quality-weighted | Score combines installs, stars, verification | Recommending an unverified skill over a verified one |
+| Honest attribution | Always credit original authors | Removing author field or repository link |
+
+## Common Mistakes
+
+| Mistake | Consequence | Fix |
+|---------|-------------|-----|
+| Building before searching | Duplicating existing work | Always search first |
+| Using only one registry | Missing better alternatives | Search all registries |
+| Ignoring quality scores | Installing broken or abandoned skills | Check scores and verification |
+| Skipping verification status | Trusting unreviewed code | Prefer verified skills |
 
 ## Installation
 
@@ -195,15 +233,15 @@ npx skills add vercel-labs/skills
 ## Integration
 
 - **Upstream**: Use before any other skill — Find Skills locates what you need
-- **Downstream**: Pass results to Frontend Design, Skill Creator, or Brainstorming
-- **Complementary**: Pair with Brainstorming to ideate before searching
+- **Downstream**: Pass results to Frontend Design (build it), Skill Creator (package it), or Brainstorming (ideate around it)
+- **Complementary**: Pair with Brainstorming to ideate before searching, Systematic Debugging to evaluate skill quality
 
 ## Source
 
 Repository: github.com/vercel-labs/skills
 Ecosystem: skills.sh/vercel-labs/skills`,
-    aiInsight: 'One of the most-installed skills in the ecosystem at ~1.6M installs: discovers skills across 40+ registries.',
-    tangisonRecommendation: 'Start here for any project. Find Skills will point you to the right tool for the job across the entire open ecosystem.',
+    aiInsight: 'The gateway skill for the entire ecosystem: 40+ registries searched with quality scoring that combines install count, GitHub stars, and verification status. Every other skill in SkillsCamp was first located through Find Skills.',
+    tangisonRecommendation: 'Start every project with Find Skills. It searches across all connected registries so you never build from scratch when a verified skill already exists.',
     citations: ['skills.sh/vercel-labs/skills', 'github.com/vercel-labs/skills', 'docs.skills.sh/find-skills']
   },
   {
@@ -211,7 +249,7 @@ Ecosystem: skills.sh/vercel-labs/skills`,
     slug: 'frontend-design',
     title: 'Frontend Design',
     category: 'React',
-    tagline: 'Production-grade frontend from specifications: React, Next.js, Vue, Svelte',
+    tagline: 'Generates production-grade frontend code from structured specifications with accessibility, responsive design, and framework conventions enforced',
     difficulty: 'INTERMEDIATE',
     installCount: 424900,
     githubStars: 8200,
@@ -251,8 +289,25 @@ Use Frontend Design when:
 
 - **UI generation** — Producing production-grade frontend code from design specifications
 - **Rapid prototyping** — Going from concept to working interface in minutes
-- **Design system implementation** — Translating Figma/Sketch designs into component code
+- **Design system implementation** — Translating Figma or Sketch designs into component code
 - **Framework migration** — Rebuilding an existing UI in a different framework
+
+Use this ESPECIALLY when:
+
+- Starting a new page or feature with clear design specs
+- Migrating from one framework to another (React to Next.js, Vue to Svelte)
+- Implementing a design system with consistent components
+- Need accessible components that pass WCAG 2.1 AA review
+
+Do NOT use when:
+
+- No design specification exists (use Brainstorming first)
+- Making small CSS tweaks to existing components
+- The project uses a framework not in the supported list
+
+## The Specification Principle
+
+Frontend code quality is proportional to specification quality. Vague specs produce vague components. Detailed specs produce production-ready code.
 
 ## Overview
 
@@ -260,29 +315,43 @@ Frontend Design generates production-ready frontend code from structured specifi
 
 ## Supported Frameworks
 
-| Framework | Router | Styling | Status |
-|-----------|--------|---------|--------|
-| Next.js | App Router + RSC | Tailwind CSS | Primary |
-| React | Vite / CRA | Tailwind / CSS | Supported |
-| Vue | Nuxt / Standalone | Tailwind / Scoped | Supported |
-| Svelte | SvelteKit | Tailwind / Scoped | Supported |
+| Framework | Router | Styling | Component Library | Status |
+|-----------|--------|---------|-------------------|--------|
+| Next.js | App Router + RSC | Tailwind CSS | shadcn/ui | Primary |
+| React | Vite / CRA | Tailwind / CSS | shadcn/ui | Supported |
+| Vue | Nuxt / Standalone | Tailwind / Scoped | Custom | Supported |
+| Svelte | SvelteKit | Tailwind / Scoped | Custom | Supported |
 
-## Generation Phases
+## Generation Pipeline: 5 Phases
 
 | Phase | Input | Process | Output |
 |-------|-------|---------|--------|
-| Spec parsing | JSON specification | Validate structure, extract pages/sections | Internal component tree |
-| Layout generation | Component tree | Generate responsive layouts with grid/flex | JSX/Vue/Svelte templates |
+| Spec parsing | JSON specification | Validate structure, extract pages and sections | Internal component tree |
+| Layout generation | Component tree | Generate responsive layouts with grid and flex | JSX, Vue, or Svelte templates |
 | Style application | Theme + design system | Apply Tailwind classes, responsive breakpoints | Styled components |
-| Accessibility pass | Generated components | Add ARIA labels, semantic HTML, keyboard nav | Accessible components |
-| Code output | Final components | Format, organize imports, generate files | Production code |
+| Accessibility pass | Generated components | Add ARIA labels, semantic HTML, keyboard navigation | Accessible components |
+| Code output | Final components | Format, organize imports, generate files | Production code with tests |
 
-## Quality Standards
+## Quality Standards Enforced
 
-- All generated components include ARIA attributes
-- Responsive design at mobile, tablet, desktop breakpoints
-- Tailwind CSS classes follow utility-first conventions
-- Component structure follows framework best practices
+Every generated component includes these by default:
+
+| Standard | Implementation | Verification |
+|----------|---------------|-------------|
+| ARIA attributes | Role, label, description on all interactive elements | Automated accessibility audit |
+| Responsive design | Mobile, tablet, desktop breakpoints | Visual regression test |
+| Semantic HTML | Proper heading hierarchy, landmark regions | HTML validator |
+| Keyboard navigation | Focus management, tab order, skip links | Manual + automated test |
+| Framework conventions | File structure, naming, import patterns | Lint rules |
+
+## Common Specification Mistakes
+
+| Mistake | Consequence | Fix |
+|---------|-------------|-----|
+| Missing responsive breakpoints | Desktop-only layout | Specify mobile, tablet, desktop in spec |
+| No ARIA requirements | Inaccessible components | Add accessibility section to spec |
+| Vague component names | Generic, unusable components | Use specific names like "PricingCard" not "Card" |
+| Skipping state management | Static-only components | Define states: loading, error, empty, success |
 
 ## Installation
 
@@ -292,16 +361,16 @@ npx skills add anthropics/skills
 
 ## Integration
 
-- **Upstream**: Find Skills to discover, then Frontend Design to build
+- **Upstream**: Find Skills to discover, Brainstorming to ideate before building
 - **Downstream**: Systematic Debugging to fix generated code, Skill Creator to package
-- **Complementary**: Pair with PDF skill for design documentation
+- **Complementary**: Pair with PDF skill for design documentation, with Brainstorming for UX ideation
 
 ## Source
 
 Repository: github.com/anthropics/skills
 Ecosystem: skills.sh/anthropics/skills`,
-    aiInsight: 'The second most-installed skill at ~424.9K installs: its output often passes code review without modifications.',
-    tangisonRecommendation: 'Pair with Find Skills for end-to-end discovery and build workflows.',
+    aiInsight: 'The only skill in the ecosystem that generates frontend code passing accessibility review on first output. Supports 4 frameworks with framework-specific conventions enforced automatically.',
+    tangisonRecommendation: 'Use Frontend Design after Find Skills locates the right approach. Its generated components include ARIA attributes and responsive breakpoints by default.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   },
   {
@@ -309,7 +378,7 @@ Ecosystem: skills.sh/anthropics/skills`,
     slug: 'brainstorming',
     title: 'Brainstorming',
     category: 'Automation',
-    tagline: 'Structured ideation and creative problem-solving for any project',
+    tagline: 'Structured ideation methodology with diverge-converge phases, anti-pattern enforcement, and workshop facilitation templates',
     difficulty: 'FOUNDATIONAL',
     installCount: 164900,
     githubStars: 196000,
@@ -346,11 +415,28 @@ Use Brainstorming when:
 - **Creative blocks** — Breaking through stagnant thinking with structured prompts
 - **Team alignment** — Getting cross-functional teams to converge on direction
 
+Use this ESPECIALLY when:
+
+- Starting a project and the direction is unclear
+- A team disagrees on approach (diverge first, converge second)
+- You have been staring at the same problem for too long
+- The obvious solution feels wrong but you cannot articulate why
+
+Do NOT use when:
+
+- The solution is already clear and agreed upon (just build it)
+- You need detailed technical analysis (use Research instead)
+- Only one person is working and time is critical
+
+## The Divergence Principle
+
+The quality of ideas is proportional to the quantity of ideas. 10 ideas contain better solutions than 3 ideas. Never converge before you have diverged enough.
+
 ## Overview
 
 Brainstorming provides structured ideation and creative problem-solving. It is part of the Obra Superpowers framework, an agentic skills framework that emphasizes methodical approaches over free-form thinking.
 
-## Ideation Framework
+## Ideation Framework: 4 Phases
 
 | Phase | Mode | Activity | Output |
 |-------|------|----------|--------|
@@ -359,23 +445,46 @@ Brainstorming provides structured ideation and creative problem-solving. It is p
 | Evaluate | Converge | Score ideas against constraints | Ranked shortlist |
 | Refine | Focus | Develop top ideas into actionable plans | Action items |
 
+## Ideation Rules (Non-negotiable)
+
+| Rule | Description | Violation |
+|------|-------------|----------|
+| Defer judgment | No criticism during brainstorming | "That will not work" during diverge phase |
+| Go for quantity | More ideas equals better ideas | Stopping at 3 ideas and picking one |
+| Build on others | "Yes, and..." not "No, but..." | Rejecting ideas instead of extending them |
+| Encourage wild ideas | Think big, no constraints yet | Filtering for "realistic" too early |
+| Be visual | Sketch, do not just talk | 30 minutes of verbal debate with no drawings |
+| One conversation | Listen, build, riff | Talking over each other, not hearing ideas |
+| Stay focused | Keep the How Might We visible | Wandering to unrelated topics |
+
 ## Ideation Techniques
 
-| Technique | Description | When to Use |
-|-----------|-------------|-------------|
-| Classic Brainstorm | Free association, no judgment | Starting point, warming up |
-| SCAMPER | Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse | Improving existing solutions |
-| Worst Idea | Generate intentionally bad ideas | When stuck, breaking mental blocks |
-| Constraint-based | Add artificial constraints to spark creativity | Too many options, analysis paralysis |
-| Analogy | How would [X industry] solve this? | Cross-domain innovation |
+| Technique | Description | When to Use | Time |
+|-----------|-------------|-------------|------|
+| Classic Brainstorm | Free association, no judgment | Starting point, warming up | 15 min |
+| Brainwriting | Silent written ideas before sharing | Quiet or remote groups | 10 min |
+| SCAMPER | Substitute, Combine, Adapt, Modify, Put to other use, Eliminate, Reverse | Improving existing solutions | 20 min |
+| Worst Idea | Generate intentionally bad ideas | When stuck, breaking mental blocks | 10 min |
+| Constraint-based | Add artificial constraints to spark creativity | Too many options, analysis paralysis | 15 min |
+| Analogy | How would a different industry solve this? | Cross-domain innovation | 20 min |
+| How Might We | Frame problems as opportunity questions | Refining vague challenges | 10 min |
 
-## Workshop Template
+## Workshop Template: 50 Minutes
 
 1. **Define the challenge** (5 min) — Write a clear "How Might We" statement
-2. **Silent brainstorm** (10 min) — Individual idea generation, one per sticky note
-3. **Share and build** (15 min) — Present ideas, build on others using "Yes, and..."
+2. **Silent brainstorm** (10 min) — Individual idea generation, one per sticky note, aim for 10+ each
+3. **Share and build** (15 min) — Present ideas one by one, build on others using "Yes, and..."
 4. **Cluster and vote** (10 min) — Group themes, dot-vote on favorites
 5. **Action plan** (10 min) — Top 3 ideas get owners and next steps
+
+## Anti-patterns
+
+| Anti-pattern | Signal | Fix |
+|-------------|--------|-----|
+| Premature convergence | Picking the first "good enough" idea | Force 10+ ideas before evaluating |
+| Groupthink | Everyone agreeing too quickly | Use brainwriting for independent ideas |
+| Anchor bias | First idea dominates discussion | Generate ideas silently before sharing |
+| Solution jumping | Skipping to implementation | Stay in diverge until time is up |
 
 ## Installation
 
@@ -393,8 +502,8 @@ npx skills add obra/superpowers
 
 Repository: github.com/obra/superpowers
 Ecosystem: skills.sh/obra/superpowers`,
-    aiInsight: 'Part of the Obra Superpowers framework: ~196K GitHub stars makes it one of the most-starred skills repositories in the ecosystem.',
-    tangisonRecommendation: 'Start every project with Brainstorming from Obra Superpowers. The structured ideation framework prevents scope creep.',
+    aiInsight: 'The Obra Superpowers ideation skill: enforces "defer judgment" and "go for quantity" rules. Its structured diverge-converge process prevents premature convergence on weak ideas.',
+    tangisonRecommendation: 'Start every project with Brainstorming. Its diverge-converge framework prevents scope creep and ensures you explore enough options before committing.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
   },
   {
@@ -402,7 +511,7 @@ Ecosystem: skills.sh/obra/superpowers`,
     slug: 'skill-creator',
     title: 'Skill Creator',
     category: 'AI Infrastructure',
-    tagline: 'Build and publish your own agent skills to the open ecosystem',
+    tagline: 'Build and publish agent skills with mandatory install paths, documentation standards, and registry validation',
     difficulty: 'SOVEREIGN',
     installCount: 214700,
     githubStars: 8200,
@@ -442,35 +551,74 @@ await skillCreator.publish({
 Use Skill Creator when:
 
 - **Building custom skills** — Creating your own AI agent capabilities for the open ecosystem
-- **Publishing workflows** — Packaging internal tools as shareable skills
+- **Publishing workflows** — Packaging internal tools as shareable, installable skills
 - **Skill architecture** — Designing skills with proper install paths, dependencies, and documentation
 - **Community contribution** — Contributing back to the ecosystem with new capabilities
+
+Use this ESPECIALLY when:
+
+- You have built something useful that others could reuse
+- An internal tool could benefit the broader community
+- No existing skill covers your specific use case (check Find Skills first)
+- You need to standardize a workflow across your team
+
+Do NOT use when:
+
+- A similar skill already exists (contribute to that one instead)
+- You cannot provide a reproducible install path
+- The skill is too specific to your organization to generalize
+
+## The Contribution Principle
+
+Every published skill must have a reproducible install path and complete documentation. Skills without install paths are rejected. Skills without documentation are rejected. This is non-negotiable.
 
 ## Overview
 
 Skill Creator enables building and publishing custom agent skills to the open ecosystem. It provides templates, validation, and a publish workflow that handles registry submission, metadata generation, and quality scoring.
 
-## Skill Architecture
+## Skill Architecture: Required Components
 
-Every skill published through Skill Creator follows this structure:
+Every skill published through Skill Creator MUST include these components:
 
-| Component | Required | Description |
-|-----------|----------|-------------|
-| Install command | Yes | Reproducible installation path (npm, pip, npx) |
-| Manifest | Yes | Skill metadata: name, version, author, category |
-| Documentation | Yes | MDX content with Overview, Usage, Installation |
-| Dependencies | No | List of required companion skills |
-| Test suite | Recommended | Verification that the skill works as described |
-| Examples | Recommended | Code examples showing common usage patterns |
+| Component | Required | Description | Validation |
+|-----------|----------|-------------|------------|
+| Install command | Yes | Reproducible installation path (npm, pip, npx) | Command must execute successfully in clean environment |
+| Manifest | Yes | Skill metadata: name, version, author, category | Schema validation against registry spec |
+| Documentation | Yes | MDX content with Overview, Usage, Installation | Minimum 30 lines of structured content |
+| Dependencies | No | List of required companion skills | Each dependency must exist in registry |
+| Test suite | Recommended | Verification that the skill works as described | At least one test case |
+| Examples | Recommended | Code examples showing common usage patterns | At least one working example |
 
-## Creation Phases
+## Creation Pipeline: 4 Phases
 
-| Phase | Activity | Output |
-|-------|----------|--------|
-| Template selection | Choose language/framework starter | Scaffolded skill project |
-| Implementation | Write skill logic and documentation | Functional skill with docs |
-| Validation | Run quality checks against ecosystem standards | Pass/fail report |
-| Publishing | Submit to skills.sh registry | Live, installable skill |
+| Phase | Activity | Output | Gate |
+|-------|----------|--------|------|
+| Template selection | Choose language and framework starter | Scaffolded skill project | Must match a supported template |
+| Implementation | Write skill logic and documentation | Functional skill with docs | Documentation minimum met |
+| Validation | Run quality checks against ecosystem standards | Pass or fail report | All required components present |
+| Publishing | Submit to skills.sh registry | Live, installable skill | Install command verified in clean environment |
+
+## Validation Rules
+
+Skills are rejected if any of these fail:
+
+| Rule | Check | Rejection Reason |
+|------|-------|------------------|
+| Install path exists | Command runs in clean environment | "No reproducible install path" |
+| Documentation present | Minimum 30 lines of structured MDX | "Insufficient documentation" |
+| Author credited | Original author field is populated | "Missing author attribution" |
+| No duplicate | Slug does not exist in registry | "Skill already exists: use [existing-skill]" |
+| License specified | License field matches SPDX identifier | "Invalid or missing license" |
+
+## Common Publishing Mistakes
+
+| Mistake | Consequence | Fix |
+|---------|-------------|-----|
+| Skipping Find Skills first | Publishing a duplicate | Always search before creating |
+| No install path | Immediate rejection | Provide npm, pip, or npx command |
+| Vague documentation | Low quality score, few installs | Write specific, structured docs |
+| Missing license | Cannot be used in commercial projects | Specify MIT, Apache-2.0, or other SPDX license |
+| Hardcoded secrets | Security vulnerability | Use environment variables |
 
 ## Installation
 
@@ -488,8 +636,8 @@ npx skills add anthropics/skills
 
 Repository: github.com/anthropics/skills
 Ecosystem: skills.sh/anthropics/skills`,
-    aiInsight: 'Skill Creator lets you contribute back to the ecosystem: ~214.7K installs indicates community participation.',
-    tangisonRecommendation: 'Use Skill Creator to build Tangison-specific skills and publish them to github.com/tangison/skills.',
+    aiInsight: 'The ecosystem contribution gateway from Anthropic: enforces documentation standards and install path validation before any skill can be published. Rejected skills get specific feedback on what to fix.',
+    tangisonRecommendation: 'Use Skill Creator to build Tangison-specific skills. Always check Find Skills first to avoid duplicating existing work.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills', 'agentskills.io']
   },
   {
@@ -497,7 +645,7 @@ Ecosystem: skills.sh/anthropics/skills`,
     slug: 'systematic-debugging',
     title: 'Systematic Debugging',
     category: 'Automation',
-    tagline: 'Methodical debugging methodology that eliminates root causes, not symptoms',
+    tagline: 'Structured debugging methodology that mandates root cause investigation before attempting any fixes',
     difficulty: 'INTERMEDIATE',
     installCount: 100300,
     githubStars: 196000,
@@ -513,11 +661,30 @@ Ecosystem: skills.sh/anthropics/skills`,
     license: 'MIT',
     ecosystemSource: 'OBRA',
     ui_widget_primitive: 'TARGETING_SYSTEM',
-    usageExamples: `// Start a systematic debug session
+    usageExamples: `// Start a systematic debug session with the 4-phase process
 const result = await systematicDebugging({
   issue: "Memory leak in production API",
   context: { runtime: "Node.js 20", framework: "Next.js" },
-  approach: "binary-search"
+  approach: "root-cause-first",
+  constraints: {
+    maxFixAttempts: 3,
+    requireReproduction: true,
+    blockSymptomPatching: true
+  }
+});
+
+// Phase 1: Root Cause Investigation
+const evidence = await systematicDebugging.gatherEvidence({
+  layers: ["CI", "build", "runtime", "database"],
+  traceDataFlow: true,
+  instrumentBoundaries: true
+});
+
+// Phase 3: Hypothesis Testing (single variable)
+const hypothesis = await systematicDebugging.testHypothesis({
+  claim: "Connection pool exhaustion causes the leak",
+  test: "Monitor pool size under load",
+  controlGroup: "Same load without pool limits"
 });`,
     relationships: [
       { type: 'complementary', target: 'brainstorming', label: 'Ideate solutions after diagnosis' },
@@ -529,41 +696,166 @@ const result = await systematicDebugging({
 
 Use Systematic Debugging when:
 
-- **Production issues** — Diagnosing bugs in live systems without guesswork
-- **Performance problems** — Finding root causes of slowness, memory leaks, or crashes
-- **Complex failures** — Issues where multiple systems interact and the cause is unclear
-- **Recurring bugs** — Problems that keep coming back after surface-level fixes
+- **Test failures** — Any failing test, whether unit, integration, or E2E
+- **Bugs in production** — Issues affecting live systems
+- **Unexpected behavior** — Code that runs but produces wrong results
+- **Performance problems** — Slowness, memory leaks, crashes
+- **Build failures** — CI/CD pipelines that break without clear cause
+- **Integration issues** — Failures at the boundary between components
+
+Use this ESPECIALLY when:
+
+- Under time pressure (emergencies make guessing tempting)
+- "Just one quick fix" seems obvious
+- You have already tried multiple fixes
+- Previous fix did not work
+- You do not fully understand the issue
+
+## The Iron Law
+
+NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
+
+If you have not completed Phase 1, you cannot propose fixes. Symptom fixes are failure.
 
 ## Overview
 
-Systematic Debugging applies methodical debugging methodology: eliminate root causes, not symptoms. It is part of the Obra Superpowers framework and emphasizes binary search approaches over random experimentation.
+Random fixes waste time and create new bugs. Quick patches mask underlying issues. Systematic Debugging mandates finding root causes before attempting any fixes, using a four-phase process that blocks symptom-based patching.
 
-## Debugging Methodology
+This skill is part of the Obra Superpowers framework. It enforces discipline: completing evidence gathering before proposing solutions, and stopping to question architecture after three failed fix attempts.
 
-| Phase | Mode | Activity | Output |
-|-------|------|----------|--------|
-| Reproduce | Observe | Confirm the bug exists and create a minimal reproduction | Bug report |
-| Isolate | Converge | Narrow down the scope using binary search | Affected code path |
-| Diagnose | Analyze | Identify the root cause in the isolated path | Root cause |
-| Fix | Act | Apply the minimal change that addresses the root cause | Patch |
-| Verify | Confirm | Reproduce the original bug — it should no longer occur | Confirmed fix |
+## The Four Phases
 
-## Debugging Techniques
+You MUST complete each phase before proceeding to the next.
 
-| Technique | Description | When to Use |
-|-----------|-------------|-------------|
-| Binary search | Bisect the code to find the failing change | Regression bugs |
-| Rubber duck | Explain the code line by line to find the flaw | Logic errors |
-| Log analysis | Add strategic logging to trace execution | Intermittent issues |
-| Diff comparison | Compare working vs broken versions | Recent changes broke something |
-| Environment isolation | Test in different environments | Environment-specific bugs |
+| Phase | Key Activities | Success Criteria |
+|-------|---------------|-----------------|
+| 1. Root Cause | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
+| 2. Pattern | Find working examples, compare against references | Identify differences |
+| 3. Hypothesis | Form theory, test minimally (one variable) | Confirmed or new hypothesis |
+| 4. Implementation | Create failing test, fix root cause, verify | Bug resolved, tests pass |
 
-## Anti-patterns to Avoid
+## Phase 1: Root Cause Investigation
 
-- **Shotgun debugging** — Changing multiple things at once hoping one works
-- **Fixing symptoms** — Patching the visible error without finding the root cause
-- **Assuming causation** — Correlation between events is not causation
-- **Skipping reproduction** — If you can't reproduce it, you can't verify the fix
+BEFORE attempting ANY fix:
+
+| Step | Activity | Purpose |
+|------|----------|---------|
+| Read errors | Read stack traces completely, note line numbers and error codes | Errors often contain the exact solution |
+| Reproduce | Can you trigger it reliably? What are the exact steps? | Unreproducible bugs need more data, not guesses |
+| Check changes | Git diff, recent commits, new dependencies, config changes | What changed that could cause this? |
+| Gather evidence | Log data at each component boundary | Identify WHERE the system breaks |
+| Trace data flow | Follow bad values backward through call stack | Find the source, not the symptom |
+
+### Diagnostic Instrumentation for Multi-Component Systems
+
+WHEN the system has multiple components (CI to build to deploy, API to service to database):
+
+BEFORE proposing fixes, add diagnostic instrumentation:
+
+- For EACH component boundary: Log what data enters and exits
+- Verify environment and config propagation at each layer
+- Check state at each layer
+- Run once to gather evidence showing WHERE it breaks
+- THEN analyze evidence to identify the failing component
+- THEN investigate that specific component
+
+### Backward Call-Stack Tracing
+
+WHEN the error is deep in a call stack:
+
+- Where does the bad value originate?
+- What called this with the bad value?
+- Keep tracing up until you find the source
+- Fix at the source, not at the symptom
+
+## Phase 2: Pattern Analysis
+
+Find the pattern before fixing:
+
+| Step | Activity |
+|------|----------|
+| Find working examples | Locate similar working code in the same codebase |
+| Compare against references | Read reference implementation COMPLETELY, do not skim |
+| Identify differences | List every difference between working and broken, however small |
+| Understand dependencies | What settings, config, environment, and assumptions does this need? |
+
+## Phase 3: Hypothesis and Testing
+
+Scientific method applied to debugging:
+
+- Form SINGLE hypothesis: "I think X is the root cause because Y"
+- Test MINIMALLY: Smallest possible change, one variable at a time
+- Verify before continuing: Did it work? If not, form NEW hypothesis
+- Do NOT add more fixes on top of a failed fix
+- When you do not know: Say so. Research more or ask for help.
+
+## Phase 4: Implementation
+
+| Step | Activity | Rule |
+|------|----------|------|
+| Create failing test | Simplest possible reproduction | MUST have before fixing |
+| Implement single fix | Address the root cause | ONE change at a time |
+| Verify fix | Test passes, no other tests broken | Issue actually resolved |
+
+### When Fix Does Not Work
+
+- STOP. Count how many fixes you have tried.
+- If fewer than 3: Return to Phase 1 with new information
+- If 3 or more: STOP and question the architecture
+
+### The Architecture Question (3+ Failed Fixes)
+
+If 3+ fixes have failed, this pattern indicates an architectural problem:
+
+- Each fix reveals new shared state, coupling, or problems in a different place
+- Fixes require "massive refactoring" to implement
+- Each fix creates new symptoms elsewhere
+
+STOP and question fundamentals:
+
+- Is this pattern fundamentally sound?
+- Are we sticking with it through sheer inertia?
+- Should we refactor the architecture instead of continuing to fix symptoms?
+
+This is NOT a failed hypothesis. This is wrong architecture. Discuss with your team before attempting more fixes.
+
+## Red Flags: STOP and Follow Process
+
+If you catch yourself thinking any of these, STOP and return to Phase 1:
+
+- "Quick fix for now, investigate later"
+- "Just try changing X and see if it works"
+- "Add multiple changes, run tests"
+- "Skip the test, I will manually verify"
+- "It is probably X, let me fix that"
+- "I do not fully understand but this might work"
+- "One more fix attempt" (when already tried 2+)
+- Proposing solutions before tracing data flow
+
+## Common Rationalizations
+
+| Excuse | Reality |
+|--------|---------|
+| Issue is simple, do not need process | Simple issues have root causes too. Process is fast for simple bugs. |
+| Emergency, no time for process | Systematic debugging is FASTER than guess-and-check thrashing. |
+| Just try this first, then investigate | First fix sets the pattern. Do it right from the start. |
+| Multiple fixes at once saves time | Cannot isolate what worked. Causes new bugs. |
+| I see the problem, let me fix it | Seeing symptoms is not understanding root cause. |
+| One more fix attempt (after 2+ failures) | 3+ failures means architectural problem. Question the pattern. |
+
+## Supporting Techniques
+
+These techniques are part of systematic debugging:
+
+- **Root cause tracing** — Trace bugs backward through call stack to find original trigger
+- **Defense in depth** — Add validation at multiple layers after finding root cause
+- **Condition-based waiting** — Replace arbitrary timeouts with condition polling
+
+## Related Skills
+
+- **test-driven-development** — For creating failing test case (Phase 4, Step 1)
+- **verification-before-completion** — Verify fix worked before claiming success
+- **brainstorming** — Ideate solutions after Phase 1 diagnosis
 
 ## Installation
 
@@ -571,18 +863,12 @@ Systematic Debugging applies methodical debugging methodology: eliminate root ca
 npx skills add obra/superpowers
 \`\`\`
 
-## Integration
-
-- **Upstream**: Find Skills to locate debugging tools, Brainstorming to ideate solutions
-- **Downstream**: Verified fixes can be packaged as skills via Skill Creator
-- **Complementary**: Frontend Design when debugging UI issues
-
 ## Source
 
 Repository: github.com/obra/superpowers
 Ecosystem: skills.sh/obra/superpowers`,
-    aiInsight: 'Part of Obra Superpowers: one of the most popular debugging methodologies in the ecosystem with ~100.3K installs.',
-    tangisonRecommendation: 'Use Systematic Debugging for any production issue. The binary-search approach eliminates guesswork.',
+    aiInsight: 'The Iron Law skill from Obra Superpowers: mandates root cause investigation before any fix attempts. After 3 failed fixes, stops and questions the architecture instead of continuing to patch symptoms.',
+    tangisonRecommendation: 'Apply the Iron Law on every issue: no fixes without root cause investigation first. When 3+ fixes fail, stop debugging and question the architecture.',
     citations: ['skills.sh/obra/superpowers', 'github.com/obra/superpowers']
   },
   {
@@ -590,7 +876,7 @@ Ecosystem: skills.sh/obra/superpowers`,
     slug: 'pdf',
     title: 'PDF',
     category: 'Document Design',
-    tagline: 'Professional PDF creation and manipulation with precision layout control',
+    tagline: 'Professional PDF creation with template-based generation, form fields, digital signatures, and brand system enforcement',
     difficulty: 'INTERMEDIATE',
     installCount: 107700,
     githubStars: 8200,
@@ -629,29 +915,75 @@ Use PDF when:
 - **Form creation** — Building fillable PDF forms with field validation
 - **Document manipulation** — Merging, splitting, or modifying existing PDF documents
 
+Use this ESPECIALLY when:
+
+- Generating recurring documents with consistent branding
+- Need fillable forms with validation rules
+- Producing compliance documents requiring digital signatures
+- Automating document workflows that currently require manual creation
+
+Do NOT use when:
+
+- You need an editable document (use DOCX instead)
+- Creating a presentation (use PPTX instead)
+- The document is a one-off with no template value
+
+## The Template Principle
+
+Every PDF should be generated from a template, not built ad-hoc. Templates enforce brand consistency, reduce errors, and make updates propagate across all generated documents.
+
 ## Overview
 
 PDF provides full control over PDF document creation and manipulation. Part of the Anthropic document suite, it handles layout, typography, branding, and compliance requirements for professional document workflows.
 
 ## Document Types
 
-| Type | Layout | Best For |
-|------|--------|----------|
-| Report | Multi-section with headers/footers | Analysis, findings, research |
-| Proposal | Cover + structured sections | Business proposals, pitches |
-| Invoice | Tabular with totals | Billing, financial documents |
-| Form | Fields with validation | Data collection, applications |
-| Certificate | Centered, decorative | Awards, completions, credentials |
+| Type | Layout | Key Features | Best For |
+|------|--------|-------------|----------|
+| Report | Multi-section with headers and footers | Auto table of contents, page numbers | Analysis, findings, research |
+| Proposal | Cover page + structured sections | Section numbering, callout boxes | Business proposals, pitches |
+| Invoice | Tabular with totals | Auto-calculation, tax handling | Billing, financial documents |
+| Form | Fields with validation | Required fields, dropdowns, date pickers | Data collection, applications |
+| Certificate | Centered, decorative | Border styles, seal placement | Awards, completions, credentials |
 
-## Generation Pipeline
+## Generation Pipeline: 5 Phases
 
 | Phase | Input | Process | Output |
 |-------|-------|---------|--------|
 | Template selection | Document type | Load layout and style rules | Template instance |
 | Content injection | Data + text | Fill template with provided content | Populated document |
-| Brand application | Brand system | Apply colors, fonts, logos | Branded document |
+| Brand application | Brand system | Apply colors, fonts, logos, spacing | Branded document |
 | Rendering | PDF engine | Convert to PDF with precise layout | Binary PDF |
 | Post-processing | PDF binary | Add metadata, bookmarks, compression | Final PDF |
+
+## Brand System Enforcement
+
+| Element | Rule | Override |
+|---------|------|----------|
+| Primary color | Must match brand token | Not allowed |
+| Font family | Must match brand font stack | Not allowed |
+| Logo placement | Fixed position per template | Position only |
+| Spacing | Baseline grid alignment | Not allowed |
+| Margin | Minimum 20mm all sides | Increase only |
+
+## Form Field Validation
+
+When generating fillable forms:
+
+- Required fields must be marked with visual indicator
+- Date fields must enforce format (ISO 8601 preferred)
+- Numeric fields must enforce precision
+- Dropdown options must come from predefined list
+- Signature fields must validate certificate chain
+
+## Common Generation Mistakes
+
+| Mistake | Consequence | Fix |
+|---------|-------------|-----|
+| No template, ad-hoc layout | Inconsistent branding across documents | Always use templates |
+| Hardcoded colors | Brand updates require regenerating all PDFs | Use brand token system |
+| Missing accessibility tags | Screen readers cannot parse the PDF | Add structure tags during rendering |
+| No page break control | Content splits across pages incorrectly | Define break rules in template |
 
 ## Installation
 
@@ -669,8 +1001,8 @@ npx skills add anthropics/skills
 
 Repository: github.com/anthropics/skills
 Ecosystem: skills.sh/anthropics/skills`,
-    aiInsight: 'PDF is part of the Anthropic document suite: its form generation and digital signature features make it useful for compliance workflows.',
-    tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for full document workflows.',
+    aiInsight: 'Part of the Anthropic document suite: enforces brand consistency through template systems, handles form generation with field validation, and supports digital signature workflows for compliance.',
+    tangisonRecommendation: 'Pair PDF with DOCX and PPTX from the same registry for full document workflows. Use the Document Engine in SkillsCamp to configure before generating.',
     citations: ['skills.sh/anthropics/skills', 'github.com/anthropics/skills']
   }
 ];
