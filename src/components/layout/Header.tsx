@@ -16,7 +16,6 @@ import {
   Moon,
   List,
   Globe,
-  LockKey,
 } from '@phosphor-icons/react';
 import { NAV_ITEMS, OFFCANVAS_LINKS, FOOTER_LINKS, type Section } from '@/lib/constants';
 
@@ -38,13 +37,15 @@ export function Header({
   const { resolvedTheme, setTheme } = useTheme();
   const [offCanvasOpen, setOffCanvasOpen] = useState(false);
 
-  const handleNavAction = (action: 'home' | 'skills' | 'documents' | 'tools' | 'about' | 'chat') => {
+  const handleNavAction = (action: 'home' | 'skills' | 'documents' | 'tools' | 'about' | 'chat' | 'external-tangison') => {
     setOffCanvasOpen(false);
     if (action === 'home') {
       onSectionChange('skills');
       onSelectedSkillClear();
     } else if (action === 'chat') {
       onChatToggle();
+    } else if (action === 'external-tangison') {
+      window.open('https://tangison.com', '_blank', 'noopener,noreferrer');
     } else {
       onSectionChange(action as Section);
       onSelectedSkillClear();
@@ -155,8 +156,8 @@ export function Header({
               </nav>
 
               <div className="border-t border-[var(--border-subtle-value)] px-5 py-4 space-y-3">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary">Resources</p>
-                {FOOTER_LINKS.resources.map(link => (
+                <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary">Ecosystem</p>
+                {FOOTER_LINKS.ecosystem.map(link => (
                   <a
                     key={link.label}
                     href={link.href}
@@ -176,9 +177,11 @@ export function Header({
                   <a
                     key={link.label}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 text-xs text-secondary hover:text-primary transition-colors"
                   >
-                    <LockKey size={13} />
+                    <Globe size={13} />
                     {link.label}
                   </a>
                 ))}
@@ -186,7 +189,7 @@ export function Header({
 
               <div className="absolute bottom-0 left-0 right-0 border-t border-[var(--border-subtle-value)] px-5 py-4">
                 <p className="text-[10px] text-muted">
-                  © 2026 TANGISON GROUP. ALL RIGHTS SECURED.
+                  © 2026 Tangison Agency. All rights reserved.
                 </p>
               </div>
             </SheetContent>

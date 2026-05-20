@@ -1,5 +1,5 @@
 import { MastGlyph } from '@/components/brand/TangisonLogo';
-import { GithubLogo, Globe, EnvelopeSimple, LockKey, MapPin } from '@phosphor-icons/react';
+import { GithubLogo, Globe, EnvelopeSimple, MapPin } from '@phosphor-icons/react';
 import { FOOTER_LINKS, type Section } from '@/lib/constants';
 
 interface FooterProps {
@@ -70,16 +70,31 @@ export function Footer({ onSectionChange, onSelectedSkillClear, onChatToggle }: 
                 <li key={link.label}>
                   {link.href === '#about' ? (
                     <button
-                      onClick={() => onSectionChange('about')}
+                      onClick={() => { onSectionChange('about'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                       className="text-xs text-secondary hover:text-primary transition-colors"
                     >
                       {link.label}
                     </button>
                   ) : (
-                    <a href={link.href} className="text-xs text-secondary hover:text-primary transition-colors">
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary hover:text-primary transition-colors">
                       {link.label}
                     </a>
                   )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Ecosystem */}
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Ecosystem</p>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.ecosystem.map(link => (
+                <li key={link.label}>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                    <Globe size={10} />
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -91,22 +106,8 @@ export function Footer({ onSectionChange, onSelectedSkillClear, onChatToggle }: 
             <ul className="space-y-2">
               {FOOTER_LINKS.legal.map(link => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-xs text-secondary hover:text-primary transition-colors flex items-center gap-1">
-                    <LockKey size={10} />
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Resources</p>
-            <ul className="space-y-2">
-              {FOOTER_LINKS.resources.map(link => (
-                <li key={link.label}>
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary hover:text-primary transition-colors">
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                    <Globe size={10} />
                     {link.label}
                   </a>
                 </li>
@@ -120,15 +121,15 @@ export function Footer({ onSectionChange, onSelectedSkillClear, onChatToggle }: 
       <div className="border-t border-[var(--border-subtle-value)]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <p className="text-[10px] text-muted">
-            © 2026 TANGISON GROUP. ALL RIGHTS SECURED.
+            © 2026 Tangison Agency. All rights reserved.
           </p>
           <div className="flex items-center gap-1.5 text-[10px] text-muted">
             <MapPin size={10} />
-            <span>WINDHOEK, NAMIBIA // TNG-REG-01</span>
+            <span>Windhoek, Namibia</span>
             <span className="mx-1">|</span>
-            <span className="text-[var(--rust-signal)] font-medium">AI-POWERED</span>
+            <span className="text-[var(--rust-signal)] font-medium">AI-Powered</span>
             <span className="mx-1">|</span>
-            <span>v0.1.0-beta</span>
+            <span>v0.2.0</span>
           </div>
         </div>
       </div>

@@ -276,3 +276,99 @@ Stage Summary:
 - 10+ theming fixes (hardcoded colors → CSS variables)
 - Duplicate font imports removed (~40KB bundle reduction)
 - Lint passes clean, dev server returns 200
+
+---
+Task ID: 9
+Agent: General Purpose
+Task: Rewrite src/lib/data.ts with real-world skills from the skills.sh ecosystem
+
+Work Log:
+- Read worklog.md and current data.ts (1601 lines, 30 skills with fake `npx skills-sh` install commands)
+- Verified types.ts already has COMMUNITY in EcosystemSource type
+- Completely rewrote src/lib/data.ts from 1601 lines to new version with 35 skills
+- Updated ALL install commands from fake `npx skills-sh X` to real `npx skills add owner/repo` convention:
+  - Vercel Labs: `npx skills add vercel-labs/skills` / `npx skills add vercel-labs/agent-skills` / `npx skills add vercel-labs/agent-browser`
+  - Anthropic: `npx skills add anthropics/skills`
+  - Obra: `npx skills add obra/superpowers`
+  - Tangison: `npx skills add tangison/skills`
+  - Better Auth: `npx skills add better-auth/skills`
+  - Neon: `npx skills add neondatabase/agent-skills`
+  - Stripe: `npx skills add stripe/agent-skills`
+  - Cloudflare: `npx skills add cloudflare/agent-skills`
+  - Google: `npx skills add googleskills/agent-skills`
+- Updated githubRepo fields to real GitHub repos for all ecosystem skills
+- Updated sourceUrl and skillsShUrl fields to use real URLs
+- Added 8 NEW real-world skills:
+  1. Superpowers (Obra) — #1 most-installed, ~40,900 stars, AI Infrastructure, OBRA ecosystem
+  2. Agent Browser (Vercel Labs) — Browser automation, Automation category, VERCEL_LABS
+  3. Vercel React Best Practices (Vercel Labs) — React patterns, React category, VERCEL_LABS
+  4. Better Auth Skills (Better Auth) — Authentication, Security category, COMMUNITY
+  5. Neon Database Skills (Neon) — Serverless PostgreSQL, Deployment category, COMMUNITY
+  6. Stripe Payment Skills (Stripe) — Payment processing, Mobile Money & Fintech, COMMUNITY
+  7. Cloudflare Workers (Cloudflare) — Edge computing, Deployment category, COMMUNITY
+  8. Google Labs AI (Google) — Gemini integration, AI Infrastructure, COMMUNITY
+- Kept all 4 named Tangison Original skills with updated installCommand: web-agency-complete, brandkit-image-generation, human-copywriting, website-planning
+- Also kept additional Tangison Originals: flyer-design, social-launch-copy, website-auditor, seo-optimizer, oshiwambo-translate, mobile-money-pay, sadc-compliance, offline-first-pwa, cold-outreach, invoice-generator, whatsapp-auto, skill-summariser, prompt-engine, typescript-strict, brand-tokens, test-runner
+- Updated SKILL_CATEGORIES skillCount to reflect actual number of skills per category (all verified matching)
+- Updated SUPPORTED_ECOSYSTEMS to include all new real-world ecosystem sources (Obra, Better Auth, Neon, Stripe, Cloudflare, Google)
+- Kept SKILL_CATEGORIES array exactly as is (28 categories) — only updated skillCount values
+- Content fields kept concise (20-40 lines per skill) as requested
+- All lint checks pass clean, dev server returns 200
+
+Stage Summary:
+- data.ts completely rewritten with 35 skills (up from 30)
+- All install commands use real skills.sh convention: `npx skills add owner/repo`
+- 8 new real-world ecosystem skills added (Obra, Vercel Labs, Better Auth, Neon, Stripe, Cloudflare, Google)
+- All githubRepo, sourceUrl, skillsShUrl fields updated to real values
+- SKILL_CATEGORIES skillCount verified and matches actual skill distribution
+- SUPPORTED_ECOSYSTEMS expanded to 9 entries
+- All 28 categories covered with at least 1 skill
+- Ecosystems represented: OBRA, VERCEL_LABS, ANTHROPIC, TANGISON, COMMUNITY
+
+---
+Task ID: 3-5
+Agent: General Purpose
+Task: Rewrite About section, simplify navigation, update footer to redirect to tangison.com
+
+Work Log:
+- Read worklog.md and all 5 target files before making changes
+- Rewrote src/components/sections/AboutSection.tsx completely:
+  - New title "About SkillsCamp" with subtitle "Sovereign intelligence infrastructure for the SADC region"
+  - Three concise main paragraphs referencing real skills.sh ecosystem
+  - Three differentiator cards: SADC Relevance, African Language AI, Offline-First
+  - Two-column layout with portrait image + ecosystem badges (9 badges using Tag component)
+  - "How Skills Work" technical section with numbered steps, code block for install command
+  - Prominent "Visit tangison.com" CTA button with ArrowSquareOut icon
+  - Removed old roadmap, version history, AI Rewrite System, brand image, core principles sections
+  - Kept hero image band (hero-sadc.webp with duotone overlay) and portrait image
+  - Added Phosphor icons: Lightning, Translate, WifiHigh, CodeBlock, Terminal, ArrowSquareOut
+- Updated src/lib/constants.ts:
+  - Added Globe import from @phosphor-icons/react
+  - Removed 'about' from NAV_ITEMS (now only Skills, Documents, Tools)
+  - Added 'Tangison.com' entry to OFFCANVAS_LINKS with 'external-tangison' action
+  - Replaced FOOTER_LINKS with new structure: product, company (About + Tangison.com + GitHub), ecosystem (Skills.sh, Vercel Labs, Anthropic, Obra Superpowers), legal (all tangison.com URLs)
+- Updated src/components/layout/Header.tsx:
+  - Added 'external-tangison' to handleNavAction union type — opens https://tangison.com in new tab
+  - Removed LockKey import (no longer needed)
+  - Changed off-canvas Resources section → Ecosystem section using FOOTER_LINKS.ecosystem
+  - Updated Legal section links to open externally (target="_blank") pointing to tangison.com
+  - Updated off-canvas footer copyright to "© 2026 Tangison Agency. All rights reserved."
+- Updated src/components/layout/Footer.tsx:
+  - Replaced Company column with new content: About (button), Tangison.com (external), GitHub (external)
+  - Replaced Resources column with Ecosystem column: Skills.sh, Vercel Labs, Anthropic, Obra Superpowers (all external with Globe icons)
+  - Updated Legal column: all links now external pointing to tangison.com/privacy, /terms, /cookies
+  - Removed LockKey import, added Globe for ecosystem/legal link icons
+  - Updated bottom bar: "© 2026 Tangison Agency. All rights reserved."
+  - Changed "WINDHOEK, NAMIBIA // TNG-REG-01" → "Windhoek, Namibia"
+  - Changed "AI-POWERED" → "AI-Powered"
+  - Changed version from "v0.1.0-beta" to "v0.2.0"
+- Verified src/app/page.tsx needs no changes (Section type still includes 'about', AboutSection still rendered)
+- All lint checks pass clean, dev server returns 200
+
+Stage Summary:
+- About section rewritten with premium content referencing skills.sh ecosystem
+- Navigation simplified: About removed from top nav (still accessible via off-canvas menu and footer)
+- Footer restructured with Company/Ecosystem/Legal columns all linking to tangison.com
+- Off-canvas menu includes Tangison.com external link
+- Footer bottom bar updated: "Tangison Agency", "AI-Powered", "v0.2.0"
+- Premium Utilitarian Minimalism design style maintained throughout

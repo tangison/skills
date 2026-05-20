@@ -11,6 +11,7 @@ import {
   Info,
   House,
   ChatTeardropText,
+  Globe,
 } from '@phosphor-icons/react';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -83,7 +84,6 @@ export const NAV_ITEMS: { id: Section; label: string; icon: typeof House }[] = [
   { id: 'skills', label: 'Skills', icon: FolderOpen },
   { id: 'documents', label: 'Documents', icon: FileText },
   { id: 'tools', label: 'Tools', icon: Wrench },
-  { id: 'about', label: 'About', icon: Info },
 ];
 
 export const OFFCANVAS_LINKS = [
@@ -93,6 +93,7 @@ export const OFFCANVAS_LINKS = [
   { label: 'Tools', icon: Wrench, action: 'tools' as const },
   { label: 'About', icon: Info, action: 'about' as const },
   { label: 'AI Chat', icon: ChatTeardropText, action: 'chat' as const },
+  { label: 'Tangison.com', icon: Globe, action: 'external-tangison' as const },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
@@ -107,20 +108,18 @@ export const FOOTER_LINKS = {
   ],
   company: [
     { label: 'About', href: '#about' },
-    { label: 'Contact', href: '#contact' },
-    { label: 'Careers', href: '#careers' },
-    { label: 'Blog', href: '#blog' },
+    { label: 'Tangison.com', href: 'https://tangison.com' },
+    { label: 'GitHub', href: 'https://github.com/tangison/skills' },
+  ],
+  ecosystem: [
+    { label: 'Skills.sh', href: 'https://skills.sh' },
+    { label: 'Vercel Labs', href: 'https://github.com/vercel-labs/skills' },
+    { label: 'Anthropic', href: 'https://github.com/anthropics/skills' },
+    { label: 'Obra Superpowers', href: 'https://github.com/obra/superpowers' },
   ],
   legal: [
-    { label: 'Privacy Policy', href: '#privacy' },
-    { label: 'Terms of Service', href: '#terms' },
-    { label: 'Cookie Policy', href: '#cookies' },
-    { label: 'GDPR', href: '#gdpr' },
-  ],
-  resources: [
-    { label: 'Documentation', href: 'https://skills.sh/docs' },
-    { label: 'API Reference', href: 'https://skills.sh/api' },
-    { label: 'GitHub', href: 'https://github.com/tangison/skills' },
-    { label: 'Status', href: 'https://status.tangison.com' },
+    { label: 'Privacy Policy', href: 'https://tangison.com/privacy' },
+    { label: 'Terms of Service', href: 'https://tangison.com/terms' },
+    { label: 'Cookie Policy', href: 'https://tangison.com/cookies' },
   ],
 };
