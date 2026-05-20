@@ -39,12 +39,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* ── Tangison brand tokens ── */
-  --color-atlantic-black: #111315;
-  --color-skeleton-bone: #F6F4EF;
-  --color-fog-gray: #D9D7D2;
-  --color-deep-ocean: #16353D;
-  --color-rust-signal: #C56A4A;
+  /* ── Tangison brand tokens (Premium Utilitarian Minimalism) ── */
+  --color-warm-bone: var(--warm-bone);
+  --color-off-black: var(--off-black);
+  --color-rust-signal: var(--rust-signal);
   --color-surface-01: var(--surface-01);
   --color-surface-02: var(--surface-02);
   --color-border-subtle: var(--border-subtle-value);
@@ -52,6 +50,20 @@
   --color-text-primary: var(--text-primary-value);
   --color-text-secondary: var(--text-secondary-value);
   --color-text-muted: var(--text-muted-value);
+  --color-pastel-red: var(--pastel-red);
+  --color-pastel-red-text: var(--pastel-red-text);
+  --color-pastel-blue: var(--pastel-blue);
+  --color-pastel-blue-text: var(--pastel-blue-text);
+  --color-pastel-green: var(--pastel-green);
+  --color-pastel-green-text: var(--pastel-green-text);
+  --color-pastel-yellow: var(--pastel-yellow);
+  --color-pastel-yellow-text: var(--pastel-yellow-text);
+
+  /* ── Legacy aliases (backward compat) ── */
+  --color-atlantic-black: var(--off-black);
+  --color-skeleton-bone: var(--warm-bone);
+  --color-fog-gray: var(--text-secondary-value);
+  --color-deep-ocean: #16353D;
 
   /* ── Radii ── */
   --radius-sm: calc(var(--radius) - 4px);
@@ -59,147 +71,169 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* ── Font families ── */
-  --font-sans: "Inter", "Satoshi", ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: "Satoshi", "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-editorial: "Cabinet Grotesk", "Inter", ui-sans-serif, system-ui,
-    sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono",
-    Menlo, Consolas, "Liberation Mono", monospace;
+  /* ── Font families (powered by next/font) ── */
+  --font-sans: var(--font-geist-sans), "Helvetica Neue", "Switzer", ui-sans-serif, system-ui,
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-editorial: var(--font-playfair), "Newsreader", "Instrument Serif", ui-serif,
+    Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: var(--font-jetbrains-mono), "SF Mono", ui-monospace,
+    SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    LIGHT THEME (default :root)
+   Premium Utilitarian Minimalism — Warm Bone / Off-Black
    ═══════════════════════════════════════════════════════════════════════════ */
 
 :root {
   --radius: 0.625rem;
 
-  /* ── Core brand palette (constant) ── */
-  --atlantic-black: #111315;
-  --skeleton-bone: #F6F4EF;
-  --fog-gray: #D9D7D2;
-  --deep-ocean: #16353D;
+  /* ── Core palette (constant) ── */
+  --warm-bone: #F7F6F3;
+  --off-black: #111111;
   --rust-signal: #C56A4A;
 
   /* ── Light theme surfaces ── */
   --surface-01: #FFFFFF;
-  --surface-02: #EDEAE5;
-  --border-subtle-value: rgba(17, 19, 21, 0.06);
-  --border-default-value: rgba(17, 19, 21, 0.12);
-  --text-primary-value: #111315;
-  --text-secondary-value: rgba(17, 19, 21, 0.55);
-  --text-muted-value: rgba(17, 19, 21, 0.35);
+  --surface-02: #F0EFEC;
+  --border-subtle-value: #EAEAEA;
+  --border-default-value: rgba(0, 0, 0, 0.06);
+  --text-primary-value: #111111;
+  --text-secondary-value: #787774;
+  --text-muted-value: rgba(17, 17, 17, 0.35);
+
+  /* ── Desaturated pastel accents (tags/badges only) ── */
+  --pastel-red: #FDEBEC;
+  --pastel-red-text: #9F2F2D;
+  --pastel-blue: #E1F3FE;
+  --pastel-blue-text: #1F6C9F;
+  --pastel-green: #EDF3EC;
+  --pastel-green-text: #346538;
+  --pastel-yellow: #FBF3DB;
+  --pastel-yellow-text: #956400;
 
   /* ── Semantic mappings ── */
-  --background: var(--skeleton-bone);
-  --foreground: var(--atlantic-black);
+  --background: var(--warm-bone);
+  --foreground: var(--off-black);
 
   --card: var(--surface-01);
-  --card-foreground: var(--atlantic-black);
+  --card-foreground: var(--off-black);
 
   --popover: var(--surface-01);
-  --popover-foreground: var(--atlantic-black);
+  --popover-foreground: var(--off-black);
 
-  --primary: var(--rust-signal);
+  --primary: var(--off-black);
   --primary-foreground: #FFFFFF;
 
   --secondary: var(--surface-02);
-  --secondary-foreground: var(--atlantic-black);
+  --secondary-foreground: var(--off-black);
 
   --muted: var(--surface-02);
   --muted-foreground: var(--text-secondary-value);
 
-  --accent: var(--deep-ocean);
-  --accent-foreground: var(--skeleton-bone);
+  --accent: var(--surface-02);
+  --accent-foreground: var(--off-black);
 
   --destructive: #E05252;
 
-  --border: var(--border-default-value);
+  --border: var(--border-subtle-value);
   --input: var(--border-default-value);
-  --ring: var(--rust-signal);
+  --ring: var(--off-black);
 
   /* ── Charts ── */
-  --chart-1: var(--rust-signal);
-  --chart-2: var(--deep-ocean);
-  --chart-3: #2A7A6E;
-  --chart-4: #888888;
-  --chart-5: #8B5E3C;
+  --chart-1: #787774;
+  --chart-2: #1F6C9F;
+  --chart-3: #346538;
+  --chart-4: #956400;
+  --chart-5: var(--rust-signal);
 
   /* ── Sidebar ── */
-  --sidebar: var(--skeleton-bone);
-  --sidebar-foreground: var(--atlantic-black);
-  --sidebar-primary: var(--rust-signal);
+  --sidebar: var(--warm-bone);
+  --sidebar-foreground: var(--off-black);
+  --sidebar-primary: var(--off-black);
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: var(--deep-ocean);
-  --sidebar-accent-foreground: var(--skeleton-bone);
+  --sidebar-accent: var(--surface-02);
+  --sidebar-accent-foreground: var(--off-black);
   --sidebar-border: var(--border-subtle-value);
-  --sidebar-ring: var(--rust-signal);
+  --sidebar-ring: var(--off-black);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DARK THEME
+   Premium Utilitarian Minimalism — Dark Canvas
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .dark {
   --radius: 0.625rem;
 
-  --atlantic-black: #111315;
-  --skeleton-bone: #F6F4EF;
-  --fog-gray: #D9D7D2;
-  --deep-ocean: #16353D;
+  /* ── Core palette (constant) ── */
+  --warm-bone: #F7F6F3;
+  --off-black: #111111;
   --rust-signal: #C56A4A;
 
-  --surface-01: #1A1C1E;
-  --surface-02: #222426;
-  --border-subtle-value: rgba(217, 215, 210, 0.08);
-  --border-default-value: rgba(217, 215, 210, 0.15);
-  --text-primary-value: #F6F4EF;
-  --text-secondary-value: rgba(246, 244, 239, 0.55);
-  --text-muted-value: rgba(246, 244, 239, 0.3);
+  /* ── Dark theme surfaces ── */
+  --surface-01: #1A1A1A;
+  --surface-02: #242424;
+  --border-subtle-value: rgba(255, 255, 255, 0.08);
+  --border-default-value: rgba(255, 255, 255, 0.12);
+  --text-primary-value: #F7F6F3;
+  --text-secondary-value: rgba(247, 246, 243, 0.55);
+  --text-muted-value: rgba(247, 246, 243, 0.35);
 
-  --background: var(--atlantic-black);
-  --foreground: var(--skeleton-bone);
+  /* ── Desaturated pastel accents — dark mode adjusted ── */
+  --pastel-red: rgba(253, 235, 236, 0.12);
+  --pastel-red-text: #E8A0A0;
+  --pastel-blue: rgba(225, 243, 254, 0.12);
+  --pastel-blue-text: #8EC4E8;
+  --pastel-green: rgba(237, 243, 236, 0.12);
+  --pastel-green-text: #8DBF90;
+  --pastel-yellow: rgba(251, 243, 219, 0.12);
+  --pastel-yellow-text: #D4B872;
+
+  /* ── Semantic mappings ── */
+  --background: var(--off-black);
+  --foreground: var(--warm-bone);
 
   --card: var(--surface-01);
-  --card-foreground: var(--skeleton-bone);
+  --card-foreground: var(--warm-bone);
 
   --popover: var(--surface-01);
-  --popover-foreground: var(--skeleton-bone);
+  --popover-foreground: var(--warm-bone);
 
-  --primary: var(--rust-signal);
-  --primary-foreground: var(--skeleton-bone);
+  --primary: #FFFFFF;
+  --primary-foreground: var(--off-black);
 
   --secondary: var(--surface-02);
-  --secondary-foreground: var(--skeleton-bone);
+  --secondary-foreground: var(--warm-bone);
 
   --muted: var(--surface-02);
   --muted-foreground: var(--text-secondary-value);
 
-  --accent: var(--deep-ocean);
-  --accent-foreground: var(--skeleton-bone);
+  --accent: var(--surface-02);
+  --accent-foreground: var(--warm-bone);
 
   --destructive: #E05252;
 
-  --border: var(--border-default-value);
+  --border: var(--border-subtle-value);
   --input: var(--border-default-value);
-  --ring: var(--rust-signal);
+  --ring: #FFFFFF;
 
-  --chart-1: var(--rust-signal);
-  --chart-2: var(--deep-ocean);
-  --chart-3: #2A7A6E;
-  --chart-4: var(--fog-gray);
-  --chart-5: #8B5E3C;
+  /* ── Charts ── */
+  --chart-1: rgba(247, 246, 243, 0.55);
+  --chart-2: #8EC4E8;
+  --chart-3: #8DBF90;
+  --chart-4: #D4B872;
+  --chart-5: var(--rust-signal);
 
-  --sidebar: var(--atlantic-black);
-  --sidebar-foreground: var(--skeleton-bone);
-  --sidebar-primary: var(--rust-signal);
-  --sidebar-primary-foreground: var(--skeleton-bone);
-  --sidebar-accent: var(--deep-ocean);
-  --sidebar-accent-foreground: var(--skeleton-bone);
+  /* ── Sidebar ── */
+  --sidebar: var(--off-black);
+  --sidebar-foreground: var(--warm-bone);
+  --sidebar-primary: #FFFFFF;
+  --sidebar-primary-foreground: var(--off-black);
+  --sidebar-accent: var(--surface-02);
+  --sidebar-accent-foreground: var(--warm-bone);
   --sidebar-border: var(--border-subtle-value);
-  --sidebar-ring: var(--rust-signal);
+  --sidebar-ring: #FFFFFF;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -230,14 +264,14 @@
 @layer utilities {
   /* ── Typography ── */
   .font-display {
-    font-family: var(--font-display);
+    font-family: var(--font-sans);
     font-weight: 700;
     letter-spacing: -0.02em;
   }
 
-  .font-editorial {
+  .font-editorial-serif {
     font-family: var(--font-editorial);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: -0.01em;
   }
 
@@ -245,15 +279,16 @@
     font-family: var(--font-mono);
   }
 
-  /* ── Brand color shortcuts ── */
+  /* ── Brand accent ── */
   .text-brand {
     color: var(--rust-signal);
   }
 
-  .bg-atlantic {
-    background-color: var(--atlantic-black);
+  .bg-brand {
+    background-color: var(--rust-signal);
   }
 
+  /* ── Surfaces ── */
   .bg-surface-1 {
     background-color: var(--surface-01);
   }
@@ -262,20 +297,26 @@
     background-color: var(--surface-02);
   }
 
-  .bg-deep-ocean {
-    background-color: var(--deep-ocean);
+  /* ── Text hierarchy ── */
+  .text-primary {
+    color: var(--text-primary-value);
   }
 
-  .text-skeleton {
-    color: var(--skeleton-bone);
-  }
-
-  .text-fog {
-    color: var(--fog-gray);
-  }
-
-  .text-brand-muted {
+  .text-secondary {
     color: var(--text-secondary-value);
+  }
+
+  .text-muted {
+    color: var(--text-muted-value);
+  }
+
+  .text-warm-bone {
+    color: var(--warm-bone);
+  }
+
+  /* ── Borders ── */
+  .border-subtle {
+    border: 1px solid var(--border-subtle-value);
   }
 
   .border-brand-subtle {
@@ -286,24 +327,39 @@
     border-color: var(--border-default-value);
   }
 
-  /* ── Subtle grid background pattern ── */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, var(--border-subtle-value) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--border-subtle-value) 1px, transparent 1px);
-    background-size: 64px 64px;
+  /* ── Desaturated pastel accents (tags/badges) ── */
+  .pastel-red {
+    background-color: var(--pastel-red);
+    color: var(--pastel-red-text);
   }
 
-  .bg-grid-dense {
-    background-image:
-      linear-gradient(to right, var(--border-default-value) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--border-default-value) 1px, transparent 1px);
-    background-size: 32px 32px;
+  .pastel-blue {
+    background-color: var(--pastel-blue);
+    color: var(--pastel-blue-text);
+  }
+
+  .pastel-green {
+    background-color: var(--pastel-green);
+    color: var(--pastel-green-text);
+  }
+
+  .pastel-yellow {
+    background-color: var(--pastel-yellow);
+    color: var(--pastel-yellow-text);
   }
 
   /* ── Focus ring ── */
   .ring-brand {
     --tw-ring-color: var(--rust-signal);
+  }
+
+  /* ── No scrollbar ── */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 
@@ -327,7 +383,7 @@
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--fog-gray);
+  background: var(--text-secondary-value);
 }
 
 ::-webkit-scrollbar-corner {
@@ -344,6 +400,11 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 ::selection {
-  background-color: rgba(197, 106, 74, 0.25);
+  background-color: rgba(17, 17, 17, 0.12);
+  color: var(--foreground);
+}
+
+.dark ::selection {
+  background-color: rgba(247, 246, 243, 0.15);
   color: var(--foreground);
 }

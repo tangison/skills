@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Geist, Playfair_Display, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-const satoshi = Plus_Jakarta_Sans({
-  variable: "--font-satoshi",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
-const cabinetGrotesk = Space_Grotesk({
-  variable: "--font-cabinet-grotesk",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -26,7 +26,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://skills.tangison.com"),
-  title: "Tangison SkillsCamp — Intelligence Built On What Remains",
+  title: "Tangison SkillsCamp",
   description:
     "The open directory for AI agent skills. Browse, install, and deploy modular skills from Vercel Labs, Anthropic, Obra, and more.",
   keywords: [
@@ -128,7 +128,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${satoshi.variable} ${cabinetGrotesk.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${geistSans.variable} ${playfair.variable} ${jetbrainsMono.variable} antialiased`}
       >
         <script
           type="application/ld+json"
