@@ -1,24 +1,37 @@
 import { Skill, SkillCategory, Ecosystem } from './types';
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
-  { id: 'cat-1', slug: 'website-planning', name: 'Website Planning', description: 'Industry-specific website architecture blueprints — sitemap, content, SEO, CTA strategy', icon: 'LayoutGrid', skillCount: 0, sortOrder: 1 },
-  { id: 'cat-2', slug: 'website-auditing', name: 'Website Auditing', description: 'Comprehensive website audits — performance, accessibility, SEO, and UX analysis', icon: 'Shield', skillCount: 0, sortOrder: 2 },
-  { id: 'cat-3', slug: 'seo', name: 'SEO', description: 'Technical SEO auditing, structured data, and optimization', icon: 'Search', skillCount: 0, sortOrder: 3 },
-  { id: 'cat-4', slug: 'copywriting', name: 'Copywriting', description: 'Natural, believable brand copy that converts', icon: 'PenLine', skillCount: 0, sortOrder: 4 },
-  { id: 'cat-5', slug: 'prompt-engineering', name: 'Prompt Engineering', description: 'Advanced prompt design and constraint enforcement', icon: 'Terminal', skillCount: 0, sortOrder: 5 },
-  { id: 'cat-6', slug: 'image-generation', name: 'Image Generation', description: 'AI-powered image creation and brand kit generation', icon: 'Image', skillCount: 0, sortOrder: 6 },
-  { id: 'cat-7', slug: 'flyer-design', name: 'Flyer Design', description: 'Professional flyer and poster design — print-safe, export-ready', icon: 'Layout', skillCount: 0, sortOrder: 7 },
-  { id: 'cat-8', slug: 'social-media', name: 'Social Media', description: 'Social content creation, scheduling, and launch strategy', icon: 'Share2', skillCount: 0, sortOrder: 8 },
-  { id: 'cat-9', slug: 'document-design', name: 'Document Design', description: 'Professional document creation — PDFs, Word, presentations', icon: 'FileText', skillCount: 0, sortOrder: 9 },
-  { id: 'cat-10', slug: 'pdf-generation', name: 'PDF Generation', description: 'Programmatic PDF creation with layout, typography, and form support', icon: 'FileDown', skillCount: 0, sortOrder: 10 },
-  { id: 'cat-11', slug: 'research', name: 'Research', description: 'Deep research, citation tracking, and source verification', icon: 'BookOpen', skillCount: 0, sortOrder: 11 },
-  { id: 'cat-12', slug: 'automation', name: 'Automation', description: 'Workflow automation and CI/CD pipeline skills', icon: 'Cpu', skillCount: 0, sortOrder: 12 },
-  { id: 'cat-13', slug: 'deployment', name: 'Deployment', description: 'Hosting, CDN, and production deployment strategies', icon: 'Rocket', skillCount: 0, sortOrder: 13 },
-  { id: 'cat-14', slug: 'nextjs', name: 'Next.js', description: 'Next.js framework skills — App Router, RSC, and fullstack', icon: 'Box', skillCount: 0, sortOrder: 14 },
-  { id: 'cat-15', slug: 'react', name: 'React', description: 'React component patterns, hooks, and state management', icon: 'Atom', skillCount: 0, sortOrder: 15 },
-  { id: 'cat-16', slug: 'typescript', name: 'TypeScript', description: 'TypeScript type systems, generics, and strict mode patterns', icon: 'FileType', skillCount: 0, sortOrder: 16 },
-  { id: 'cat-17', slug: 'brand-systems', name: 'Brand Systems', description: 'Brand identity systems, design tokens, and visual language', icon: 'Compass', skillCount: 0, sortOrder: 17 },
-  { id: 'cat-18', slug: 'ai-infrastructure', name: 'AI Infrastructure', description: 'AI agent skills, model integration, and intelligent systems', icon: 'Server', skillCount: 0, sortOrder: 18 }
+  // Global Domains (20)
+  { id: 'cat-1', slug: 'website-planning', name: 'Website Planning', description: 'Industry-specific website architecture blueprints — sitemap, content, SEO, CTA strategy', icon: 'LayoutGrid', skillCount: 14, sortOrder: 1 },
+  { id: 'cat-2', slug: 'website-auditing', name: 'Website Auditing', description: 'Comprehensive website audits — performance, accessibility, SEO, and UX analysis', icon: 'Shield', skillCount: 8, sortOrder: 2 },
+  { id: 'cat-3', slug: 'seo', name: 'SEO', description: 'Technical SEO auditing, structured data, and optimization', icon: 'Search', skillCount: 18, sortOrder: 3 },
+  { id: 'cat-4', slug: 'copywriting', name: 'Copywriting', description: 'Natural, believable brand copy that converts', icon: 'PenLine', skillCount: 32, sortOrder: 4 },
+  { id: 'cat-5', slug: 'prompt-engineering', name: 'Prompt Engineering', description: 'Advanced prompt design and constraint enforcement', icon: 'Terminal', skillCount: 33, sortOrder: 5 },
+  { id: 'cat-6', slug: 'creative-design', name: 'Creative Design', description: 'AI-powered image creation, brand kits, and visual design systems', icon: 'Image', skillCount: 161, sortOrder: 6 },
+  { id: 'cat-7', slug: 'flyer-design', name: 'Flyer Design', description: 'Professional flyer and poster design — print-safe, export-ready', icon: 'Layout', skillCount: 12, sortOrder: 7 },
+  { id: 'cat-8', slug: 'social-media', name: 'Social Media', description: 'Social content creation, scheduling, and launch strategy', icon: 'Share2', skillCount: 38, sortOrder: 8 },
+  { id: 'cat-9', slug: 'document-design', name: 'Document Design', description: 'Professional document creation — PDFs, Word, presentations', icon: 'FileText', skillCount: 19, sortOrder: 9 },
+  { id: 'cat-10', slug: 'pdf-generation', name: 'PDF Generation', description: 'Programmatic PDF creation with layout, typography, and form support', icon: 'FileDown', skillCount: 7, sortOrder: 10 },
+  { id: 'cat-11', slug: 'research', name: 'Research', description: 'Deep research, citation tracking, and source verification', icon: 'BookOpen', skillCount: 28, sortOrder: 11 },
+  { id: 'cat-12', slug: 'automation', name: 'Automation', description: 'Workflow automation and CI/CD pipeline skills', icon: 'Cpu', skillCount: 29, sortOrder: 12 },
+  { id: 'cat-13', slug: 'deployment', name: 'Deployment', description: 'Hosting, CDN, and production deployment strategies', icon: 'Rocket', skillCount: 31, sortOrder: 13 },
+  { id: 'cat-14', slug: 'nextjs', name: 'Next.js', description: 'Next.js framework skills — App Router, RSC, and fullstack', icon: 'Box', skillCount: 126, sortOrder: 14 },
+  { id: 'cat-15', slug: 'react', name: 'React', description: 'React component patterns, hooks, and state management', icon: 'Atom', skillCount: 112, sortOrder: 15 },
+  { id: 'cat-16', slug: 'typescript', name: 'TypeScript', description: 'TypeScript type systems, generics, and strict mode patterns', icon: 'FileType', skillCount: 76, sortOrder: 16 },
+  { id: 'cat-17', slug: 'brand-systems', name: 'Brand Systems', description: 'Brand identity systems, design tokens, and visual language', icon: 'Compass', skillCount: 15, sortOrder: 17 },
+  { id: 'cat-18', slug: 'ai-infrastructure', name: 'AI Infrastructure', description: 'AI agent skills, model integration, and intelligent systems', icon: 'Server', skillCount: 42, sortOrder: 18 },
+  { id: 'cat-19', slug: 'testing', name: 'Testing', description: 'Unit testing, integration testing, E2E, and quality assurance', icon: 'CheckCircle', skillCount: 63, sortOrder: 19 },
+  { id: 'cat-20', slug: 'security', name: 'Security', description: 'Application security, vulnerability scanning, and compliance', icon: 'Lock', skillCount: 34, sortOrder: 20 },
+  // SADC-Specific Domains (4)
+  { id: 'cat-21', slug: 'african-language-ai', name: 'African Language AI', description: 'AI skills for Afrikaans, Oshiwambo, Setswana, and other African languages', icon: 'Translate', skillCount: 12, sortOrder: 21 },
+  { id: 'cat-22', slug: 'mobile-money-fintech', name: 'Mobile Money & Fintech', description: 'M-Pesa, FNB, Bank Windhoek integration, payment processing for SADC', icon: 'Wallet', skillCount: 18, sortOrder: 22 },
+  { id: 'cat-23', slug: 'sadc-compliance-legal', name: 'SADC Compliance & Legal', description: 'NHBRC, BIPA, labour law, and regional compliance document generation', icon: 'Scales', skillCount: 9, sortOrder: 23 },
+  { id: 'cat-24', slug: 'offline-first-low-bandwidth', name: 'Offline-First & Low Bandwidth', description: 'Progressive web apps, data-saving patterns, and offline-capable AI skills', icon: 'WifiSlash', skillCount: 14, sortOrder: 24 },
+  // Everyday Business Domains (4)
+  { id: 'cat-25', slug: 'sales-cold-outreach', name: 'Sales & Cold Outreach', description: 'Cold calling scripts, SDR automation, objection handling, and follow-up sequences', icon: 'PhoneCall', skillCount: 22, sortOrder: 25 },
+  { id: 'cat-26', slug: 'operations-admin', name: 'Operations & Admin', description: 'Scheduling, invoicing, quote generation, and supplier communication', icon: 'Clipboard', skillCount: 18, sortOrder: 26 },
+  { id: 'cat-27', slug: 'customer-communication', name: 'Customer Communication', description: 'WhatsApp automation, review management, and appointment reminders', icon: 'ChatCircleDots', skillCount: 16, sortOrder: 27 },
+  { id: 'cat-28', slug: 'skill-summariser', name: 'Skill Summariser', description: 'Produces plain-English summaries at beginner, intermediate, and expert levels', icon: 'Article', skillCount: 1, sortOrder: 28 },
 ];
 
 export const SEED_SKILLS: Skill[] = [

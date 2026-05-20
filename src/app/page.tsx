@@ -5,6 +5,13 @@ import { useTheme } from 'next-themes';
 import ReactMarkdown from 'react-markdown';
 import { SEED_SKILLS } from '@/lib/data';
 import { MastGlyph } from '@/components/brand/TangisonLogo';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 import {
   MagnifyingGlass,
@@ -29,6 +36,18 @@ import {
   Briefcase,
   PaperPlane,
   CaretLeft,
+  List,
+  House,
+  FolderOpen,
+  Wrench,
+  ChatTeardropText,
+  Info,
+  LockKey,
+  Scroll,
+  EnvelopeSimple,
+  Globe,
+  GithubLogo,
+  MapPin,
 } from '@phosphor-icons/react';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -93,11 +112,46 @@ const REWRITE_FUNCTIONS = [
   { id: 'simplify', label: 'Simplify', enabled: false },
 ];
 
-const NAV_ITEMS: { id: Section; label: string }[] = [
-  { id: 'skills', label: 'Skills' },
-  { id: 'documents', label: 'Documents' },
-  { id: 'tools', label: 'Tools' },
+const NAV_ITEMS: { id: Section; label: string; icon: typeof House }[] = [
+  { id: 'skills', label: 'Skills', icon: FolderOpen },
+  { id: 'documents', label: 'Documents', icon: FileText },
+  { id: 'tools', label: 'Tools', icon: Wrench },
 ];
+
+const OFFCANVAS_LINKS = [
+  { label: 'Home', icon: House, action: 'home' as const },
+  { label: 'Skills', icon: FolderOpen, action: 'skills' as const },
+  { label: 'Documents', icon: FileText, action: 'documents' as const },
+  { label: 'Tools', icon: Wrench, action: 'tools' as const },
+  { label: 'AI Chat', icon: ChatTeardropText, action: 'chat' as const },
+];
+
+const FOOTER_LINKS = {
+  product: [
+    { label: 'Skills', href: '#skills' },
+    { label: 'Document Engine', href: '#documents' },
+    { label: 'Prompt Writer', href: '#tools' },
+    { label: 'AI Chat', href: '#chat' },
+  ],
+  company: [
+    { label: 'About', href: '#about' },
+    { label: 'Contact', href: '#contact' },
+    { label: 'Careers', href: '#careers' },
+    { label: 'Blog', href: '#blog' },
+  ],
+  legal: [
+    { label: 'Privacy Policy', href: '#privacy' },
+    { label: 'Terms of Service', href: '#terms' },
+    { label: 'Cookie Policy', href: '#cookies' },
+    { label: 'GDPR', href: '#gdpr' },
+  ],
+  resources: [
+    { label: 'Documentation', href: 'https://skills.sh/docs' },
+    { label: 'API Reference', href: 'https://skills.sh/api' },
+    { label: 'GitHub', href: 'https://github.com/tangison/skills' },
+    { label: 'Status', href: 'https://status.tangison.com' },
+  ],
+};
 
 /* ═══════════════════════════════════════════════════════════════
    ANIMATION HOOK
@@ -177,6 +231,7 @@ export default function Page() {
   const [mounted, setMounted] = useState(false);
   const [activeSection, setActiveSection] = useState<Section>('skills');
   const [chatOpen, setChatOpen] = useState(false);
+  const [offCanvasOpen, setOffCanvasOpen] = useState(false);
 
   // Skills state
   const [skillFilter, setSkillFilter] = useState('all');
@@ -225,6 +280,20 @@ export default function Page() {
   });
 
   const categories = ['all', ...Array.from(new Set(SEED_SKILLS.map(s => s.categoryName)))];
+
+  /* ── Navigation handler ── */
+  const handleNavAction = (action: 'home' | 'skills' | 'documents' | 'tools' | 'chat') => {
+    setOffCanvasOpen(false);
+    if (action === 'home') {
+      setActiveSection('skills');
+      setSelectedSkill(null);
+    } else if (action === 'chat') {
+      setChatOpen(true);
+    } else {
+      setActiveSection(action as Section);
+      setSelectedSkill(null);
+    }
+  };
 
   /* ── API Handlers ── */
 
@@ -335,39 +404,47 @@ export default function Page() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
 
-      {/* ═══════════════ NAVIGATION ═══════════════ */}
-      <nav className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-[var(--border-subtle-value)]">
-        <div className="max-w-5xl mx-auto px-6 h-12 flex items-center justify-between">
-          {/* Left: Logo mark */}
+      {/* ═══════════════ HEADER ═══════════════ */}
+      <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-[var(--border-subtle-value)]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
+          {/* Left: Logo + Wordmark */}
           <button
             onClick={() => { setSelectedSkill(null); setActiveSection('skills'); }}
-            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+            className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
           >
-            <MastGlyph className="h-6 w-auto" />
+            <MastGlyph className="h-7 w-auto" />
+            <div className="flex flex-col leading-none">
+              <span className="font-display text-xs tracking-[0.14em] uppercase">Tangison</span>
+              <span className="font-editorial-serif text-[9px] tracking-[0.2em] uppercase text-secondary mt-0.5">SkillsCamp</span>
+            </div>
           </button>
 
-          {/* Center: Section tabs */}
-          <div className="flex items-center gap-0.5">
-            {NAV_ITEMS.map(item => (
-              <button
-                key={item.id}
-                onClick={() => { setActiveSection(item.id); setSelectedSkill(null); }}
-                className={`px-3 py-1 text-[11px] font-medium uppercase tracking-[0.06em] rounded-md transition-all ${
-                  activeSection === item.id
-                    ? 'text-primary bg-[var(--surface-02)]'
-                    : 'text-secondary hover:text-primary'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+          {/* Center: Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV_ITEMS.map(item => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => { setActiveSection(item.id); setSelectedSkill(null); }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.06em] rounded-md transition-all ${
+                    activeSection === item.id
+                      ? 'text-primary bg-[var(--surface-02)]'
+                      : 'text-secondary hover:text-primary hover:bg-[var(--surface-02)]'
+                  }`}
+                >
+                  <Icon size={13} weight={activeSection === item.id ? 'fill' : 'regular'} />
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
 
           {/* Right: Actions */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5">
             <button
               onClick={() => setChatOpen(!chatOpen)}
-              className={`p-1.5 rounded-md transition-all ${chatOpen ? 'bg-[var(--surface-02)]' : 'hover:bg-[var(--surface-02)]'}`}
+              className={`p-2 rounded-md transition-all ${chatOpen ? 'bg-[var(--surface-02)]' : 'hover:bg-[var(--surface-02)]'}`}
               aria-label="Toggle AI chat"
             >
               <ChatCircle size={16} weight="fill" className={chatOpen ? 'text-brand' : 'text-secondary'} />
@@ -375,20 +452,103 @@ export default function Page() {
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-1.5 rounded-md hover:bg-[var(--surface-02)] transition-all"
+                className="p-2 rounded-md hover:bg-[var(--surface-02)] transition-all"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun size={16} weight="bold" /> : <Moon size={16} weight="bold" />}
               </button>
             )}
+
+            {/* Mobile: Off-canvas trigger */}
+            <Sheet open={offCanvasOpen} onOpenChange={setOffCanvasOpen}>
+              <SheetTrigger asChild>
+                <button
+                  className="md:hidden p-2 rounded-md hover:bg-[var(--surface-02)] transition-all"
+                  aria-label="Open menu"
+                >
+                  <List size={18} weight="bold" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] sm:w-[320px] p-0 bg-[var(--surface-01)]">
+                <SheetHeader className="px-5 pt-6 pb-4 border-b border-[var(--border-subtle-value)]">
+                  <div className="flex items-center gap-2.5">
+                    <MastGlyph className="h-7 w-auto" />
+                    <div className="flex flex-col leading-none">
+                      <SheetTitle className="font-display text-xs tracking-[0.14em] uppercase">Tangison</SheetTitle>
+                      <span className="font-editorial-serif text-[9px] tracking-[0.2em] uppercase text-secondary mt-0.5">SkillsCamp</span>
+                    </div>
+                  </div>
+                </SheetHeader>
+
+                <nav className="flex flex-col py-2">
+                  {OFFCANVAS_LINKS.map(link => {
+                    const Icon = link.icon;
+                    const isActive = (link.action === 'skills' && activeSection === 'skills') ||
+                      (link.action === 'documents' && activeSection === 'documents') ||
+                      (link.action === 'tools' && activeSection === 'tools') ||
+                      (link.action === 'chat' && chatOpen);
+                    return (
+                      <button
+                        key={link.action}
+                        onClick={() => handleNavAction(link.action)}
+                        className={`flex items-center gap-3 px-5 py-3 text-sm transition-all text-left ${
+                          isActive
+                            ? 'text-primary bg-[var(--surface-02)] font-medium'
+                            : 'text-secondary hover:text-primary hover:bg-[var(--surface-02)]'
+                        }`}
+                      >
+                        <Icon size={18} weight={isActive ? 'fill' : 'regular'} />
+                        {link.label}
+                      </button>
+                    );
+                  })}
+                </nav>
+
+                <div className="border-t border-[var(--border-subtle-value)] px-5 py-4 space-y-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary">Resources</p>
+                  {FOOTER_LINKS.resources.map(link => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-xs text-secondary hover:text-primary transition-colors"
+                    >
+                      <Globe size={13} />
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+
+                <div className="border-t border-[var(--border-subtle-value)] px-5 py-4 space-y-3">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary">Legal</p>
+                  {FOOTER_LINKS.legal.map(link => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      className="flex items-center gap-2 text-xs text-secondary hover:text-primary transition-colors"
+                    >
+                      <LockKey size={13} />
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+
+                <div className="absolute bottom-0 left-0 right-0 border-t border-[var(--border-subtle-value)] px-5 py-4">
+                  <p className="text-[10px] text-muted">
+                    &copy; {new Date().getFullYear()} Tangison Systems. All rights reserved.
+                  </p>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-      </nav>
+      </header>
 
       {/* ═══════════════ HERO ═══════════════ */}
       {activeSection === 'skills' && !selectedSkill && (
         <section className="border-b border-[var(--border-subtle-value)]">
-          <div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
             <Reveal>
               <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Intelligence Built On What Remains</p>
             </Reveal>
@@ -424,7 +584,7 @@ export default function Page() {
 
       {/* ═══════════════ MAIN CONTENT ═══════════════ */}
       <main className="flex-1">
-        <div className="max-w-5xl mx-auto px-6 py-10 md:py-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
 
           {/* ─── SKILLS SECTION ─── */}
           {activeSection === 'skills' && (
@@ -867,7 +1027,7 @@ export default function Page() {
 
       {/* ═══════════════ CHAT PANEL ═══════════════ */}
       {chatOpen && (
-        <div className="fixed right-4 bottom-4 w-[340px] max-w-[calc(100vw-2rem)] z-50 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col max-h-[460px]">
+        <div className="fixed right-4 bottom-20 sm:bottom-4 w-[340px] max-w-[calc(100vw-2rem)] z-50 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col max-h-[460px]">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border-subtle-value)]">
             <div className="flex items-center gap-1.5">
               <ChatCircle size={12} weight="fill" className="text-brand" />
@@ -927,15 +1087,115 @@ export default function Page() {
       )}
 
       {/* ═══════════════ FOOTER ═══════════════ */}
-      <footer className="border-t border-[var(--border-subtle-value)] mt-auto">
-        <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <MastGlyph className="h-4 w-auto opacity-40" />
-            <span className="text-[10px] text-secondary">Tangison Agency</span>
+      <footer className="border-t border-[var(--border-subtle-value)] mt-auto bg-[var(--surface-01)]">
+        {/* Main footer content */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 md:gap-6">
+            {/* Brand column */}
+            <div className="col-span-2 md:col-span-1">
+              <div className="flex items-center gap-2 mb-3">
+                <MastGlyph className="h-6 w-auto" />
+                <div className="flex flex-col leading-none">
+                  <span className="font-display text-xs tracking-[0.14em] uppercase">Tangison</span>
+                  <span className="font-editorial-serif text-[9px] tracking-[0.2em] uppercase text-secondary mt-0.5">SkillsCamp</span>
+                </div>
+              </div>
+              <p className="text-secondary text-xs leading-relaxed max-w-[220px]">
+                The open directory for AI agent skills. Built in the SADC region for every person on the continent.
+              </p>
+              <div className="flex items-center gap-2 mt-4">
+                <a href="https://github.com/tangison/skills" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-primary transition-colors">
+                  <GithubLogo size={16} weight="bold" />
+                </a>
+                <a href="https://skills.sh" target="_blank" rel="noopener noreferrer" className="text-secondary hover:text-primary transition-colors">
+                  <Globe size={16} weight="bold" />
+                </a>
+                <a href="mailto:hello@tangison.com" className="text-secondary hover:text-primary transition-colors">
+                  <EnvelopeSimple size={16} weight="bold" />
+                </a>
+              </div>
+            </div>
+
+            {/* Product */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Product</p>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.product.map(link => (
+                  <li key={link.label}>
+                    <button
+                      onClick={() => {
+                        if (link.href === '#skills') { setActiveSection('skills'); setSelectedSkill(null); }
+                        else if (link.href === '#documents') setActiveSection('documents');
+                        else if (link.href === '#tools') setActiveSection('tools');
+                        else if (link.href === '#chat') setChatOpen(true);
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="text-xs text-secondary hover:text-primary transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Company</p>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.company.map(link => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-xs text-secondary hover:text-primary transition-colors">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Legal</p>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.legal.map(link => (
+                  <li key={link.label}>
+                    <a href={link.href} className="text-xs text-secondary hover:text-primary transition-colors flex items-center gap-1">
+                      <LockKey size={10} />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Resources */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Resources</p>
+              <ul className="space-y-2">
+                {FOOTER_LINKS.resources.map(link => (
+                  <li key={link.label}>
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-xs text-secondary hover:text-primary transition-colors">
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="flex items-center gap-3 text-[10px] text-muted">
-            <a href="https://skills.sh" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">skills.sh</a>
-            <a href="https://github.com/tangison/skills" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-[var(--border-subtle-value)]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p className="text-[10px] text-muted">
+              &copy; {new Date().getFullYear()} Tangison Systems (Pty) Ltd. All rights reserved.
+            </p>
+            <div className="flex items-center gap-1.5 text-[10px] text-muted">
+              <MapPin size={10} />
+              <span>Windhoek, Namibia</span>
+              <span className="mx-1">|</span>
+              <span>SADC Region</span>
+            </div>
           </div>
         </div>
       </footer>
