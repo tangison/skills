@@ -112,3 +112,34 @@ Stage Summary:
 - Footer is comprehensive with company, product, legal, and resources columns
 - 28 skill domain categories now in the system (20 global + 4 SADC + 4 everyday)
 - Chat AI is now the SkillsCamp Skills Population Agent v2.0
+
+---
+Task ID: 5
+Agent: Main Orchestrator
+Task: Orange accent fix + About page + skills population + beta banner + footer updates
+
+Work Log:
+- Changed rust-signal from #C56A4A to #E8643A (proper orange) in both light and dark themes
+- Changed --ring to use var(--rust-signal) instead of off-black/white for orange focus rings
+- Changed ::selection to use orange-tinted highlight color
+- Updated MastGlyph SVG accent stroke from #C56A4A to #E8643A
+- Added 20 new skills (skill-11 through skill-30) covering ALL 28 categories:
+  - Website Auditing, SEO, Prompt Engineering, Social Media, Flyer Design
+  - Automation, Deployment, Next.js, TypeScript, Brand Systems, Testing, Security
+  - African Language AI (Oshiwambo Translate), Mobile Money & Fintech
+  - SADC Compliance & Legal, Offline-First & Low Bandwidth
+  - Sales & Cold Outreach, Operations & Admin, Customer Communication, Skill Summariser
+- Fixed skill-8 categoryName from 'Image Generation' to 'Creative Design'
+- Added About section with full content: description, core principles (8 items), supported ecosystems, AI rewrite system, roadmap (v0.1.0/v0.2.0/v0.3.0), version history
+- Added About to navigation (desktop nav + off-canvas menu)
+- Added beta announcement banner (orange, dismissible styling, "v0.1.0-beta")
+- Updated footer copyright: "© 2026 TANGISON GROUP. ALL RIGHTS SECURED."
+- Updated footer location: "WINDHOEK, NAMIBIA // TNG-REG-01 | AI-POWERED | v0.1.0-beta"
+- All lint checks pass, page loads with 200
+
+Stage Summary:
+- Orange accent #E8643A is now prominent across the site (rings, selection, banner, footer)
+- All 28 skill categories have at least one skill
+- About page with complete company info, principles, ecosystems, roadmap, version history
+- Beta banner visible sitewide
+- Footer includes agency signature with version badge

@@ -68,7 +68,7 @@ export function MastGlyph({ className, forceRustAccent, strokeColor }: MastGlyph
       {/* ── Rust accent — curved pennant / signal line ── */}
       <path
         d="M82 8 C86 18, 80 26, 76 22"
-        stroke={forceRustAccent ? '#C56A4A' : '#C56A4A'}
+        stroke={forceRustAccent ? '#E8643A' : '#E8643A'}
         strokeWidth="3"
         strokeLinecap="round"
         fill="none"
