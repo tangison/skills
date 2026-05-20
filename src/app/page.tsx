@@ -15,7 +15,7 @@ import { MastGlyph } from '@/components/brand/TangisonLogo';
 /* ═══════════════════════════════════════════════════════════════
    TYPES
    ═══════════════════════════════════════════════════════════════ */
-type PageRoute = 'home' | 'skills' | 'skill_detail' | 'categories' | 'trending' | 'documents' | 'research' | 'about' | 'agent_pipeline';
+type PageRoute = 'home' | 'skills' | 'skill_detail' | 'categories' | 'trending' | 'documents' | 'research' | 'about' | 'agent_pipeline' | 'prompt_writer';
 type Difficulty = 'FOUNDATIONAL' | 'INTERMEDIATE' | 'SOVEREIGN';
 type EcosystemSource = 'VERCEL_LABS' | 'ANTHROPIC' | 'OBRA' | 'MICROSOFT' | 'TANGISON' | 'COMMUNITY';
 
@@ -1476,6 +1476,14 @@ export default function Home() {
   const [pipelineLogs, setPipelineLogs] = useState<string[]>([]);
   const pipelineLogRef = useRef<HTMLDivElement>(null);
 
+  // Prompt Writer state
+  const [pwInput, setPwInput] = useState('');
+  const [pwContext, setPwContext] = useState('Agent Builder');
+  const [pwTone, setPwTone] = useState('Professional');
+  const [pwResults, setPwResults] = useState<string[]>([]);
+  const [pwLoading, setPwLoading] = useState(false);
+  const [pwCopiedIdx, setPwCopiedIdx] = useState<number | null>(null);
+
   const showNotification = useCallback((msg: string) => {
     setNotification(msg);
     setTimeout(() => setNotification(null), 3000);
@@ -1696,11 +1704,62 @@ export default function Home() {
     showNotification('Pipeline processing complete');
   }, [pipelineInput, showNotification]);
 
+  // Prompt Writer: generate up to 3 rewrites
+  const handlePromptWriterGenerate = useCallback(async () => {
+    if (!pwInput.trim()) return;
+    setPwLoading(true);
+    setPwResults([]);
+    const results: string[] = [];
+    const rewrites = 3;
+    for (let i = 0; i < rewrites; i++) {
+      try {
+        const res = await fetch('/api/prompt-writer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ context: pwContext, tone: pwTone, input: pwInput + (i > 0 ? ` (variation ${i + 1})` : '') }),
+        });
+        const data = await res.json();
+        if (data.result) {
+          results.push(data.result);
+        } else {
+          results.push(`Error: ${data.error || 'Failed to generate'}`);
+        }
+      } catch {
+        results.push('Error: Network request failed');
+      }
+    }
+    setPwResults(results);
+    setPwLoading(false);
+    showNotification(`Generated ${results.length} prompt variations`);
+  }, [pwInput, pwContext, pwTone, showNotification]);
+
+  const handlePwDownload = useCallback((text: string, idx: number) => {
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `prompt-variation-${idx + 1}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, []);
+
+  const handlePwDownloadAll = useCallback(() => {
+    const combined = pwResults.map((r, i) => `═══ VARIATION ${i + 1} ═══\n\n${r}`).join('\n\n\n');
+    const blob = new Blob([combined], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'skillscamp-prompts.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [pwResults]);
+
   // Nav items for desktop
   const navItems: { page: PageRoute; label: string }[] = [
     { page: 'skills', label: 'Skills' },
     { page: 'categories', label: 'Categories' },
     { page: 'trending', label: 'Trending' },
+    { page: 'prompt_writer', label: 'Prompt Writer' },
     { page: 'agent_pipeline', label: 'Pipeline' },
     { page: 'documents', label: 'Documents' },
     { page: 'research', label: 'Triangulation' },
@@ -2738,6 +2797,158 @@ export default function Home() {
                   ))}
                 </div>
               </div>
+            </div>
+          </section>
+        )}
+
+        {currentPage === 'prompt_writer' && (
+          <section className="py-12" aria-label="Prompt Writer">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionTag>PROMPT WRITER</SectionTag>
+              <h1 className={`mt-3 text-[clamp(1.75rem,3.5vw,2.5rem)] font-display ${textPrimaryClass} mb-2`}>
+                Generate structured AI system prompts.
+              </h1>
+              <p className={`text-sm ${textMutedClass} mb-8 max-w-2xl`}>
+                Describe what your AI should do. The Prompt Writer generates up to 3 variations — each structured with Role, Behavior, Tone, Escalation, and Constraints. 7 strict guidelines enforced on every rewrite.
+              </p>
+
+              {/* ── Input Controls ── */}
+              <div className={`border rounded-[4px] p-6 ${cardClass} mb-6`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                  {/* Context selector */}
+                  <div>
+                    <label className={`block text-xs font-mono uppercase tracking-widest mb-2 ${textMutedClass}`}>Skill Context</label>
+                    <select
+                      value={pwContext}
+                      onChange={(e) => setPwContext(e.target.value)}
+                      className={`w-full px-3 py-2.5 rounded-[2px] border text-sm ${isDark ? 'bg-[#1A1C1E] border-[#787774]/20 text-[#F6F4EF]' : 'bg-white border-[#787774]/20 text-[#111315]'} focus:outline-none focus:border-[#C56A4A]`}
+                    >
+                      {['Agent Builder', 'Chat', 'RAG', 'Workflow', 'Code Review', 'Data Analysis', 'Creative Writing', 'Research', 'Customer Support', 'Education'].map(ctx => (
+                        <option key={ctx} value={ctx}>{ctx}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {/* Tone selector */}
+                  <div>
+                    <label className={`block text-xs font-mono uppercase tracking-widest mb-2 ${textMutedClass}`}>Tone</label>
+                    <select
+                      value={pwTone}
+                      onChange={(e) => setPwTone(e.target.value)}
+                      className={`w-full px-3 py-2.5 rounded-[2px] border text-sm ${isDark ? 'bg-[#1A1C1E] border-[#787774]/20 text-[#F6F4EF]' : 'bg-white border-[#787774]/20 text-[#111315]'} focus:outline-none focus:border-[#C56A4A]`}
+                    >
+                      {['Professional', 'Technical', 'Concise', 'Detailed', 'Authoritative', 'Conversational', 'Academic', 'Minimal'].map(t => (
+                        <option key={t} value={t}>{t}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Text input */}
+                <label className={`block text-xs font-mono uppercase tracking-widest mb-2 ${textMutedClass}`}>Describe your AI</label>
+                <textarea
+                  value={pwInput}
+                  onChange={(e) => setPwInput(e.target.value)}
+                  placeholder="e.g. An AI that helps developers find and install the right npm packages by analyzing their project dependencies and suggesting alternatives..."
+                  rows={4}
+                  className={`w-full px-3 py-2.5 rounded-[2px] border text-sm resize-y ${isDark ? 'bg-[#1A1C1E] border-[#787774]/20 text-[#F6F4EF] placeholder:text-[#787774]/50' : 'bg-white border-[#787774]/20 text-[#111315] placeholder:text-[#787774]/50'} focus:outline-none focus:border-[#C56A4A]`}
+                />
+
+                {/* Generate button */}
+                <div className="mt-4 flex items-center gap-3">
+                  <button
+                    onClick={handlePromptWriterGenerate}
+                    disabled={pwLoading || !pwInput.trim()}
+                    className="px-6 py-2.5 rounded-[2px] text-sm font-medium bg-[#C56A4A] text-white hover:bg-[#C56A4A]/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                  >
+                    {pwLoading ? (
+                      <>
+                        <RefreshCw className="w-4 h-4 animate-spin" />
+                        Generating...
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="w-4 h-4" />
+                        Generate 3 Variations
+                      </>
+                    )}
+                  </button>
+                  {pwLoading && (
+                    <span className={`text-xs font-mono ${textMutedClass}`}>
+                      Each variation takes ~3s via OpenRouter/free
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* ── 7 Strict Guidelines ── */}
+              <div className={`border rounded-[4px] p-4 mb-6 ${cardClass}`}>
+                <SectionTag>7 STRICT GUIDELINES ENFORCED</SectionTag>
+                <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {[
+                    'NO HALLUCINATION — Never invent capabilities or data',
+                    'NO FILLER — Remove hedging, preamble, and motivational language',
+                    'ALWAYS ESCALATE — Ask for clarification rather than guess',
+                    'ROLE CLARITY — Specific enough for a stranger to understand',
+                    'BEHAVIOR IS ACTIONABLE — Every bullet must be testable',
+                    'TONE IS ENFORCEABLE — Maps to measurable output',
+                    'CONSTRAINTS ARE ABSOLUTE — Specific, measurable, no exceptions',
+                  ].map((g, idx) => (
+                    <div key={idx} className={`flex items-start gap-2 text-xs ${textMutedClass}`}>
+                      <span className="text-[#C56A4A] font-mono shrink-0">0{idx + 1}</span>
+                      <span>{g}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── Results ── */}
+              {pwResults.length > 0 && (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <SectionTag>GENERATED PROMPTS</SectionTag>
+                    <button
+                      onClick={handlePwDownloadAll}
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] text-xs font-medium border border-[#C56A4A]/30 text-[#C56A4A] hover:bg-[#C56A4A]/10 transition-colors"
+                    >
+                      <FileDown className="w-3.5 h-3.5" />
+                      Download All
+                    </button>
+                  </div>
+
+                  {pwResults.map((result, idx) => (
+                    <div key={idx} className={`border rounded-[4px] ${cardClass}`}>
+                      {/* Result header */}
+                      <div className={`flex items-center justify-between px-4 py-2.5 border-b ${borderClass}`}>
+                        <span className="text-xs font-mono uppercase tracking-widest text-[#C56A4A]">
+                          Variation {idx + 1}
+                        </span>
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={() => { copyToClipboard(result); setPwCopiedIdx(idx); setTimeout(() => setPwCopiedIdx(null), 2000); }}
+                            className={`flex items-center gap-1 text-xs px-2 py-1 rounded-[2px] transition-colors ${pwCopiedIdx === idx ? 'bg-emerald-500/10 text-emerald-500' : `${textMutedClass} hover:text-[#F6F4EF]`}`}
+                          >
+                            {pwCopiedIdx === idx ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                            {pwCopiedIdx === idx ? 'Copied' : 'Copy'}
+                          </button>
+                          <button
+                            onClick={() => handlePwDownload(result, idx)}
+                            className={`flex items-center gap-1 text-xs px-2 py-1 rounded-[2px] ${textMutedClass} hover:text-[#F6F4EF] transition-colors`}
+                          >
+                            <FileDown className="w-3 h-3" />
+                            .txt
+                          </button>
+                        </div>
+                      </div>
+                      {/* Result content */}
+                      <div className="p-4">
+                        <pre className={`text-xs font-mono whitespace-pre-wrap leading-relaxed ${textPrimaryClass} max-h-80 overflow-y-auto`}>
+                          {result}
+                        </pre>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </section>
         )}
