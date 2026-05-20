@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
+import { aiChat } from '@/lib/ai-provider';
 import { SEED_SKILLS } from '@/lib/data';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -85,21 +85,11 @@ ${skillCatalog}${contextBlock}
 
 When recommending skills, use the slug from the catalog. The install command is always "skillscamp install [slug]" regardless of what the catalog shows.`;
 
-    // Create ZAI instance and call the LLM
-    const zai = await ZAI.create();
-    const result = await zai.chat.completions.create({
-      messages: [
-        { role: 'assistant', content: fullSystemPrompt },
-        ...messages.map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-      ],
-      thinking: { type: 'disabled' },
-    });
-
-    // Extract the assistant's reply text — robust extraction
-    const reply = result?.choices?.[0]?.message?.content
-      || result?.content?.[0]?.text
-      || result?.text
-      || (typeof result === 'string' ? result : JSON.stringify(result));
+    // Use smart AI provider (z-ai-sdk in sandbox, OpenRouter on Vercel)
+    const { text: reply } = await aiChat([
+      { role: 'assistant', content: fullSystemPrompt },
+      ...messages.map(m => ({ role: m.role as 'user' | 'assistant', content: m.content })),
+    ]);
 
     if (!reply || reply.trim().length === 0) {
       return NextResponse.json(
@@ -120,7 +110,7 @@ When recommending skills, use the slug from the catalog. The install command is 
       userMessage = 'The AI service is busy right now. Please wait a moment and try again.';
     } else if (errorMsg.includes('timeout')) {
       userMessage = 'The request timed out. Please try a shorter or more specific question.';
-    } else if (errorMsg.includes('key') || errorMsg.includes('auth')) {
+    } else if (errorMsg.includes('key') || errorMsg.includes('auth') || errorMsg.includes('OPENROUTER_API_KEY')) {
       userMessage = 'The AI service is not configured correctly. Please contact support.';
     }
 

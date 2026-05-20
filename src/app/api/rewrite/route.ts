@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
+import { aiChat } from '@/lib/ai-provider';
+
+/**
+ * SkillsCamp Sovereign Intelligence Rewrite Engine v2.0
+ * Rewrites content with enforced quality standards using smart AI provider.
+ */
 
 const REWRITE_SYSTEM_PROMPT = `You are the SkillsCamp Sovereign Intelligence Rewrite Engine by TANGISON SYSTEMS. Your core objective is to process raw AI agent capabilities, verify their functional integrity, and rewrite their documentation into strict, production-grade architecture specifications.
 
@@ -50,19 +55,14 @@ ${content}
 
 Return ONLY the rewritten Markdown content. Do not include any preamble, explanation, or meta-commentary.`;
 
-    const zai = await ZAI.create();
-    const result = await zai.chat.completions.create({
-      messages: [
+    // Use smart AI provider
+    const { text: rewritten } = await aiChat(
+      [
         { role: 'assistant', content: REWRITE_SYSTEM_PROMPT },
         { role: 'user', content: userPrompt },
       ],
-      thinking: { type: 'disabled' },
-    });
-
-    const rewritten = result?.choices?.[0]?.message?.content
-      || result?.content?.[0]?.text
-      || result?.text
-      || (typeof result === 'string' ? result : JSON.stringify(result));
+      2000
+    );
 
     return NextResponse.json({ rewritten });
   } catch (error: any) {

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
+import { aiChat } from '@/lib/ai-provider';
 
 /**
  * SkillsCamp AI Agent Processing Pipeline v3.0.0
@@ -94,20 +94,14 @@ ${rawDataStr}
 
 Return ONLY the JSON output matching the specified schema. No preamble, no explanation.`;
 
-    const zai = await ZAI.create();
-    const result = await zai.chat.completions.create({
-      messages: [
+    // Use smart AI provider
+    const { text: responseText } = await aiChat(
+      [
         { role: 'assistant', content: AGENT_SYSTEM_PROMPT },
         { role: 'user', content: userPrompt },
       ],
-      thinking: { type: 'disabled' },
-    });
-
-    // Extract the response
-    const responseText = result?.choices?.[0]?.message?.content
-      || result?.content?.[0]?.text
-      || result?.text
-      || (typeof result === 'string' ? result : JSON.stringify(result));
+      3000
+    );
 
     // Try to parse as JSON
     let parsedResult;

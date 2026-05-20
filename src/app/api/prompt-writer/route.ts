@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import ZAI from 'z-ai-web-dev-sdk';
+import { aiChat } from '@/lib/ai-provider';
 
 /* ═══════════════════════════════════════════════════════════════
    SKILLSCAMP PROMPT WRITER — Sovereign Prompt Engineering Engine v2.0
@@ -105,20 +105,14 @@ export async function POST(request: Request) {
 
     const userPrompt = `Write a structured system prompt for the following AI:\n\n${input}${variationNote}`;
 
-    // Use z-ai-web-dev-sdk
-    const zai = await ZAI.create();
-    const result = await zai.chat.completions.create({
-      messages: [
+    // Use smart AI provider (z-ai-sdk in sandbox, OpenRouter on Vercel)
+    const { text: promptResult } = await aiChat(
+      [
         { role: 'assistant', content: systemPrompt },
         { role: 'user', content: userPrompt },
       ],
-      thinking: { type: 'disabled' },
-    });
-
-    const promptResult = result?.choices?.[0]?.message?.content
-      || result?.content?.[0]?.text
-      || result?.text
-      || (typeof result === 'string' ? result : JSON.stringify(result));
+      1500
+    );
 
     if (!promptResult || promptResult.trim().length === 0) {
       return NextResponse.json(
@@ -143,6 +137,12 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: 'Request timed out. Try a shorter description.' },
         { status: 504 }
+      );
+    }
+    if (message.includes('OPENROUTER_API_KEY')) {
+      return NextResponse.json(
+        { error: 'AI service not configured. Set OPENROUTER_API_KEY environment variable.' },
+        { status: 503 }
       );
     }
 
