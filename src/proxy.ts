@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function proxy(request: NextRequest) {
+/**
+ * Next.js 16 Proxy (replaces deprecated middleware convention)
+ *
+ * Adds security headers to all responses.
+ * @see https://nextjs.org/docs/messages/middleware-to-proxy
+ */
+export default function proxy(request: NextRequest) {
   const response = NextResponse.next();
 
   // Security headers

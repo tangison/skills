@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTheme } from 'next-themes';
 import ReactMarkdown from 'react-markdown';
-import { SEED_SKILLS, SKILL_CATEGORIES } from '@/lib/data';
+import { SEED_SKILLS } from '@/lib/data';
 import { MastGlyph } from '@/components/brand/TangisonLogo';
 
 import {
@@ -28,6 +28,7 @@ import {
   ChartBar,
   Briefcase,
   PaperPlane,
+  CaretLeft,
 } from '@phosphor-icons/react';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -41,14 +42,8 @@ interface ChatMessage {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   HELPERS
+   CONSTANTS
    ═══════════════════════════════════════════════════════════════ */
-function formatCount(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
-  if (n >= 1_000) return `${(n / 1_000).toFixed(0)}K`;
-  return n.toString();
-}
-
 const PASTEL_MAP: Record<string, string> = {
   TANGISON: 'pastel-yellow',
   VERCEL_LABS: 'pastel-blue',
@@ -98,8 +93,14 @@ const REWRITE_FUNCTIONS = [
   { id: 'simplify', label: 'Simplify', enabled: false },
 ];
 
+const NAV_ITEMS: { id: Section; label: string }[] = [
+  { id: 'skills', label: 'Skills' },
+  { id: 'documents', label: 'Documents' },
+  { id: 'tools', label: 'Tools' },
+];
+
 /* ═══════════════════════════════════════════════════════════════
-   ANIMATION HOOK — IntersectionObserver fade-in
+   ANIMATION HOOK
    ═══════════════════════════════════════════════════════════════ */
 function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
@@ -137,7 +138,7 @@ function Reveal({ children, delay = 0, className = '' }: { children: React.React
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   COPY BUTTON
+   SMALL COMPONENTS
    ═══════════════════════════════════════════════════════════════ */
 function CopyBtn({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);
@@ -158,13 +159,10 @@ function CopyBtn({ text }: { text: string }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PASTEL TAG
-   ═══════════════════════════════════════════════════════════════ */
 function Tag({ children, variant = 'pastel-blue' }: { children: React.ReactNode; variant?: string }) {
   return (
     <span
-      className={`${variant} inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.05em] leading-none`}
+      className={`${variant} inline-flex items-center rounded-[6px] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.05em] leading-none`}
     >
       {children}
     </span>
@@ -228,7 +226,8 @@ export default function Page() {
 
   const categories = ['all', ...Array.from(new Set(SEED_SKILLS.map(s => s.categoryName)))];
 
-  // Document generation
+  /* ── API Handlers ── */
+
   const handleGenerateDoc = async () => {
     if (!docTitle.trim() || !docDescription.trim()) return;
     setDocGenerating(true);
@@ -254,7 +253,6 @@ export default function Page() {
     finally { setDocGenerating(false); }
   };
 
-  // Print document
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow || !docResult) return;
@@ -281,7 +279,6 @@ export default function Page() {
     printWindow.print();
   };
 
-  // Prompt Writer
   const handleGeneratePrompt = async () => {
     if (!promptInput.trim()) return;
     setPromptGenerating(true);
@@ -297,7 +294,6 @@ export default function Page() {
     finally { setPromptGenerating(false); }
   };
 
-  // Rewrite
   const handleRewrite = async () => {
     if (!rewriteInput.trim()) return;
     setRewriteGenerating(true);
@@ -314,7 +310,6 @@ export default function Page() {
     finally { setRewriteGenerating(false); }
   };
 
-  // Chat
   const handleChat = async () => {
     if (!chatInput.trim()) return;
     const userMsg = chatInput;
@@ -339,45 +334,51 @@ export default function Page() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+
       {/* ═══════════════ NAVIGATION ═══════════════ */}
       <nav className="sticky top-0 z-50 bg-background/90 backdrop-blur-sm border-b border-[var(--border-subtle-value)]">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <a href="#" className="flex items-center gap-2.5" onClick={() => { setSelectedSkill(null); setActiveSection('skills'); }}>
-              <MastGlyph className="h-7 w-auto" />
-              <span className="font-display text-sm tracking-[0.12em] uppercase">Tangison</span>
-            </a>
-            <div className="flex items-center gap-1">
-              {(['skills', 'documents', 'tools'] as Section[]).map(s => (
-                <button
-                  key={s}
-                  onClick={() => { setActiveSection(s); setSelectedSkill(null); }}
-                  className={`px-3 py-1.5 text-xs font-medium uppercase tracking-[0.04em] rounded-md transition-all ${
-                    activeSection === s
-                      ? 'bg-[var(--surface-02)] text-primary'
-                      : 'text-secondary hover:text-primary'
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
+        <div className="max-w-5xl mx-auto px-6 h-12 flex items-center justify-between">
+          {/* Left: Logo mark */}
+          <button
+            onClick={() => { setSelectedSkill(null); setActiveSection('skills'); }}
+            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+          >
+            <MastGlyph className="h-6 w-auto" />
+          </button>
+
+          {/* Center: Section tabs */}
+          <div className="flex items-center gap-0.5">
+            {NAV_ITEMS.map(item => (
+              <button
+                key={item.id}
+                onClick={() => { setActiveSection(item.id); setSelectedSkill(null); }}
+                className={`px-3 py-1 text-[11px] font-medium uppercase tracking-[0.06em] rounded-md transition-all ${
+                  activeSection === item.id
+                    ? 'text-primary bg-[var(--surface-02)]'
+                    : 'text-secondary hover:text-primary'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
-          <div className="flex items-center gap-2">
+
+          {/* Right: Actions */}
+          <div className="flex items-center gap-1">
             <button
               onClick={() => setChatOpen(!chatOpen)}
-              className={`p-2 rounded-md transition-all ${chatOpen ? 'bg-[var(--surface-02)]' : 'hover:bg-[var(--surface-02)]'}`}
+              className={`p-1.5 rounded-md transition-all ${chatOpen ? 'bg-[var(--surface-02)]' : 'hover:bg-[var(--surface-02)]'}`}
               aria-label="Toggle AI chat"
             >
-              <ChatCircle size={18} weight="fill" className={chatOpen ? 'text-brand' : 'text-secondary'} />
+              <ChatCircle size={16} weight="fill" className={chatOpen ? 'text-brand' : 'text-secondary'} />
             </button>
             {mounted && (
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-md hover:bg-[var(--surface-02)] transition-all"
+                className="p-1.5 rounded-md hover:bg-[var(--surface-02)] transition-all"
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? <Sun size={18} weight="bold" /> : <Moon size={18} weight="bold" />}
+                {theme === 'dark' ? <Sun size={16} weight="bold" /> : <Moon size={16} weight="bold" />}
               </button>
             )}
           </div>
@@ -385,59 +386,61 @@ export default function Page() {
       </nav>
 
       {/* ═══════════════ HERO ═══════════════ */}
-      <section className="border-b border-[var(--border-subtle-value)]">
-        <div className="max-w-6xl mx-auto px-6 py-16 md:py-24">
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.08em] text-secondary mb-4">Intelligence Built On What Remains</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="font-editorial-serif text-4xl md:text-5xl lg:text-6xl tracking-[-0.03em] leading-[1.1] max-w-3xl">
-              The open directory for AI agent skills
-            </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="mt-6 text-secondary text-base md:text-lg leading-relaxed max-w-xl">
-              Browse, install, and deploy modular skills from Vercel Labs, Anthropic, Obra, and more. Generate documents. Write prompts. Ship faster.
-            </p>
-          </Reveal>
-          <Reveal delay={240}>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                onClick={() => setActiveSection('skills')}
-                className="inline-flex items-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-5 py-2.5 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all"
-              >
-                Browse Skills <ArrowRight size={14} weight="bold" />
-              </button>
-              <button
-                onClick={() => setActiveSection('documents')}
-                className="inline-flex items-center gap-2 border border-[var(--border-subtle-value)] px-5 py-2.5 rounded-md text-sm font-medium hover:bg-[var(--surface-02)] active:scale-[0.98] transition-all"
-              >
-                <FileText size={14} weight="bold" /> Documents
-              </button>
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      {activeSection === 'skills' && !selectedSkill && (
+        <section className="border-b border-[var(--border-subtle-value)]">
+          <div className="max-w-5xl mx-auto px-6 py-16 md:py-24">
+            <Reveal>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary mb-3">Intelligence Built On What Remains</p>
+            </Reveal>
+            <Reveal delay={80}>
+              <h1 className="font-editorial-serif text-4xl md:text-5xl tracking-[-0.03em] leading-[1.1] max-w-2xl">
+                The open directory for AI agent skills
+              </h1>
+            </Reveal>
+            <Reveal delay={160}>
+              <p className="mt-5 text-secondary text-sm md:text-base leading-relaxed max-w-lg">
+                Browse, install, and deploy modular skills. Generate documents. Write prompts. Ship faster.
+              </p>
+            </Reveal>
+            <Reveal delay={240}>
+              <div className="mt-6 flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveSection('documents')}
+                  className="inline-flex items-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-4 py-2 rounded-md text-xs font-medium hover:opacity-90 active:scale-[0.98] transition-all"
+                >
+                  Document Engine <ArrowRight size={12} weight="bold" />
+                </button>
+                <button
+                  onClick={() => setActiveSection('tools')}
+                  className="inline-flex items-center gap-2 border border-[var(--border-subtle-value)] px-4 py-2 rounded-md text-xs font-medium hover:bg-[var(--surface-02)] active:scale-[0.98] transition-all"
+                >
+                  <PencilSimple size={12} weight="bold" /> Prompt Tools
+                </button>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ═══════════════ MAIN CONTENT ═══════════════ */}
       <main className="flex-1">
-        <div className="max-w-6xl mx-auto px-6 py-12 md:py-16">
+        <div className="max-w-5xl mx-auto px-6 py-10 md:py-14">
 
           {/* ─── SKILLS SECTION ─── */}
           {activeSection === 'skills' && (
             <div>
               {currentSkill ? (
-                /* Skill Detail View */
+                /* ── Skill Detail ── */
                 <Reveal>
                   <div>
                     <button
                       onClick={() => setSelectedSkill(null)}
-                      className="text-xs text-secondary hover:text-primary uppercase tracking-[0.04em] mb-6 inline-flex items-center gap-1"
+                      className="text-[11px] text-secondary hover:text-primary uppercase tracking-[0.04em] mb-5 inline-flex items-center gap-1"
                     >
-                      ← Back to skills
+                      <CaretLeft size={10} weight="bold" /> Back
                     </button>
                     <div className="border border-[var(--border-subtle-value)] rounded-lg p-6 md:p-8 bg-[var(--surface-01)]">
-                      <div className="flex flex-wrap items-center gap-2 mb-4">
+                      <div className="flex flex-wrap items-center gap-1.5 mb-3">
                         <Tag variant={DIFFICULTY_PASTEL[currentSkill.difficulty] || 'pastel-blue'}>
                           {currentSkill.difficulty}
                         </Tag>
@@ -446,11 +449,14 @@ export default function Page() {
                         </Tag>
                         {currentSkill.isTangisonOriginal && <Tag variant="pastel-yellow">Tangison Original</Tag>}
                       </div>
-                      <h2 className="font-editorial-serif text-2xl md:text-3xl tracking-[-0.02em]">{currentSkill.name}</h2>
-                      <p className="mt-2 text-secondary text-sm leading-relaxed">{currentSkill.tagline}</p>
+                      <h2 className="font-editorial-serif text-2xl tracking-[-0.02em]">{currentSkill.name}</h2>
+                      <p className="mt-1.5 text-secondary text-sm leading-relaxed">{currentSkill.tagline}</p>
 
                       <div className="mt-4 flex flex-wrap gap-2 text-xs text-secondary">
-                        <span className="inline-flex items-center gap-1"><Code size={12} weight="bold" /> <code className="font-mono text-[11px] bg-[var(--surface-02)] px-1.5 py-0.5 rounded">{currentSkill.installCommand}</code></span>
+                        <span className="inline-flex items-center gap-1">
+                          <Code size={12} weight="bold" />
+                          <code className="font-mono text-[11px] bg-[var(--surface-02)] px-1.5 py-0.5 rounded">{currentSkill.installCommand}</code>
+                        </span>
                         {currentSkill.originalAuthor && <span>by {currentSkill.originalAuthor}</span>}
                       </div>
 
@@ -459,16 +465,16 @@ export default function Page() {
                       </div>
 
                       {currentSkill.aiInsight && (
-                        <div className="mt-8 border-t border-[var(--border-subtle-value)] pt-6">
-                          <p className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-2">AI Insight</p>
+                        <div className="mt-8 border-t border-[var(--border-subtle-value)] pt-5">
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1.5">AI Insight</p>
                           <p className="text-sm leading-relaxed">{currentSkill.aiInsight}</p>
                         </div>
                       )}
 
                       {currentSkill.usageExamples && (
-                        <div className="mt-6 border-t border-[var(--border-subtle-value)] pt-6">
+                        <div className="mt-5 border-t border-[var(--border-subtle-value)] pt-5">
                           <div className="flex items-center justify-between mb-2">
-                            <p className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary">Usage Examples</p>
+                            <p className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary">Usage</p>
                             <CopyBtn text={currentSkill.usageExamples} />
                           </div>
                           <pre className="bg-[var(--surface-02)] rounded-lg p-4 text-xs font-mono overflow-x-auto leading-relaxed">
@@ -480,35 +486,32 @@ export default function Page() {
                   </div>
                 </Reveal>
               ) : (
-                /* Skills Grid */
+                /* ── Skills Grid ── */
                 <div>
                   <Reveal>
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-                      <div>
-                        <h2 className="font-editorial-serif text-2xl md:text-3xl tracking-[-0.02em]">Skills</h2>
-                        <p className="text-secondary text-sm mt-1">{SEED_SKILLS.length} skills across {categories.length - 1} categories</p>
-                      </div>
-                      <div className="relative">
-                        <MagnifyingGlass size={14} weight="bold" className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                      <div className="relative flex-1 max-w-xs">
+                        <MagnifyingGlass size={13} weight="bold" className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
                         <input
                           type="text"
                           placeholder="Search skills..."
                           value={searchQuery}
                           onChange={e => setSearchQuery(e.target.value)}
-                          className="pl-9 pr-4 py-2 text-sm border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] w-full sm:w-64"
+                          className="w-full pl-8 pr-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                         />
                       </div>
+                      <p className="text-[11px] text-secondary">{SEED_SKILLS.length} skills</p>
                     </div>
                   </Reveal>
 
                   {/* Category Filter */}
-                  <Reveal delay={80}>
-                    <div className="flex gap-1.5 overflow-x-auto pb-4 mb-6 no-scrollbar">
+                  <Reveal delay={60}>
+                    <div className="flex gap-1 overflow-x-auto pb-3 mb-5 no-scrollbar">
                       {categories.map(cat => (
                         <button
                           key={cat}
                           onClick={() => setSkillFilter(cat)}
-                          className={`whitespace-nowrap px-3 py-1.5 text-xs font-medium rounded-md transition-all ${
+                          className={`whitespace-nowrap px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${
                             skillFilter === cat
                               ? 'bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)]'
                               : 'bg-[var(--surface-02)] text-secondary hover:text-primary'
@@ -520,30 +523,26 @@ export default function Page() {
                     </div>
                   </Reveal>
 
-                  {/* Skill Cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {/* Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                     {filteredSkills.map((skill, i) => (
-                      <Reveal key={skill.id} delay={Math.min(i * 60, 400)}>
+                      <Reveal key={skill.id} delay={Math.min(i * 50, 300)}>
                         <button
                           onClick={() => setSelectedSkill(skill.slug)}
-                          className="w-full text-left border border-[var(--border-subtle-value)] rounded-lg p-5 bg-[var(--surface-01)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all group"
+                          className="w-full text-left border border-[var(--border-subtle-value)] rounded-lg p-4 bg-[var(--surface-01)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all group"
                         >
-                          <div className="flex items-start justify-between gap-3">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-wrap gap-1.5 mb-2">
-                                <Tag variant={DIFFICULTY_PASTEL[skill.difficulty] || 'pastel-blue'}>
-                                  {skill.difficulty}
-                                </Tag>
-                                <Tag variant={PASTEL_MAP[skill.ecosystemSource] || 'pastel-blue'}>
-                                  {skill.ecosystemSource}
-                                </Tag>
-                              </div>
-                              <h3 className="font-medium text-sm group-hover:text-brand transition-colors">{skill.name}</h3>
-                              <p className="text-secondary text-xs mt-1 line-clamp-2 leading-relaxed">{skill.tagline}</p>
-                            </div>
-                            <ArrowRight size={14} className="text-muted mt-1 shrink-0 group-hover:text-brand transition-colors" />
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            <Tag variant={DIFFICULTY_PASTEL[skill.difficulty] || 'pastel-blue'}>{skill.difficulty}</Tag>
+                            <Tag variant={PASTEL_MAP[skill.ecosystemSource] || 'pastel-blue'}>{skill.ecosystemSource}</Tag>
                           </div>
-                          <div className="mt-3 pt-3 border-t border-[var(--border-subtle-value)] flex items-center gap-3 text-[11px] text-secondary">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-medium text-sm group-hover:text-brand transition-colors">{skill.name}</h3>
+                              <p className="text-secondary text-xs mt-0.5 line-clamp-2 leading-relaxed">{skill.tagline}</p>
+                            </div>
+                            <ArrowRight size={12} className="text-muted mt-1 shrink-0 group-hover:text-brand transition-colors" />
+                          </div>
+                          <div className="mt-2.5 pt-2.5 border-t border-[var(--border-subtle-value)] flex items-center gap-2 text-[10px] text-secondary">
                             {skill.categoryName && <span>{skill.categoryName}</span>}
                             {skill.originalAuthor && <span>by {skill.originalAuthor}</span>}
                           </div>
@@ -554,7 +553,7 @@ export default function Page() {
 
                   {filteredSkills.length === 0 && (
                     <div className="text-center py-16">
-                      <p className="text-secondary text-sm">No skills found matching your criteria.</p>
+                      <p className="text-secondary text-sm">No skills found.</p>
                     </div>
                   )}
                 </div>
@@ -566,30 +565,30 @@ export default function Page() {
           {activeSection === 'documents' && (
             <div>
               <Reveal>
-                <h2 className="font-editorial-serif text-2xl md:text-3xl tracking-[-0.02em]">Document Engine</h2>
-                <p className="text-secondary text-sm mt-1 mb-8">AI writes the content. You print or download it.</p>
+                <h2 className="font-editorial-serif text-2xl tracking-[-0.02em]">Document Engine</h2>
+                <p className="text-secondary text-xs mt-1 mb-6">AI writes the content. You print or download it.</p>
               </Reveal>
 
-              <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
                 {/* Form */}
                 <div className="lg:col-span-2">
-                  <Reveal delay={80}>
-                    <div className="border border-[var(--border-subtle-value)] rounded-lg p-6 bg-[var(--surface-01)] space-y-4">
+                  <Reveal delay={60}>
+                    <div className="border border-[var(--border-subtle-value)] rounded-lg p-5 bg-[var(--surface-01)] space-y-3.5">
                       {/* Document Type */}
                       <div>
-                        <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-2 block">Document Type</label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1.5 block">Type</label>
+                        <div className="grid grid-cols-2 gap-1.5">
                           {DOC_TYPES.map(dt => (
                             <button
                               key={dt.value}
                               onClick={() => setDocType(dt.value)}
-                              className={`flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-md border transition-all ${
+                              className={`flex items-center gap-1.5 px-2.5 py-1.5 text-[11px] font-medium rounded-md border transition-all ${
                                 docType === dt.value
                                   ? 'border-[var(--off-black)] bg-[var(--off-black)] text-white dark:border-white dark:bg-white dark:text-[var(--off-black)]'
                                   : 'border-[var(--border-subtle-value)] hover:border-[var(--off-black)]'
                               }`}
                             >
-                              <dt.icon size={14} weight="bold" />
+                              <dt.icon size={12} weight="bold" />
                               {dt.label}
                             </button>
                           ))}
@@ -598,49 +597,49 @@ export default function Page() {
 
                       {/* Title */}
                       <div>
-                        <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-1.5 block">Title</label>
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1 block">Title</label>
                         <input
                           type="text"
                           value={docTitle}
                           onChange={e => setDocTitle(e.target.value)}
                           placeholder="Q4 Performance Review"
-                          className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                          className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                         />
                       </div>
 
                       {/* Client & Author */}
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-1.5 block">Client</label>
+                          <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1 block">Client</label>
                           <input
                             type="text"
                             value={docClient}
                             onChange={e => setDocClient(e.target.value)}
                             placeholder="Acme Corp"
-                            className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                            className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                           />
                         </div>
                         <div>
-                          <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-1.5 block">Author</label>
+                          <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1 block">Author</label>
                           <input
                             type="text"
                             value={docAuthor}
                             onChange={e => setDocAuthor(e.target.value)}
                             placeholder="Tangison Agency"
-                            className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                            className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                           />
                         </div>
                       </div>
 
                       {/* Tone */}
                       <div>
-                        <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-2 block">Tone</label>
-                        <div className="flex flex-wrap gap-1.5">
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1.5 block">Tone</label>
+                        <div className="flex flex-wrap gap-1">
                           {TONES.map(t => (
                             <button
                               key={t.value}
                               onClick={() => setDocTone(t.value)}
-                              className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-all ${
+                              className={`px-2 py-0.5 text-[10px] font-medium rounded-md transition-all ${
                                 docTone === t.value
                                   ? 'bg-[var(--surface-02)] text-primary'
                                   : 'text-secondary hover:text-primary'
@@ -654,13 +653,13 @@ export default function Page() {
 
                       {/* Description */}
                       <div>
-                        <label className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary mb-1.5 block">Brief Description</label>
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1 block">Brief</label>
                         <textarea
                           value={docDescription}
                           onChange={e => setDocDescription(e.target.value)}
-                          placeholder="Describe the document's purpose, key points, and any specific requirements..."
-                          rows={4}
-                          className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
+                          placeholder="Describe the document purpose and requirements..."
+                          rows={3}
+                          className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
                         />
                       </div>
 
@@ -668,49 +667,49 @@ export default function Page() {
                       <button
                         onClick={handleGenerateDoc}
                         disabled={docGenerating || !docTitle.trim() || !docDescription.trim()}
-                        className="w-full flex items-center justify-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-5 py-2.5 rounded-md text-sm font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-4 py-2 rounded-md text-xs font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                       >
                         {docGenerating ? (
-                          <><ArrowsClockwise size={14} className="animate-spin" /> Generating...</>
+                          <><ArrowsClockwise size={12} className="animate-spin" /> Generating...</>
                         ) : (
-                          <><Lightning size={14} weight="fill" /> Generate Document</>
+                          <><Lightning size={12} weight="fill" /> Generate</>
                         )}
                       </button>
 
-                      {docError && <p className="text-xs text-red-500 mt-1">{docError}</p>}
+                      {docError && <p className="text-[11px] text-red-500">{docError}</p>}
                     </div>
                   </Reveal>
                 </div>
 
                 {/* Preview */}
                 <div className="lg:col-span-3">
-                  <Reveal delay={160}>
+                  <Reveal delay={120}>
                     {docResult ? (
                       <div className="border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)]">
-                        <div className="flex items-center justify-between px-6 py-3 border-b border-[var(--border-subtle-value)]">
-                          <span className="text-xs font-semibold uppercase tracking-[0.06em] text-secondary">Preview</span>
+                        <div className="flex items-center justify-between px-5 py-2.5 border-b border-[var(--border-subtle-value)]">
+                          <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary">Preview</span>
                           <div className="flex items-center gap-3">
                             <CopyBtn text={docResult} />
                             <button
                               onClick={handlePrint}
-                              className="inline-flex items-center gap-1.5 text-xs font-medium hover:text-primary transition-colors"
+                              className="inline-flex items-center gap-1 text-[11px] font-medium hover:text-primary transition-colors"
                             >
-                              <Printer size={12} weight="bold" /> Print / Save PDF
+                              <Printer size={11} weight="bold" /> Print
                             </button>
                           </div>
                         </div>
-                        <div className="p-6 max-h-[70vh] overflow-y-auto">
+                        <div className="p-5 max-h-[70vh] overflow-y-auto">
                           <div className="prose prose-sm max-w-none">
                             <ReactMarkdown>{docResult}</ReactMarkdown>
                           </div>
                         </div>
                       </div>
                     ) : (
-                      <div className="border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] h-full min-h-[400px] flex items-center justify-center">
+                      <div className="border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] h-full min-h-[360px] flex items-center justify-center">
                         <div className="text-center">
-                          <FileText size={32} weight="thin" className="mx-auto text-muted mb-3" />
-                          <p className="text-secondary text-sm">Fill in the form and generate</p>
-                          <p className="text-muted text-xs mt-1">Your document will appear here</p>
+                          <FileText size={28} weight="thin" className="mx-auto text-muted mb-2" />
+                          <p className="text-secondary text-xs">Fill in the form and generate</p>
+                          <p className="text-muted text-[10px] mt-0.5">Document will appear here</p>
                         </div>
                       </div>
                     )}
@@ -724,37 +723,37 @@ export default function Page() {
           {activeSection === 'tools' && (
             <div>
               <Reveal>
-                <h2 className="font-editorial-serif text-2xl md:text-3xl tracking-[-0.02em]">Tools</h2>
-                <p className="text-secondary text-sm mt-1 mb-8">Prompt engineering and content refinement</p>
+                <h2 className="font-editorial-serif text-2xl tracking-[-0.02em]">Tools</h2>
+                <p className="text-secondary text-xs mt-1 mb-6">Prompt engineering and content refinement</p>
               </Reveal>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {/* Prompt Writer */}
-                <Reveal delay={80}>
-                  <div className="border border-[var(--border-subtle-value)] rounded-lg p-6 bg-[var(--surface-01)]">
-                    <div className="flex items-center gap-2 mb-4">
-                      <PencilSimple size={18} weight="bold" className="text-brand" />
+                <Reveal delay={60}>
+                  <div className="border border-[var(--border-subtle-value)] rounded-lg p-5 bg-[var(--surface-01)]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <PencilSimple size={16} weight="bold" className="text-brand" />
                       <h3 className="font-medium text-sm">Prompt Writer</h3>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="grid grid-cols-2 gap-3">
+                    <div className="space-y-2.5">
+                      <div className="grid grid-cols-2 gap-2">
                         <div>
-                          <label className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary mb-1 block">Context</label>
+                          <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-0.5 block">Context</label>
                           <select
                             value={promptContext}
                             onChange={e => setPromptContext(e.target.value)}
-                            className="w-full px-2.5 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                            className="w-full px-2 py-1 text-[11px] border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                           >
                             {PROMPT_CONTEXTS.map(c => <option key={c} value={c}>{c}</option>)}
                           </select>
                         </div>
                         <div>
-                          <label className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary mb-1 block">Tone</label>
+                          <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-0.5 block">Tone</label>
                           <select
                             value={promptTone}
                             onChange={e => setPromptTone(e.target.value)}
-                            className="w-full px-2.5 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                            className="w-full px-2 py-1 text-[11px] border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
                           >
                             {['Professional', 'Technical', 'Concise', 'Detailed', 'Authoritative', 'Conversational', 'Academic', 'Minimal'].map(t => (
                               <option key={t} value={t}>{t}</option>
@@ -764,32 +763,32 @@ export default function Page() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary mb-1 block">Describe the AI you need</label>
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-0.5 block">Describe the AI you need</label>
                         <textarea
                           value={promptInput}
                           onChange={e => setPromptInput(e.target.value)}
                           placeholder="An AI that reviews pull requests for security vulnerabilities..."
-                          rows={3}
-                          className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
+                          rows={2}
+                          className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
                         />
                       </div>
 
                       <button
                         onClick={handleGeneratePrompt}
                         disabled={promptGenerating || !promptInput.trim()}
-                        className="w-full flex items-center justify-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-4 py-2 rounded-md text-xs font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center gap-1.5 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-3 py-1.5 rounded-md text-[11px] font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                       >
-                        {promptGenerating ? <ArrowsClockwise size={12} className="animate-spin" /> : <PencilSimple size={12} weight="bold" />}
+                        {promptGenerating ? <ArrowsClockwise size={11} className="animate-spin" /> : <PencilSimple size={11} weight="bold" />}
                         {promptGenerating ? 'Writing...' : 'Write Prompt'}
                       </button>
 
                       {promptResult && (
-                        <div className="mt-2">
+                        <div>
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary">Result</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary">Result</span>
                             <CopyBtn text={promptResult} />
                           </div>
-                          <pre className="bg-[var(--surface-02)] rounded-lg p-3 text-xs font-mono overflow-x-auto max-h-64 overflow-y-auto leading-relaxed">
+                          <pre className="bg-[var(--surface-02)] rounded-md p-3 text-[11px] font-mono overflow-x-auto max-h-56 overflow-y-auto leading-relaxed">
                             <code>{promptResult}</code>
                           </pre>
                         </div>
@@ -799,22 +798,22 @@ export default function Page() {
                 </Reveal>
 
                 {/* Rewrite Engine */}
-                <Reveal delay={160}>
-                  <div className="border border-[var(--border-subtle-value)] rounded-lg p-6 bg-[var(--surface-01)]">
-                    <div className="flex items-center gap-2 mb-4">
-                      <ArrowsClockwise size={18} weight="bold" className="text-brand" />
+                <Reveal delay={120}>
+                  <div className="border border-[var(--border-subtle-value)] rounded-lg p-5 bg-[var(--surface-01)]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <ArrowsClockwise size={16} weight="bold" className="text-brand" />
                       <h3 className="font-medium text-sm">Rewrite Engine</h3>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2.5">
                       <div>
-                        <label className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary mb-1.5 block">Functions</label>
-                        <div className="flex flex-wrap gap-1.5">
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-1 block">Functions</label>
+                        <div className="flex flex-wrap gap-1">
                           {rewriteFunctions.map(fn => (
                             <button
                               key={fn.id}
                               onClick={() => setRewriteFunctions(prev => prev.map(f => f.id === fn.id ? { ...f, enabled: !f.enabled } : f))}
-                              className={`px-2 py-1 text-[10px] font-medium rounded-md transition-all ${
+                              className={`px-2 py-0.5 text-[10px] font-medium rounded-md transition-all ${
                                 fn.enabled
                                   ? 'bg-[var(--surface-02)] text-primary'
                                   : 'text-muted line-through'
@@ -827,32 +826,32 @@ export default function Page() {
                       </div>
 
                       <div>
-                        <label className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary mb-1 block">Content to rewrite</label>
+                        <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary mb-0.5 block">Content to rewrite</label>
                         <textarea
                           value={rewriteInput}
                           onChange={e => setRewriteInput(e.target.value)}
                           placeholder="Paste the content you want to improve..."
-                          rows={3}
-                          className="w-full px-3 py-2 text-sm border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
+                          rows={2}
+                          className="w-full px-3 py-1.5 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)] resize-none"
                         />
                       </div>
 
                       <button
                         onClick={handleRewrite}
                         disabled={rewriteGenerating || !rewriteInput.trim()}
-                        className="w-full flex items-center justify-center gap-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-4 py-2 rounded-md text-xs font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                        className="w-full flex items-center justify-center gap-1.5 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] px-3 py-1.5 rounded-md text-[11px] font-medium hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                       >
-                        {rewriteGenerating ? <ArrowsClockwise size={12} className="animate-spin" /> : <ArrowsClockwise size={12} weight="bold" />}
+                        {rewriteGenerating ? <ArrowsClockwise size={11} className="animate-spin" /> : <ArrowsClockwise size={11} weight="bold" />}
                         {rewriteGenerating ? 'Rewriting...' : 'Rewrite'}
                       </button>
 
                       {rewriteResult && (
-                        <div className="mt-2">
+                        <div>
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-[10px] font-semibold uppercase tracking-[0.06em] text-secondary">Result</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-secondary">Result</span>
                             <CopyBtn text={rewriteResult} />
                           </div>
-                          <div className="bg-[var(--surface-02)] rounded-lg p-3 text-xs leading-relaxed max-h-64 overflow-y-auto">
+                          <div className="bg-[var(--surface-02)] rounded-md p-3 text-xs leading-relaxed max-h-56 overflow-y-auto">
                             <ReactMarkdown>{rewriteResult}</ReactMarkdown>
                           </div>
                         </div>
@@ -868,24 +867,24 @@ export default function Page() {
 
       {/* ═══════════════ CHAT PANEL ═══════════════ */}
       {chatOpen && (
-        <div className="fixed right-4 bottom-4 w-[360px] max-w-[calc(100vw-2rem)] z-50 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col max-h-[500px]">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-subtle-value)]">
-            <div className="flex items-center gap-2">
-              <ChatCircle size={14} weight="fill" className="text-brand" />
-              <span className="text-xs font-semibold uppercase tracking-[0.04em]">SkillsCamp AI</span>
+        <div className="fixed right-4 bottom-4 w-[340px] max-w-[calc(100vw-2rem)] z-50 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)] shadow-[0_4px_24px_rgba(0,0,0,0.08)] flex flex-col max-h-[460px]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[var(--border-subtle-value)]">
+            <div className="flex items-center gap-1.5">
+              <ChatCircle size={12} weight="fill" className="text-brand" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.06em]">SkillsCamp AI</span>
             </div>
             <button onClick={() => setChatOpen(false)} className="text-secondary hover:text-primary transition-colors">
-              <X size={14} weight="bold" />
+              <X size={12} weight="bold" />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-3 min-h-[200px]">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 min-h-[180px]">
             {chatMessages.length === 0 && (
-              <p className="text-secondary text-xs text-center py-8">Ask about skills, workflows, or recommendations.</p>
+              <p className="text-secondary text-[11px] text-center py-6">Ask about skills, workflows, or recommendations.</p>
             )}
             {chatMessages.map((msg, i) => (
               <div key={i} className={`${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
-                <div className={`inline-block max-w-[85%] rounded-lg px-3 py-2 text-xs leading-relaxed ${
+                <div className={`inline-block max-w-[85%] rounded-md px-2.5 py-1.5 text-[11px] leading-relaxed ${
                   msg.role === 'user'
                     ? 'bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)]'
                     : 'bg-[var(--surface-02)]'
@@ -896,31 +895,31 @@ export default function Page() {
             ))}
             {chatLoading && (
               <div className="text-left">
-                <div className="inline-block bg-[var(--surface-02)] rounded-lg px-3 py-2 text-xs text-secondary">
+                <div className="inline-block bg-[var(--surface-02)] rounded-md px-2.5 py-1.5 text-[11px] text-secondary">
                   Thinking...
                 </div>
               </div>
             )}
           </div>
 
-          <div className="border-t border-[var(--border-subtle-value)] p-3">
+          <div className="border-t border-[var(--border-subtle-value)] p-2.5">
             <form
               onSubmit={e => { e.preventDefault(); handleChat(); }}
-              className="flex gap-2"
+              className="flex gap-1.5"
             >
               <input
                 type="text"
                 value={chatInput}
                 onChange={e => setChatInput(e.target.value)}
                 placeholder="Ask about skills..."
-                className="flex-1 px-3 py-2 text-xs border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
+                className="flex-1 px-2.5 py-1.5 text-[11px] border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
               />
               <button
                 type="submit"
                 disabled={chatLoading || !chatInput.trim()}
-                className="p-2 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] rounded-md hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40"
+                className="p-1.5 bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)] rounded-md hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-40"
               >
-                <PaperPlane size={12} weight="bold" />
+                <PaperPlane size={11} weight="bold" />
               </button>
             </form>
           </div>
@@ -929,12 +928,12 @@ export default function Page() {
 
       {/* ═══════════════ FOOTER ═══════════════ */}
       <footer className="border-t border-[var(--border-subtle-value)] mt-auto">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <MastGlyph className="h-5 w-auto opacity-40" />
-            <span className="text-xs text-secondary">Tangison Agency</span>
+            <MastGlyph className="h-4 w-auto opacity-40" />
+            <span className="text-[10px] text-secondary">Tangison Agency</span>
           </div>
-          <div className="flex items-center gap-4 text-xs text-muted">
+          <div className="flex items-center gap-3 text-[10px] text-muted">
             <a href="https://skills.sh" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">skills.sh</a>
             <a href="https://github.com/tangison/skills" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">GitHub</a>
           </div>
