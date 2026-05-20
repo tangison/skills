@@ -17,10 +17,10 @@ interface CopyButtonProps {
 
 const variantStyles: Record<string, string> = {
   default:
-    'bg-surface-02 text-skeleton-bone hover:bg-[#2a2c2e] active:bg-[#2e3032]',
+    'bg-surface-02 text-warm-bone hover:bg-[var(--surface-02)] active:bg-[var(--border-default-value)]',
   ghost:
-    'border border-[rgba(217,215,210,0.2)] text-fog-gray bg-transparent hover:bg-[rgba(217,215,210,0.06)] active:bg-[rgba(217,215,210,0.1)]',
-  rust: 'bg-rust-signal text-atlantic-black hover:bg-[#d4785a] active:bg-[#b35d40]',
+    'border border-[var(--border-subtle-value)] text-secondary bg-transparent hover:bg-[var(--surface-02)] active:bg-[var(--border-default-value)]',
+  rust: 'bg-brand text-off-black hover:opacity-85 active:opacity-75',
 };
 
 export function CopyButton({

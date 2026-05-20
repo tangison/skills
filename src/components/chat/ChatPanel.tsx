@@ -44,7 +44,7 @@ export function ChatPanel({ chatOpen, onChatToggle }: ChatPanelProps) {
           <ChatCircle size={12} weight="fill" className="text-brand" />
           <span className="text-[10px] font-semibold uppercase tracking-[0.06em]">SkillsCamp AI</span>
         </div>
-        <button onClick={() => onChatToggle()} className="text-secondary hover:text-primary transition-colors">
+        <button onClick={() => onChatToggle()} className="text-secondary hover:text-primary transition-colors" aria-label="Close chat">
           <X size={12} weight="bold" />
         </button>
       </div>
@@ -83,6 +83,7 @@ export function ChatPanel({ chatOpen, onChatToggle }: ChatPanelProps) {
             value={chatInput}
             onChange={e => setChatInput(e.target.value)}
             placeholder="Ask about skills..."
+            aria-label="Chat message input"
             className="flex-1 px-2.5 py-1.5 text-[11px] border border-[var(--border-subtle-value)] rounded-md bg-[var(--surface-01)] focus:outline-none focus:ring-1 focus:ring-[var(--ring)]"
           />
           <button

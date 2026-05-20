@@ -20,8 +20,8 @@ export function InstallCommand({ command, className }: InstallCommandProps) {
         className
       )}
     >
-      <code className="font-mono text-sm text-skeleton-bone truncate min-w-0">
-        <span className="text-rust-signal select-none">$ </span>
+      <code className="font-mono text-sm text-warm-bone truncate min-w-0">
+        <span className="text-brand select-none">$ </span>
         {fullCommand}
       </code>
 

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Reveal } from '@/components/ui/ScrollReveal';
 
 export function AboutSection() {
@@ -10,6 +11,19 @@ export function AboutSection() {
         <p className="text-[var(--rust-signal)] font-display text-xs uppercase tracking-[0.1em] mt-2 mb-6">Intelligence built on what remains</p>
       </Reveal>
 
+      {/* ── Hero image band ── */}
+      <Reveal delay={60}>
+        <div className="relative w-full aspect-[21/9] rounded-lg overflow-hidden border border-[var(--border-subtle-value)] mb-8 img-overlay-duotone">
+          <Image
+            src="/images/hero-sadc.webp"
+            alt="African technology landscape"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+          />
+        </div>
+      </Reveal>
+
       <Reveal delay={80}>
         <div className="prose prose-sm max-w-none text-secondary leading-relaxed space-y-4">
           <p>Tangison SkillsCamp is a sovereign intelligence infrastructure platform. We discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem: skills.sh, Vercel Labs, Anthropic, Obra Superpowers, Microsoft Azure, and beyond.</p>
@@ -18,25 +32,42 @@ export function AboutSection() {
         </div>
       </Reveal>
 
+      {/* ── Two-column image + principles ── */}
       <Reveal delay={160}>
-        <div className="mt-10">
-          <h3 className="font-display text-xs uppercase tracking-[0.1em] text-primary mb-4">Core Principles</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              'Always credit original skill authors',
-              'Always link back to original repositories',
-              'Always link to skills.sh',
-              'Prefer trusted ecosystems',
-              'Prefer maintainable skills',
-              'Avoid recommending low-quality skills',
-              'Enhance skills without stealing attribution',
-              'Act as an intelligence layer above the ecosystem',
-            ].map((principle, i) => (
-              <div key={i} className="flex items-start gap-2 p-3 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)]">
-                <span className="text-[var(--rust-signal)] font-mono text-[10px] font-bold mt-0.5">{String(i + 1).padStart(2, '0')}</span>
-                <span className="text-xs leading-relaxed">{principle}</span>
-              </div>
-            ))}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-5 gap-6 items-start">
+          {/* Side image */}
+          <div className="md:col-span-2">
+            <div className="relative aspect-[3/4] rounded-lg overflow-hidden border border-[var(--border-subtle-value)] img-overlay-warm">
+              <Image
+                src="/images/about-portrait.webp"
+                alt="Tangison team member"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 300px"
+              />
+            </div>
+          </div>
+
+          {/* Principles */}
+          <div className="md:col-span-3">
+            <h3 className="font-display text-xs uppercase tracking-[0.1em] text-primary mb-4">Core Principles</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {[
+                'Always credit original skill authors',
+                'Always link back to original repositories',
+                'Always link to skills.sh',
+                'Prefer trusted ecosystems',
+                'Prefer maintainable skills',
+                'Avoid recommending low-quality skills',
+                'Enhance skills without stealing attribution',
+                'Act as an intelligence layer above the ecosystem',
+              ].map((principle, i) => (
+                <div key={i} className="flex items-start gap-2 p-3 border border-[var(--border-subtle-value)] rounded-lg bg-[var(--surface-01)]">
+                  <span className="text-[var(--rust-signal)] font-mono text-[10px] font-bold mt-0.5">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-xs leading-relaxed">{principle}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Reveal>
@@ -49,6 +80,19 @@ export function AboutSection() {
               <span key={eco} className="px-3 py-1.5 text-xs font-medium rounded-md bg-[var(--surface-02)] text-secondary">{eco}</span>
             ))}
           </div>
+        </div>
+      </Reveal>
+
+      {/* ── Brand image ── */}
+      <Reveal delay={260}>
+        <div className="mt-8 relative aspect-square max-w-[200px] rounded-lg overflow-hidden border border-[var(--border-subtle-value)] img-overlay-muted">
+          <Image
+            src="/images/about-brand.webp"
+            alt="Brand design system"
+            fill
+            className="object-cover"
+            sizes="200px"
+          />
         </div>
       </Reveal>
 

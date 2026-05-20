@@ -68,13 +68,13 @@ export const metadata: Metadata = {
     siteName: "Tangison SkillsCamp",
     type: "website",
     url: "https://skills.tangison.com",
-    images: [{ url: "/ocean-view.jpeg", width: 1200, height: 630, alt: "Tangison SkillsCamp — Sovereign Intelligence Infrastructure" }],
+    images: [{ url: "/images/og-ocean-view.webp", width: 1200, height: 630, alt: "Tangison SkillsCamp — Sovereign Intelligence Infrastructure" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Tangison SkillsCamp",
     description: "The open directory for AI agent skills. Browse, install, and deploy modular skills.",
-    images: ["/ocean-view.jpeg"],
+    images: ["/images/og-ocean-view.webp"],
   },
 
 };

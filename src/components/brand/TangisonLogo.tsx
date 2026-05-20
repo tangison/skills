@@ -68,7 +68,7 @@ export function MastGlyph({ className, forceRustAccent, strokeColor }: MastGlyph
       {/* ── Rust accent — curved pennant / signal line ── */}
       <path
         d="M82 8 C86 18, 80 26, 76 22"
-        stroke={forceRustAccent ? '#E8643A' : '#E8643A'}
+        stroke="var(--rust-signal)"
         strokeWidth="3"
         strokeLinecap="round"
         fill="none"
@@ -91,8 +91,8 @@ export function TangisonLogo({
   className,
   isDark = true,
 }: TangisonLogoProps) {
-  const textColor = isDark ? 'text-skeleton-bone' : 'text-atlantic-black';
-  const subTextColor = isDark ? 'text-fog-gray' : 'text-atlantic-black/50';
+  const textColor = isDark ? 'text-warm-bone' : 'text-off-black';
+  const subTextColor = isDark ? 'text-secondary' : 'text-off-black/50';
 
   if (variant === 'mark-only') {
     return <MastGlyph className={cn('h-10 w-auto', className)} />;
@@ -117,7 +117,7 @@ export function TangisonLogo({
         <span className={cn('font-display text-lg tracking-[0.12em] uppercase select-none', textColor)}>
           TANGISON
         </span>
-        <span className={cn('font-editorial text-xs tracking-[0.2em] uppercase select-none mt-1', subTextColor)}>
+        <span className={cn('font-editorial-serif text-xs tracking-[0.2em] uppercase select-none mt-1', subTextColor)}>
           SKILLSMITH
         </span>
       </div>

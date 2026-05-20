@@ -1,7 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@fontsource/jetbrains-mono/400.css";
-@import "@fontsource/jetbrains-mono/500.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -63,7 +61,7 @@
   --color-atlantic-black: var(--off-black);
   --color-skeleton-bone: var(--warm-bone);
   --color-fog-gray: var(--text-secondary-value);
-  --color-deep-ocean: #16353D;
+  --color-deep-ocean: var(--off-black);
 
   /* ── Radii ── */
   --radius-sm: calc(var(--radius) - 4px);
@@ -351,6 +349,98 @@
   /* ── Focus ring ── */
   .ring-brand {
     --tw-ring-color: var(--rust-signal);
+  }
+
+  /* ── Image overlays (tone down AI-generated imagery) ── */
+  .img-overlay-warm {
+    position: relative;
+  }
+  .img-overlay-warm::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(247, 246, 243, 0.35) 0%,
+      rgba(247, 246, 243, 0.10) 40%,
+      transparent 100%
+    );
+    mix-blend-mode: normal;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .img-overlay-muted {
+    position: relative;
+  }
+  .img-overlay-muted::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(247, 246, 243, 0.25);
+    mix-blend-mode: color;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .img-overlay-duotone {
+    position: relative;
+  }
+  .img-overlay-duotone::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(17, 17, 17, 0.06) 60%,
+      rgba(17, 17, 17, 0.18) 100%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .img-overlay-bottom {
+    position: relative;
+  }
+  .img-overlay-bottom::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      var(--surface-01) 0%,
+      rgba(255, 255, 255, 0) 50%
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .dark .img-overlay-warm::after {
+    background: linear-gradient(
+      135deg,
+      rgba(17, 17, 17, 0.45) 0%,
+      rgba(17, 17, 17, 0.15) 40%,
+      transparent 100%
+    );
+  }
+  .dark .img-overlay-muted::after {
+    background: rgba(17, 17, 17, 0.30);
+  }
+  .dark .img-overlay-duotone::after {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(0, 0, 0, 0.10) 60%,
+      rgba(0, 0, 0, 0.30) 100%
+    );
+  }
+  .dark .img-overlay-bottom::after {
+    background: linear-gradient(
+      to top,
+      var(--surface-01) 0%,
+      rgba(26, 26, 26, 0) 50%
+    );
   }
 
   /* ── No scrollbar ── */

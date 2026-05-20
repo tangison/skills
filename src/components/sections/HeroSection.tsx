@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { ArrowRight, PencilSimple, CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { Reveal } from '@/components/ui/ScrollReveal';
 import type { Section } from '@/lib/constants';
@@ -11,32 +12,36 @@ interface HeroSectionProps {
 
 const HERO_SLIDES = [
   {
-    image: '/images/hero-skill-discovery.png',
+    image: '/images/hero-skill-discovery.webp',
     label: 'Skill Discovery',
     title: 'The open directory for AI agent skills',
     description: 'Browse, install, and deploy modular skills across 28 categories. From plumbing to prompt engineering, find what you need.',
     cta: { label: 'Explore Skills', section: 'skills' as Section },
+    overlay: 'img-overlay-warm',
   },
   {
-    image: '/images/hero-document-engine.png',
+    image: '/images/hero-document-engine.webp',
     label: 'Document Engine',
     title: 'AI writes the documents. You ship them.',
     description: 'Generate proposals, reports, contracts, invoices, and pitch decks in seconds. Professional tone, every time.',
     cta: { label: 'Document Engine', section: 'documents' as Section },
+    overlay: 'img-overlay-duotone',
   },
   {
-    image: '/images/hero-tools.png',
+    image: '/images/hero-tools.webp',
     label: 'Prompt Tools',
     title: 'Craft prompts that actually work',
     description: 'Write, rewrite, and optimize prompts with AI-powered tools. Remove AI copy, enforce structure, ship clean output.',
     cta: { label: 'Prompt Tools', section: 'tools' as Section },
+    overlay: 'img-overlay-warm',
   },
   {
-    image: '/images/hero-sadc.png',
+    image: '/images/hero-sadc.webp',
     label: 'SADC Region',
     title: 'Built for Africa, useful everywhere',
     description: 'African Language AI, Mobile Money integration, SADC compliance, and offline-first skills for low-bandwidth environments.',
     cta: { label: 'Learn More', section: 'about' as Section },
+    overlay: 'img-overlay-muted',
   },
 ];
 
@@ -141,17 +146,18 @@ export function HeroSection({ onSectionChange }: HeroSectionProps) {
               </div>
             </div>
 
-            {/* Right: Image */}
+            {/* Right: Image with overlay */}
             <div className="relative flex items-center justify-center">
-              <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-[var(--border-subtle-value)]">
-                <img
+              <div className={`relative w-full aspect-[16/9] rounded-lg overflow-hidden border border-[var(--border-subtle-value)] ${slide.overlay}`}>
+                <Image
                   src={slide.image}
                   alt={slide.label}
-                  className="w-full h-full object-cover transition-opacity duration-500"
+                  fill
+                  className="object-cover transition-opacity duration-500"
                   key={currentSlide}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  priority={currentSlide === 0}
                 />
-                {/* Gradient overlay for text readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-01)]/20 to-transparent" />
               </div>
             </div>
           </div>

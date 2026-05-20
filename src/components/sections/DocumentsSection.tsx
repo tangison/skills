@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import { FileText, Lightning, ArrowsClockwise, Printer } from '@phosphor-icons/react';
 import { Reveal } from '@/components/ui/ScrollReveal';
@@ -73,7 +74,20 @@ export function DocumentsSection() {
     <div>
       <Reveal>
         <h2 className="font-editorial-serif text-2xl tracking-[-0.02em]">Document Engine</h2>
-        <p className="text-secondary text-xs mt-1 mb-6">AI writes the content. You print or download it.</p>
+        <p className="text-secondary text-xs mt-1 mb-4">AI writes the content. You print or download it.</p>
+      </Reveal>
+
+      {/* Subtle header image */}
+      <Reveal delay={40}>
+        <div className="relative w-full aspect-[21/6] rounded-lg overflow-hidden border border-[var(--border-subtle-value)] mb-6 img-overlay-bottom">
+          <Image
+            src="/images/home-graphic.webp"
+            alt="Document generation"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+          />
+        </div>
       </Reveal>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
@@ -183,7 +197,7 @@ export function DocumentsSection() {
                 )}
               </button>
 
-              {docError && <p className="text-[11px] text-red-500">{docError}</p>}
+              {docError && <p className="text-[11px] text-destructive">{docError}</p>}
             </div>
           </Reveal>
         </div>

@@ -217,3 +217,62 @@ Stage Summary:
 - Hash-based URL navigation works (#skills, #documents, #tools, #about)
 - selectedSkill state properly communicated between SkillsSection and page shell
 - page.tsx remains 87 lines (clean shell)
+
+---
+Task ID: 8
+Agent: Main Orchestrator
+Task: Convert user images to WebP, add overlays, implement strategically, fix audit issues
+
+Work Log:
+- Read worklog.md and all current project files to understand state
+- Cataloged uploaded images in /upload/: 8 files (5 JPEG, 2 PNG, 1 small PNG)
+- Converted all uploaded images to WebP using ffmpeg with -q:v 80:
+  - hero-skill-discovery.webp (1408x768, 41KB, was 189KB JPEG → 78% reduction)
+  - hero-document-engine.webp (1408x768, 84KB, was 296KB JPEG → 72% reduction)
+  - hero-tools.webp (1408x768, 66KB, was 255KB JPEG → 74% reduction)
+  - hero-sadc.webp (1408x628, 34KB, was 197KB JPEG → 83% reduction)
+  - about-portrait.webp (896x1280, 40KB, was 214KB JPEG → 81% reduction)
+  - about-brand.webp (1024x1024, 37KB, was 179KB JPEG → 79% reduction)
+  - home-graphic.webp (1029x334, 18KB, was 395KB PNG → 95% reduction)
+  - og-ocean-view.webp (1408x628, 44KB for OG/Twitter cards)
+- Deleted old PNG hero images from /public/images/
+- Added CSS image overlay system to globals.css with 4 variants:
+  - .img-overlay-warm — 135deg gradient wash with warm-bone tint (reduces AI saturation)
+  - .img-overlay-muted — Full desaturation via mix-blend-mode: color (mutes AI look)
+  - .img-overlay-duotone — Bottom gradient to off-black (adds depth without distraction)
+  - .img-overlay-bottom — Bottom fade to surface color (seamless content blending)
+  - All 4 variants have dark mode overrides
+- Updated HeroSection.tsx:
+  - Switched from <img> to next/image <Image> component
+  - All 4 carousel slides now use WebP images with per-slide overlay variants
+  - Added priority prop to first slide, proper sizes attribute
+- Updated AboutSection.tsx:
+  - Added hero image band with ocean/sadc landscape + duotone overlay
+  - Added portrait image with warm overlay in principles section (2-column layout)
+  - Added brand image with muted overlay next to AI Rewrite System
+- Updated DocumentsSection.tsx:
+  - Added subtle header image (home-graphic.webp) with bottom overlay
+- Updated layout.tsx:
+  - OG and Twitter card images now reference WebP version (/images/og-ocean-view.webp)
+- Ran comprehensive platform audit (6 categories: Performance, Accessibility, Theming, SEO, Code Quality, Responsive)
+
+Audit fixes applied:
+- Fixed CopyButton.tsx: Replaced 6 hardcoded hex/rgba colors with CSS variable references
+- Fixed TangisonLogo.tsx: Replaced hardcoded #E8643A with var(--rust-signal), fixed dead ternary, replaced legacy color classes with canonical names, fixed font-editorial → font-editorial-serif
+- Fixed ChatPanel.tsx: Added aria-label="Close chat" and aria-label="Chat message input"
+- Fixed Header.tsx: Added aria-label="Go to home page" to logo, aria-label + aria-current to nav items
+- Fixed SkillsSection.tsx: Added aria-label to back button, featured cards, grid cards, category filters with aria-pressed
+- Fixed DocumentsSection.tsx: Replaced text-red-500 with text-destructive
+- Fixed SectionTag.tsx: Replaced text-fog-gray with text-secondary, border-rust-signal with border-brand
+- Fixed InstallCommand.tsx: Replaced text-skeleton-bone with text-warm-bone, text-rust-signal with text-brand
+- Fixed globals.css: Removed duplicate @fontsource/jetbrains-mono imports (next/font already loads it), replaced hardcoded --deep-ocean: #16353D with var(--off-black)
+
+Stage Summary:
+- All user images converted to WebP (avg 80% size reduction)
+- Image overlay system reduces AI-ish visual prominence while keeping strategic imagery
+- Hero carousel, About section, and Documents section now use real imagery
+- OG/Twitter cards use WebP for faster social media previews
+- 15+ accessibility fixes (aria-labels, aria-pressed, aria-current)
+- 10+ theming fixes (hardcoded colors → CSS variables)
+- Duplicate font imports removed (~40KB bundle reduction)
+- Lint passes clean, dev server returns 200

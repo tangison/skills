@@ -60,6 +60,7 @@ export function SkillsSection({ onSkillSelected }: SkillsSectionProps) {
           <button
             onClick={handleBack}
             className="text-[11px] text-secondary hover:text-primary uppercase tracking-[0.04em] mb-5 inline-flex items-center gap-1"
+            aria-label="Back to skills list"
           >
             <CaretLeft size={10} weight="bold" /> Back
           </button>
@@ -147,6 +148,7 @@ export function SkillsSection({ onSkillSelected }: SkillsSectionProps) {
                   key={skill.id}
                   onClick={() => handleSkillSelect(skill.slug)}
                   className="flex-none w-[280px] sm:w-[320px] text-left border border-[var(--border-subtle-value)] rounded-lg p-4 bg-[var(--surface-01)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all group"
+                  aria-label={`View ${skill.name} skill`}
                 >
                   <div className="flex flex-wrap gap-1 mb-2">
                     <Tag variant={DIFFICULTY_PASTEL[skill.difficulty] || 'pastel-blue'}>{skill.difficulty}</Tag>
@@ -195,6 +197,8 @@ export function SkillsSection({ onSkillSelected }: SkillsSectionProps) {
                   ? 'bg-[var(--off-black)] text-white dark:bg-white dark:text-[var(--off-black)]'
                   : 'bg-[var(--surface-02)] text-secondary hover:text-primary'
               }`}
+              aria-label={`Filter by ${cat === 'all' ? 'all categories' : cat}`}
+              aria-pressed={skillFilter === cat}
             >
               {cat === 'all' ? 'All' : cat}
             </button>
@@ -209,6 +213,7 @@ export function SkillsSection({ onSkillSelected }: SkillsSectionProps) {
             <button
               onClick={() => handleSkillSelect(skill.slug)}
               className="w-full text-left border border-[var(--border-subtle-value)] rounded-lg p-4 bg-[var(--surface-01)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all group"
+              aria-label={`View ${skill.name} skill`}
             >
               <div className="flex flex-wrap gap-1 mb-2">
                 <Tag variant={DIFFICULTY_PASTEL[skill.difficulty] || 'pastel-blue'}>{skill.difficulty}</Tag>

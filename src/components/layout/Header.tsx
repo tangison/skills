@@ -58,6 +58,7 @@ export function Header({
         <button
           onClick={() => { onSelectedSkillClear(); onSectionChange('skills'); }}
           className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+          aria-label="Go to home page"
         >
           <MastGlyph className="h-7 w-auto" />
           <div className="flex flex-col leading-none">
@@ -79,6 +80,8 @@ export function Header({
                     ? 'text-primary bg-[var(--surface-02)]'
                     : 'text-secondary hover:text-primary hover:bg-[var(--surface-02)]'
                 }`}
+                aria-label={item.label}
+                aria-current={activeSection === item.id ? 'page' : undefined}
               >
                 <Icon size={13} weight={activeSection === item.id ? 'fill' : 'regular'} />
                 {item.label}
