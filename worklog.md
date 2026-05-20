@@ -143,3 +143,77 @@ Stage Summary:
 - About page with complete company info, principles, ecosystems, roadmap, version history
 - Beta banner visible sitewide
 - Footer includes agency signature with version badge
+
+---
+Task ID: 6
+Agent: Decomposition Agent
+Task: Decompose monolithic page.tsx into component files
+
+Work Log:
+- Read existing 1338-line page.tsx and identified all sections, constants, types, and state
+- Created src/lib/constants.ts with shared types (Section), constants (PASTEL_MAP, DIFFICULTY_PASTEL, DOC_TYPES, TONES, PROMPT_CONTEXTS, REWRITE_FUNCTIONS, NAV_ITEMS, OFFCANVAS_LINKS, FOOTER_LINKS)
+- Created src/components/ui/ScrollReveal.tsx — useScrollReveal hook + Reveal component
+- Created src/components/ui/Tag.tsx — Tag component with variant support
+- Created src/components/ui/CopyBtn.tsx — Copy to clipboard button component
+- Created src/components/layout/Header.tsx — Header with desktop nav, off-canvas Sheet menu, theme toggle, chat toggle
+- Created src/components/layout/Footer.tsx — Footer with brand, product, company, legal, resources columns + bottom bar
+- Created src/components/sections/HeroSection.tsx — Hero banner with CTA buttons
+- Created src/components/sections/SkillsSection.tsx — Skills grid, search, filter, detail view (self-contained with internal state)
+- Created src/components/sections/DocumentsSection.tsx — Document Engine form + preview (self-contained with internal state + API handler)
+- Created src/components/sections/ToolsSection.tsx — Prompt Writer + Rewrite Engine (self-contained with internal state + API handlers)
+- Created src/components/sections/AboutSection.tsx — About section with principles, ecosystems, rewrite system, roadmap, version history
+- Created src/components/chat/ChatPanel.tsx — Floating AI chat panel (self-contained with internal state + API handler)
+- Rewrote src/app/page.tsx from 1338 lines to 81 lines — just the shell with Header, BetaBanner, HeroSection, content switch, ChatPanel, Footer
+- Fixed lint error: replaced useState+useEffect mounted pattern with resolvedTheme from next-themes in Header
+- Each section component manages its own internal state and API calls — page.tsx only owns activeSection, chatOpen, selectedSkill
+- All existing functionality preserved: skills search/filter/detail, document engine, prompt writer, rewrite engine, about section, AI chat
+- All visual styling, CSS classes, and design tokens preserved exactly
+- Lint passes clean, dev server compiles and returns 200
+
+Stage Summary:
+- page.tsx reduced from 1338 lines to 81 lines (94% reduction)
+- 11 new component files created under src/components/{sections,layout,chat,ui}
+- 1 new constants file created at src/lib/constants.ts
+- Section components are self-contained with their own state and API handlers
+- Page shell only manages navigation state (activeSection, chatOpen, selectedSkill)
+- All existing functionality and visual design preserved exactly
+
+---
+Task ID: 7
+Agent: Main Orchestrator
+Task: Add carousel, generate images, enhance hero, add hash-based navigation
+
+Work Log:
+- Installed embla-carousel-autoplay for auto-advancing carousel
+- Generated 4 brand images using z-ai image CLI tool to /public/images/:
+  - hero-skill-discovery.png (1344x768) — AI skill discovery visualization
+  - hero-document-engine.png (1344x768) — Document generation visualization
+  - hero-tools.png (1344x768) — AI tools visualization
+  - hero-sadc.png (1344x768) — African technology landscape
+- Rewrote HeroSection with:
+  - Image carousel (4 slides, auto-advance every 6s, dot indicators, prev/next buttons)
+  - Each slide has: label, title, description, CTA button linking to relevant section
+  - Right-side image panel with aspect-ratio container and gradient overlay
+  - Bento stats grid below hero (28 Skill Domains, 30+ Skills, 6 User Classes, 8 Document Types)
+- Enhanced SkillsSection with:
+  - Featured Skills carousel at top (5 curated skills, embla-carousel with autoplay)
+  - Prev/next navigation buttons
+  - Star icon + "Featured Skills" label
+- Added hash-based URL navigation:
+  - Page reads hash on load to determine active section
+  - handleSectionChange now updates window.location.hash
+  - Browser back/forward buttons work via hashchange event listener
+  - main element gets id={activeSection} for anchor linking
+- Fixed selectedSkill state bug: page.tsx now tracks hasSelectedSkill boolean
+  - SkillsSection calls onSkillSelected(true/false) when skill is selected/deselected
+  - Hero section correctly hides when a skill detail is viewed
+- Updated Footer to use onSectionChange for About link
+- All lint checks pass, dev server compiles and returns 200
+
+Stage Summary:
+- Hero section now has image carousel + bento stats grid
+- Skills section has featured skills carousel at top
+- 4 AI-generated brand images in /public/images/
+- Hash-based URL navigation works (#skills, #documents, #tools, #about)
+- selectedSkill state properly communicated between SkillsSection and page shell
+- page.tsx remains 87 lines (clean shell)
