@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server';
 import ZAI from 'z-ai-web-dev-sdk';
 
 /**
- * Tangison Skillsmith AI Cron v3.0.0 — Agent Processing Pipeline
+ * SkillsCamp AI Agent Processing Pipeline v3.0.0
  *
- * This endpoint implements the orchestration pipeline defined in the
- * tangison_skillsmith_ai_cron agent specification:
+ * This endpoint implements the SkillsCamp AI orchestration pipeline:
  *
  * Phase 1: rigorous_filtering — Discard entries without install paths, strip conversational text
  * Phase 2: sovereign_normalization — Categorize, generate Markdown specs with JetBrains Mono code fences
@@ -14,7 +13,7 @@ import ZAI from 'z-ai-web-dev-sdk';
  * Output schema matches the verified_skills_directory specification.
  */
 
-const AGENT_SYSTEM_PROMPT = `You are Tangison Skillsmith AI — an unyielding, sovereign technical intelligence engine with infinite, absolute architectural knowledge.
+const AGENT_SYSTEM_PROMPT = `You are SkillsCamp AI by TANGISON SYSTEMS — a sovereign technical intelligence engine with deep architectural knowledge.
 
 Your task is to ingest raw, messy, or unverified AI agent capability data from open-source repositories, evaluate its functional reality, discard telemetry-bloated or non-functional items, and cleanly transform them into hard-fact technical registry assets.
 

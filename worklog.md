@@ -464,3 +464,65 @@ Changes Summary:
 ✅ All 5 aiInsight values updated with concrete claims
 ✅ All 5 tangisonRecommendation values updated with actionable guidance
 ✅ Lint: passed with zero errors
+
+---
+Task ID: 9
+Agent: Main Orchestrator
+Task: Make AI smart with Agent Harness principles, restore z-ai-web-dev-sdk, build Prompt Writer add-on, add copy buttons
+
+Work Log:
+- Read all API routes (chat, rewrite, prompt-writer, agent/process) — confirmed z-ai-web-dev-sdk already installed and used in chat, rewrite, agent/process routes
+- Prompt Writer route existed but used raw OpenRouter fetch instead of SDK
+- Upgraded /api/chat/route.ts:
+  - New system prompt with Agent Harness Construction principles (action space, observation design, error recovery, context budgeting)
+  - Defined 6 action tools: RECOMMEND, COMPARE, EXPLAIN, INSTALL, CLARIFY, ADVISE
+  - Observation design: every response must include status, summary, recommendation, next_actions
+  - Response format: structured Markdown with → direct answer, install commands, next steps
+  - Error recovery: specific messages for rate limits, timeouts, auth failures
+  - 7 constraints: no hallucination, no filler, always explain WHY, always credit authors
+  - Skill catalog injected as compact table for context-efficient querying
+- Upgraded /api/prompt-writer/route.ts:
+  - Converted from raw OpenRouter fetch to z-ai-web-dev-sdk
+  - Added context-specific framing for 10 domains (Agent Builder, Chat, RAG, Workflow, Code Review, Data Analysis, Creative Writing, Research, Customer Support, Education)
+  - Added tone mapping for 8 tones with enforceable descriptions
+  - Improved system prompt with strict Role/Behavior/Tone/Escalation/Constraints structure
+  - Added variation support for generating different approaches to same requirement
+  - Added robust error recovery with root cause hints
+- Updated agent-config.ts:
+  - Fixed Skillsmith → SkillsCamp branding
+  - Added Agent Harness sections: action_space, observation_design, error_recovery, context_budget, architecture
+  - Architecture: hybrid ReAct planning + typed tool execution
+  - Benchmarking: completion_rate, retries_per_task, pass@1, pass@3, cost_per_successful_task
+- Improved chat UI in page.tsx:
+  - Added ReactMarkdown import for rendering Markdown in chat messages
+  - Chat widget upgraded: larger (420px wide, 580px max-height), better styled
+  - Assistant messages now render Markdown with custom components (bold=Rust accent, code=monospace, lists)
+  - Added copy button on every assistant message (appears on hover, with check confirmation)
+  - Added Clear chat button in header
+  - Improved typing indicator: bouncing dots animation instead of plain "Thinking..."
+  - Better input placeholder: "Describe what you're building..."
+  - Added focus ring on input
+- Improved Prompt Writer UI in page.tsx:
+  - Results now render Markdown instead of raw <pre> text
+  - Section headers (ROLE, BEHAVIOR, TONE, ESCALATION, CONSTRAINTS) color-coded
+  - Copy button and .txt download on every result
+  - Download All button for bundled .txt
+  - Updated prompt-writer handler to pass variation number properly
+- Fixed branding across all API routes:
+  - agent/process: Skillsmith AI → SkillsCamp AI
+  - rewrite: Tangison Sovereign Intelligence → SkillsCamp Sovereign Intelligence
+- Converted middleware.ts → proxy.ts for Next.js 16 compatibility
+- Ran bun run lint — passed with zero errors
+- Tested APIs:
+  - POST /api/chat → 200, smart structured response with install commands
+  - POST /api/prompt-writer → 200, properly formatted Role/Behavior/Tone/Escalation/Constraints
+
+Stage Summary:
+✅ AI chat is now smart with Agent Harness principles (structured output, action space, observation design, error recovery)
+✅ All API routes use z-ai-web-dev-sdk (no more raw OpenRouter fetch)
+✅ Prompt Writer generates proper structured prompts with 7 strict guidelines
+✅ Chat messages render Markdown with copy buttons
+✅ Prompt Writer results render Markdown with color-coded sections
+✅ Branding consistent: SkillsCamp AI throughout
+✅ middleware.ts → proxy.ts for Next.js 16
+✅ Lint: zero errors

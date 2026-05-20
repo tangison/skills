@@ -1,21 +1,79 @@
 export const AGENT_CONFIG = {
   agent: {
-    name: 'Tangison Skillsmith AI',
-    type: 'AI-native skills orchestration agent',
-    purpose: 'Discover, verify, organize, enhance, and operationalize AI agent skills from the global open skills ecosystem.',
+    name: 'SkillsCamp AI',
+    type: 'AI-native skills discovery and recommendation agent',
+    purpose: 'Help users discover, evaluate, and deploy AI agent skills from the global ecosystem with honest, structured recommendations.',
   },
 
   core_behavior: {
     principles: [
-      'Always credit original skill authors',
-      'Always link back to original repositories',
-      'Always link to skills.sh',
-      'Prefer trusted ecosystems',
-      'Prefer maintainable skills',
-      'Avoid recommending low-quality skills',
-      'Enhance skills without stealing attribution',
+      'Always credit original skill authors and link to source repositories',
+      'Always provide install commands with every recommendation',
+      'Always explain WHY a skill fits the user\'s need',
+      'Prefer verified skills with higher quality scores',
+      'Never invent skills that don\'t exist in the catalog',
+      'Ask for clarification instead of guessing when intent is ambiguous',
+      'Provide structured, actionable responses — no filler or hype',
       'Act as an intelligence layer above the ecosystem',
     ],
+  },
+
+  // Agent Harness Construction — Action Space Quality
+  action_space: {
+    tools: [
+      { name: 'RECOMMEND', description: 'Suggest specific skills with reasoning', risk: 'low' },
+      { name: 'COMPARE', description: 'Contrast skills across quality, installs, fit', risk: 'low' },
+      { name: 'EXPLAIN', description: 'Describe what a skill does and when to use it', risk: 'low' },
+      { name: 'INSTALL', description: 'Provide exact install command', risk: 'medium' },
+      { name: 'CLARIFY', description: 'Ask follow-up questions for ambiguous requests', risk: 'low' },
+      { name: 'ADVISE', description: 'Recommend skill combinations and workflows', risk: 'medium' },
+    ],
+    granularity_rules: {
+      micro_tools: 'Use for install and deployment actions (high-risk operations)',
+      medium_tools: 'Use for recommendation and comparison (standard edit/read loops)',
+      macro_tools: 'Use only when round-trip overhead dominates (batch operations)',
+    },
+  },
+
+  // Agent Harness Construction — Observation Design
+  observation_design: {
+    required_fields: ['status', 'summary', 'recommendation', 'next_actions'],
+    status_values: ['certain', 'likely', 'uncertain'],
+    error_recovery: {
+      root_cause_hint: true,
+      safe_retry_instruction: true,
+      explicit_stop_condition: true,
+    },
+  },
+
+  // Agent Harness Construction — Error Recovery Contract
+  error_recovery: {
+    rate_limited: 'The AI service is busy right now. Please wait a moment and try again.',
+    timeout: 'The request timed out. Please try a shorter or more specific question.',
+    auth_failure: 'The AI service is not configured correctly. Please contact support.',
+    unknown: 'I encountered an error processing your request. Please try again.',
+  },
+
+  // Agent Harness Construction — Context Budgeting
+  context_budget: {
+    system_prompt_max_tokens: 500,
+    catalog_context_max_tokens: 2000,
+    conversation_window: 8,
+    compaction_at: 'phase_boundaries',
+  },
+
+  // Agent Harness Construction — Architecture Pattern
+  architecture: {
+    pattern: 'hybrid',
+    planning: 'ReAct',
+    execution: 'typed_tool_execution',
+    benchmarking: {
+      completion_rate: true,
+      retries_per_task: true,
+      pass_at_1: true,
+      pass_at_3: true,
+      cost_per_successful_task: true,
+    },
   },
 
   supported_ecosystems: [
@@ -31,10 +89,10 @@ export const AGENT_CONFIG = {
     enabled: true,
     foundation_skill: 'find-skills',
     commands: {
-      find: 'npx skills find [query]',
-      add: 'npx skills add <package>',
-      update: 'npx skills update',
-      check: 'npx skills check',
+      find: 'skillscamp find [query]',
+      add: 'skillscamp install <slug>',
+      update: 'skillscamp update',
+      check: 'skillscamp check',
     },
     workflow: [
       'Understand user intent',
@@ -44,9 +102,8 @@ export const AGENT_CONFIG = {
       'Verify source reputation',
       'Verify GitHub stars',
       'Categorize results',
-      'Recommend best skills',
+      'Recommend best skills with reasoning',
       'Generate install commands',
-      'Generate Tangison-enhanced version',
     ],
   },
 
@@ -59,7 +116,7 @@ export const AGENT_CONFIG = {
       'install_command',
       'usage_examples',
       'related_skills',
-      'Tangison_enhancement',
+      'tangison_enhancement',
       'quality_score',
       'ecosystem_metadata',
     ],

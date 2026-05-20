@@ -11,6 +11,7 @@ import {
   Play, RefreshCw, FileDown, Eye, Settings, ChevronDown, AlertCircle
 } from 'lucide-react';
 import { MastGlyph } from '@/components/brand/TangisonLogo';
+import ReactMarkdown from 'react-markdown';
 
 /* ═══════════════════════════════════════════════════════════════
    TYPES
@@ -1429,10 +1430,11 @@ export default function Home() {
   // Chat state
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
-    { role: 'assistant', content: 'I am the Tangison SkillsCamp AI. I can help you discover, evaluate, and deploy AI agent skills. What are you building?' }
+    { role: 'assistant', content: '**→ Welcome to SkillsCamp AI**\n\nI help you discover, evaluate, and deploy AI agent skills. Tell me what you\'re building and I\'ll recommend the right skills with install commands.\n\n**Next step:** Describe your project or ask about a specific skill category.' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [isAiTyping, setIsAiTyping] = useState(false);
+  const [chatCopiedIdx, setChatCopiedIdx] = useState<number | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Skills directory filters
@@ -1716,7 +1718,7 @@ export default function Home() {
         const res = await fetch('/api/prompt-writer', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ context: pwContext, tone: pwTone, input: pwInput + (i > 0 ? ` (variation ${i + 1})` : '') }),
+          body: JSON.stringify({ context: pwContext, tone: pwTone, input: pwInput, variation: i + 1 }),
         });
         const data = await res.json();
         if (data.result) {
@@ -2916,7 +2918,7 @@ export default function Home() {
                   </div>
 
                   {pwResults.map((result, idx) => (
-                    <div key={idx} className={`border rounded-[4px] ${cardClass}`}>
+                    <div key={idx} className={`border rounded-[4px] ${cardClass} overflow-hidden`}>
                       {/* Result header */}
                       <div className={`flex items-center justify-between px-4 py-2.5 border-b ${borderClass}`}>
                         <span className="text-xs font-mono uppercase tracking-widest text-[#C56A4A]">
@@ -2939,11 +2941,41 @@ export default function Home() {
                           </button>
                         </div>
                       </div>
-                      {/* Result content */}
+                      {/* Result content — rendered Markdown with section highlighting */}
                       <div className="p-4">
-                        <pre className={`text-xs font-mono whitespace-pre-wrap leading-relaxed ${textPrimaryClass} max-h-80 overflow-y-auto`}>
-                          {result}
-                        </pre>
+                        <div className="prose-chat">
+                          <ReactMarkdown
+                            components={{
+                              h2: ({ children }) => {
+                                const text = String(children);
+                                const sectionColors: Record<string, string> = {
+                                  'ROLE': 'text-[#C56A4A]',
+                                  'BEHAVIOR': 'text-emerald-500',
+                                  'TONE': 'text-amber-500',
+                                  'ESCALATION': 'text-red-400',
+                                  'CONSTRAINTS': 'text-purple-400',
+                                };
+                                const colorClass = Object.entries(sectionColors).find(([key]) => text.toUpperCase().includes(key))?.[1] || textPrimaryClass;
+                                return <h2 className={`text-sm font-mono uppercase tracking-widest mt-4 mb-2 pb-1 border-b ${borderClass} ${colorClass}`}>{children}</h2>;
+                              },
+                              p: ({ children }) => <p className={`text-xs ${textPrimaryClass} mb-2`}>{children}</p>,
+                              ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
+                              ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
+                              li: ({ children }) => <li className={`text-xs ${textPrimaryClass} leading-relaxed`}>{children}</li>,
+                              strong: ({ children }) => <strong className="font-bold text-[#C56A4A]">{children}</strong>,
+                              code: ({ children, className }) => {
+                                const isInline = !className;
+                                return isInline ? (
+                                  <code className="bg-[#C56A4A]/10 text-[#C56A4A] px-1.5 py-0.5 rounded-[2px] font-mono text-[11px]">{children}</code>
+                                ) : (
+                                  <code className={`${className} block bg-black/30 p-2 rounded-[2px] font-mono text-[10px] overflow-x-auto mt-1`}>{children}</code>
+                                );
+                              },
+                            }}
+                          >
+                            {result}
+                          </ReactMarkdown>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -2957,31 +2989,87 @@ export default function Home() {
 
       {/* ═══ AI CHAT WIDGET ═══ */}
       {chatOpen && (
-        <div className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[360px] max-h-[520px] border rounded-[4px] shadow-2xl shadow-black/30 flex flex-col animate-[fadeInUp_0.3s_ease-out] ${cardClass}`}>
+        <div className={`fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[420px] max-h-[580px] border rounded-[4px] shadow-2xl shadow-black/30 flex flex-col animate-[fadeInUp_0.3s_ease-out] ${cardClass}`}>
           {/* Chat Header */}
-          <div className={`flex items-center justify-between p-4 border-b ${borderClass}`}>
-            <div className="flex items-center gap-2">
+          <div className={`flex items-center justify-between px-4 py-3 border-b ${borderClass}`}>
+            <div className="flex items-center gap-2.5">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className={`text-xs font-mono uppercase tracking-widest ${textPrimaryClass}`}>SkillsCamp AI</span>
-              <span className="ml-2 text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span>
+              <span className="text-[9px] font-mono uppercase tracking-[0.15em] bg-[#C56A4A]/15 text-[#C56A4A] px-2 py-0.5 rounded border border-[#C56A4A]/20">beta</span>
             </div>
-            <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`} aria-label="Close assistant">
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              {chatMessages.length > 1 && (
+                <button
+                  onClick={() => {
+                    setChatMessages([{ role: 'assistant', content: '**→ Chat cleared.** Tell me what you\'re building and I\'ll recommend the right skills.\n\n**Next step:** Describe your project or ask about a skill category.' }]);
+                    setChatCopiedIdx(null);
+                  }}
+                  className={`text-[10px] font-mono uppercase tracking-widest px-2 py-1 rounded-[2px] ${textMutedClass} hover:text-[#C56A4A] transition-colors`}
+                  aria-label="Clear chat"
+                >
+                  Clear
+                </button>
+              )}
+              <button onClick={() => setChatOpen(false)} className={`${textMutedClass} hover:text-[#F6F4EF]`} aria-label="Close assistant">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
           {/* Chat Messages */}
-          <div className="flex-grow overflow-y-auto p-4 space-y-3 max-h-[360px]">
+          <div className="flex-grow overflow-y-auto p-4 space-y-3 max-h-[420px]" style={{ scrollbarWidth: 'thin' }}>
             {chatMessages.map((msg, idx) => (
               <div key={idx} className={`text-xs leading-relaxed ${msg.role === 'assistant' ? textPrimaryClass : `${textMutedClass} text-right`}`}>
-                <div className={`inline-block max-w-[85%] p-3 rounded-[4px] ${msg.role === 'assistant' ? `${cardNestedClass} ${borderClass} border` : 'bg-[#C56A4A]/10 border border-[#C56A4A]/20'}`}>
-                  {msg.content}
+                <div className={`relative group inline-block max-w-[92%] p-3 rounded-[4px] ${msg.role === 'assistant' ? `${cardNestedClass} ${borderClass} border` : 'bg-[#C56A4A]/10 border border-[#C56A4A]/20'}`}>
+                  {msg.role === 'assistant' ? (
+                    <div className="prose-chat">
+                      <ReactMarkdown
+                        components={{
+                          p: ({ children }) => <p className="mb-1.5 last:mb-0">{children}</p>,
+                          strong: ({ children }) => <strong className="font-bold text-[#C56A4A]">{children}</strong>,
+                          code: ({ children, className }) => {
+                            const isInline = !className;
+                            return isInline ? (
+                              <code className="bg-[#C56A4A]/10 text-[#C56A4A] px-1.5 py-0.5 rounded-[2px] font-mono text-[11px]">{children}</code>
+                            ) : (
+                              <code className={`${className} block bg-black/30 p-2 rounded-[2px] font-mono text-[10px] overflow-x-auto mt-1`}>{children}</code>
+                            );
+                          },
+                          ul: ({ children }) => <ul className="list-disc pl-4 mb-1.5 space-y-0.5">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal pl-4 mb-1.5 space-y-0.5">{children}</ol>,
+                          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+                          a: ({ children, href }) => <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#C56A4A] hover:underline">{children}</a>,
+                        }}
+                      >
+                        {msg.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    <span>{msg.content}</span>
+                  )}
+                  {/* Copy button on assistant messages */}
+                  {msg.role === 'assistant' && (
+                    <button
+                      onClick={() => { copyToClipboard(msg.content); setChatCopiedIdx(idx); setTimeout(() => setChatCopiedIdx(null), 2000); }}
+                      className={`absolute -bottom-1 -right-1 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[9px] px-1.5 py-0.5 rounded-[2px] ${chatCopiedIdx === idx ? 'bg-emerald-500/10 text-emerald-500 opacity-100' : `${cardClass} ${textMutedClass} hover:text-[#F6F4EF]`}`}
+                      aria-label="Copy message"
+                    >
+                      {chatCopiedIdx === idx ? <Check className="w-2.5 h-2.5" /> : <Copy className="w-2.5 h-2.5" />}
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
             {isAiTyping && (
               <div className={`text-xs ${textMutedClass}`}>
                 <div className={`inline-block p-3 rounded-[4px] ${cardNestedClass} ${borderClass} border`}>
-                  <span className="animate-pulse">Thinking...</span>
+                  <div className="flex items-center gap-1.5">
+                    <div className="flex gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C56A4A] animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C56A4A] animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#C56A4A] animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                    <span className="animate-pulse">Thinking...</span>
+                  </div>
                 </div>
               </div>
             )}
@@ -2994,10 +3082,10 @@ export default function Home() {
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleChatSend()}
-              placeholder="Ask about skills..."
-              className={`flex-grow px-3 py-2 rounded-[2px] text-xs font-mono placeholder:text-[#787774]/50 focus:outline-none ${cardNestedClass} ${textPrimaryClass}`}
+              placeholder="Describe what you're building..."
+              className={`flex-grow px-3 py-2.5 rounded-[2px] text-xs font-mono placeholder:text-[#787774]/50 focus:outline-none focus:ring-1 focus:ring-[#C56A4A]/50 ${cardNestedClass} ${textPrimaryClass}`}
             />
-            <button onClick={handleChatSend} disabled={isAiTyping || !chatInput.trim()} className="p-2 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors disabled:opacity-50" aria-label="Send message">
+            <button onClick={handleChatSend} disabled={isAiTyping || !chatInput.trim()} className="p-2.5 rounded-[2px] bg-[#C56A4A] text-[#F6F4EF] hover:bg-[#F6F4EF] hover:text-[#111315] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Send message">
               <Send className="w-3.5 h-3.5" />
             </button>
           </div>
