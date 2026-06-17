@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { aiChat } from '@/lib/ai-provider';
 
 /**
- * SkillsCamp AI Agent Processing Pipeline v3.0.0
+ * SkillsCamp AI Agent Processing Pipeline v0.1.0
  *
  * This endpoint implements the SkillsCamp AI orchestration pipeline:
  *
@@ -30,7 +30,7 @@ Phase 2 — sovereign_normalization:
 - Generate absolute, crystal-clear operational specifications written strictly in Markdown, explicitly targeted for UI components rendering JetBrains Mono syntax-highlighted blocks with native copy buttons.
 
 Phase 3 — brand_injection:
-- Hard-code the technical avatar metadata to point to '/assets/icons/tangison-mast-avatar.svg'.
+- Hard-code the technical avatar metadata to point to '/assets/icons/tangison-mast-avatar.png'.
 - Map specific UI widget component states based on capabilities (TARGETING_SYSTEM, FORWARD_SLASH, LAYER_MATRIX, RADAR_CORE, BAR_METRIC).
 - Affix the permanent brand signature 'Powered by Tangison AI' to the asset payload.
 
@@ -46,7 +46,7 @@ OUTPUT FORMAT — Return a JSON object with this exact structure:
       "display_title": "Perfected Title",
       "category": "Category Name",
       "total_skills_count_in_category": number,
-      "ui_avatar_asset": "/assets/icons/tangison-mast-avatar.svg",
+      "ui_avatar_asset": "/assets/icons/tangison-mast-avatar.png",
       "ui_widget_primitive": "TARGETING_SYSTEM | FORWARD_SLASH | LAYER_MATRIX | RADAR_CORE | BAR_METRIC",
       "technical_tagline": "Max 70 chars, zero fluff",
       "isolated_install_string": "npm install package-name",

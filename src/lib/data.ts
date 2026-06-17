@@ -42,8 +42,8 @@ export const SEED_SKILLS: Skill[] = [
     id: 'skill-1',
     slug: 'superpowers',
     name: 'Superpowers',
-    tagline: 'The #1 most-installed skill — complete multi-agent development workflow',
-    description: 'The most-installed skill on skills.sh with ~40,900 GitHub stars. Superpowers provides a complete multi-agent development workflow for AI coding assistants — task decomposition, context management, agent coordination, and quality enforcement. The gold standard for AI-assisted development.',
+    tagline: 'Complete multi-agent development workflow',
+    description: 'A widely-used multi-agent development workflow skill on skills.sh. Superpowers provides task decomposition, context management, agent coordination, and quality enforcement for AI coding assistants.',
     content: `# Superpowers
 
 ## Overview
@@ -66,8 +66,8 @@ npx skills add obra/superpowers
 
 ## Why It's #1
 
-- ~40,900 GitHub stars — the most popular skill by a wide margin
-- Used by thousands of developers daily
+- Widely adopted across the skills.sh community
+- Used by developers daily across multiple AI coding assistants
 - Integrates with all major AI coding assistants
 - Battle-tested in production environments
 
@@ -112,7 +112,7 @@ npx skills add obra/superpowers
       { type: 'complementary', target: 'find-skills', label: 'Discover complementary skills' },
       { type: 'complementary', target: 'vercel-react-best-practices', label: 'Enforce React standards' }
     ],
-    aiInsight: 'The undisputed #1 skill — 40,900+ GitHub stars. Superpowers is the gateway drug to the skills.sh ecosystem.',
+    aiInsight: 'Superpowers is a foundational skill in the skills.sh ecosystem — it orchestrates other skills through multi-agent coordination.',
     tangisonRecommendation: 'Install Superpowers first — it orchestrates everything else and gives you the full multi-agent development experience.'
   },
   // ═══════════════════════════════════════════════════════════
@@ -1052,7 +1052,7 @@ const contracts = await docx.mailMerge({
       { type: 'complementary', target: 'pdf', label: 'Export to PDF format' },
       { type: 'complementary', target: 'pptx', label: 'Create matching presentations' }
     ],
-    aiInsight: 'DOCX template system reduces document creation time by an average of 73%.',
+    aiInsight: 'DOCX template system accelerates document creation by providing pre-structured, professional templates.',
     tangisonRecommendation: 'Use DOCX for any document that needs Word compatibility. Pair with PDF for dual-format output.'
   },
   // ═══════════════════════════════════════════════════════════
@@ -1197,7 +1197,7 @@ const deck = await pptx.create({
       { type: 'complementary', target: 'docx', label: 'Create handout documents' },
       { type: 'complementary', target: 'pdf', label: 'Export to PDF for sharing' }
     ],
-    aiInsight: 'PPTX pitch deck template has been used to raise over $200M in documented funding rounds.',
+    aiInsight: 'PPTX pitch deck template follows the Sequoia format investors expect — clear, structured, and ready to customize.',
     tangisonRecommendation: 'For pitch decks, start with the built-in template. It follows the Sequoia format investors expect.'
   },
   // ═══════════════════════════════════════════════════════════
@@ -2113,8 +2113,8 @@ const sequence = await coldOutreach({
       { type: 'complementary', target: 'human-copywriting', label: 'Write compelling outreach copy' },
       { type: 'complementary', target: 'whatsapp-auto', label: 'WhatsApp follow-up automation' }
     ],
-    aiInsight: 'Cold Outreach\'s SADC cultural calibration makes it 3x more effective than generic sales skills in Namibian markets.',
-    tangisonRecommendation: 'Use Cold Outreach for B2B sales in SADC. The cultural calibration alone doubles reply rates.'
+    aiInsight: 'Cold Outreach\'s SADC cultural calibration makes it better suited to Namibian markets than generic sales skills.',
+    tangisonRecommendation: 'Use Cold Outreach for B2B sales in SADC. The cultural calibration helps avoid tone-mismatch.'
   },
   // ═══════════════════════════════════════════════════════════
   // TANGISON — Invoice Generator
@@ -2258,7 +2258,7 @@ const bot = await whatsappAuto({
       { type: 'complementary', target: 'cold-outreach', label: 'WhatsApp follow-up sequences' },
       { type: 'complementary', target: 'invoice-generator', label: 'Send invoices via WhatsApp' }
     ],
-    aiInsight: 'WhatsApp Auto is the most-used SADC business skill — WhatsApp has 95%+ penetration in Namibia.',
+    aiInsight: 'WhatsApp Auto is built for SADC business workflows where WhatsApp is the dominant messaging channel.',
     tangisonRecommendation: 'Every SADC business needs WhatsApp automation. Start with auto-replies, then add appointment reminders.'
   },
   // ═══════════════════════════════════════════════════════════
@@ -2403,7 +2403,7 @@ const prompt = await promptEngine({
       { type: 'complementary', target: 'superpowers', label: 'Use prompts in Superpowers workflow' },
       { type: 'complementary', target: 'google-labs-ai', label: 'Optimize prompts for Gemini' }
     ],
-    aiInsight: 'Prompt Engine\'s anti-hallucination patterns reduce AI confabulation by 67% in testing.',
+    aiInsight: 'Prompt Engine\'s anti-hallucination patterns help reduce AI confabulation through structured prompting.',
     tangisonRecommendation: 'Use Prompt Engine before deploying any AI feature — the prompt quality determines output quality.'
   },
   // ═══════════════════════════════════════════════════════════
@@ -2551,7 +2551,7 @@ type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };`,
       { type: 'complementary', target: 'frontend-design', label: 'Type-safe components' }
     ],
     aiInsight: 'TypeScript Strict\'s branded types and Result patterns eliminate entire classes of runtime errors.',
-    tangisonRecommendation: 'Use TypeScript Strict on any production project — the strict config alone catches 40% more bugs.'
+    tangisonRecommendation: 'Use TypeScript Strict on any production project — the strict config catches many classes of bugs at compile time.'
   },
   // ═══════════════════════════════════════════════════════════
   // TANGISON — Brand Tokens
@@ -2695,6 +2695,123 @@ const setup = await testRunner({
     ],
     aiInsight: 'Test Runner eliminates the "I\'ll add tests later" problem — one command and you have a full testing setup.',
     tangisonRecommendation: 'Run Test Runner init on every new project. Having tests from day one changes how you write code.'
+  },
+  // ═══════════════════════════════════════════════════════════
+  // TANGISON — Tangison Audit (Autonomous Self-Healing Audit)
+  // ═══════════════════════════════════════════════════════════
+  {
+    id: 'skill-36',
+    slug: 'tangison-audit',
+    name: 'Tangison Audit',
+    tagline: 'Autonomous self-healing audit orchestration — audit → fix → verify → re-audit → improve → repeat',
+    description: 'Master supervisor skill for all auditing and remediation workflows. Tangison Audit continuously audits, analyzes, prioritizes, fixes, validates, re-audits, and improves a project until quality targets are achieved or human intervention is required. Coordinates SEO, accessibility, security, performance, code quality, testing, infrastructure, documentation, and truthiness audits across a multi-agent loop.',
+    content: `# Tangison Audit — Autonomous Self-Healing Audit Orchestration
+
+## Overview
+
+Tangison Audit transforms the traditional \`Audit → Report\` flow into an
+\`Audit → Fix → Verify → Re-Audit → Improve → Repeat\` loop. The skill acts as
+the master supervisor for all auditing and remediation workflows across a
+project.
+
+## Architecture
+
+The skill runs a 10-phase autonomous loop:
+
+1. **Discovery** — Run all applicable audit skills, collect findings into a unified database.
+2. **Classification** — Severity × Category × Fixability matrix.
+3. **Root Cause Analysis** — Why it exists, what caused it, where else it lives.
+4. **Prioritization** — \`Priority = Severity × Impact × Confidence × Reach\`.
+5. **Planning** — Files, risks, expected score increase, validation, rollback.
+6. **Autonomous Fixing** — Apply high-confidence fixes per category (SEO, A11y, Performance, Security, Truthiness).
+7. **Validation** — Build, tests, lint, type checks must pass.
+8. **Re-Audit** — Compare before/after, generate delta report.
+9. **Reflection** — What improved, what failed, what regressed, what's next.
+10. **Repeat** — Until completion criteria or safety limits hit.
+
+## Completion Criteria
+
+\`\`\`
+SEO Score            >= 95
+Accessibility Score  >= 95
+Performance Score    >= 95
+Security Score       >= 95
+Documentation Score  >= 95
+Test Coverage        >= Target
+Broken Links         == 0
+Critical Issues      == 0
+Errors               == 0
+Warnings             == 0
+Fabricated Claims    == 0
+\`\`\`
+
+## Safety Limits
+
+\`\`\`
+MAX_ITERATIONS = 20
+MAX_RUNTIME    = 2 hours
+MAX_RETRIES    = 3
+MAX_REGRESSION = 0
+\`\`\`
+
+Stop and escalate to human review if no measurable improvement after 3 cycles.
+
+## Multi-Agent Structure
+
+| Agent | Responsibility |
+|-------|----------------|
+| Supervisor | Orchestration |
+| SEO | SEO and metadata remediation |
+| Accessibility | WCAG compliance |
+| Security | Security reviews and fixes |
+| Performance | Speed and optimization |
+| Content | Content quality and structure |
+| Architecture | Codebase design |
+| Documentation | Documentation completeness |
+| Validation | Builds, tests, verification |
+| GitHub | Commits, branches, PRs |
+| Truthiness | Detect lies and fabricated claims |
+
+## Usage
+
+\`\`\`bash
+npx skills add tangison/skills
+# Then invoke the tangison-audit skill from your agent runtime.
+\`\`\`
+
+## Philosophy
+
+> The objective is not to generate audits. The objective is to eliminate
+> problems until quality targets are achieved.`,
+    tangisonRewrite: null,
+    installCommand: 'npx skills add tangison/skills',
+    categoryId: 'cat-19',
+    tags: ['audit', 'qa', 'security', 'seo', 'accessibility', 'performance', 'self-healing', 'orchestration', 'truthiness'],
+    difficulty: 'ADVANCED',
+    originalAuthor: 'Tangison',
+    sourceUrl: 'https://github.com/tangison/skills',
+    skillsShUrl: 'https://skills.sh/skills/tangison-audit',
+    githubRepo: 'tangison/skills',
+    license: 'Proprietary',
+    ecosystemSource: 'TANGISON',
+    isTangisonOriginal: true,
+    isVerified: true,
+    categoryName: 'Testing',
+    dependencies: [],
+    usageExamples: `// Invoke the audit loop
+const audit = await tangisonAudit({
+  target: process.cwd(),
+  completion: { seo: 95, a11y: 95, security: 95, performance: 95 },
+  maxIterations: 20,
+  onPhase: (phase, result) => console.log(phase, result)
+});`,
+    relationships: [
+      { type: 'complementary', target: 'test-runner', label: 'Validate fixes with tests' },
+      { type: 'complementary', target: 'typescript-strict', label: 'Type-safe remediation' },
+      { type: 'complementary', target: 'nextjs-app-router', label: 'Audit Next.js apps' }
+    ],
+    aiInsight: 'Tangison Audit is the master supervisor — it coordinates every other audit skill into a self-healing loop that does not stop until targets are met or human review is required.',
+    tangisonRecommendation: 'Run Tangison Audit on every release branch. Configure completion criteria to match your quality bar; the skill will iterate autonomously until it meets them.'
   },
 ];
 

@@ -46,7 +46,7 @@ export function SkillsSection({ onSkillSelected }: SkillsSectionProps) {
     return matchesCategory && matchesSearch;
   });
 
-  const categories = ['all', ...Array.from(new Set(SEED_SKILLS.map(s => s.categoryName)))];
+  const categories = ['all', ...Array.from(new Set(SEED_SKILLS.map(s => s.categoryName).filter((c): c is string => Boolean(c))))];
   const currentSkill = selectedSkill ? SEED_SKILLS.find(s => s.slug === selectedSkill) : null;
   const featuredSkills = FEATURED_SLUGS.map(slug => SEED_SKILLS.find(s => s.slug === slug)).filter(Boolean) as typeof SEED_SKILLS;
 

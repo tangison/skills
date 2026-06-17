@@ -47,7 +47,7 @@ const HERO_SLIDES = [
 
 const STATS = [
   { value: '28', label: 'Skill Domains' },
-  { value: '30+', label: 'Curated Skills' },
+  { value: '36', label: 'Curated Skills' },
   { value: '6', label: 'User Classes' },
   { value: '8', label: 'Document Types' },
 ];

@@ -1,16 +1,12 @@
 :81 {
-	@transform_port_query {
-		query XTransformPort=*
-	}
-
-	handle @transform_port_query {
-		reverse_proxy localhost:{query.XTransformPort} {
-			header_up Host {host}
-			header_up X-Forwarded-For {remote_host}
-			header_up X-Forwarded-Proto {scheme}
-			header_up X-Real-IP {remote_host}
-		}
-	}
+	# SkillsCamp Caddyfile (audited 2026-06-17)
+	#
+	# SECURITY: The previous version exposed an open-proxy / SSRF vulnerability
+	# via the `XTransformPort` query parameter — any external client could
+	# proxy to any port on localhost. That block has been REMOVED.
+	#
+	# All inbound traffic is now reverse-proxied to the Next.js standalone
+	# server on :3000 only.
 
 	handle {
 		reverse_proxy localhost:3000 {

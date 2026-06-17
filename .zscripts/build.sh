@@ -77,19 +77,31 @@ if [ -d "public" ]; then
     cp -r public "$BUILD_DIR/next-service-dist/"
 fi
 
-# 将测试环境数据库复制到构建产物中，生产环境直接使用这份数据库
-if [ -f "./db/custom.db" ]; then
-    echo "🗄️  复制测试环境数据库到构建产物..."
-    mkdir -p "$BUILD_DIR/db"
-    cp -r ./db/. "$BUILD_DIR/db/"
-
-    echo "🗄️  同步构建产物中的数据库结构..."
-    DATABASE_URL="file:$BUILD_DIR/db/custom.db" bun run db:push
-    echo "✅ 构建产物数据库已准备完成"
-    ls -lah "$BUILD_DIR/db"
+# SECURITY FIX (audit 5-b, 2026-06-17): No longer bundle the dev SQLite DB
+# into the production image. Production deployments MUST set DATABASE_URL
+# externally (Vercel Postgres, Neon, Turso, etc.). The dev DB contains seed
+# data and test fixtures that must not ship to prod.
+if [ -n "$BUNDLE_DEV_DB" ] && [ "$BUNDLE_DEV_DB" = "1" ]; then
+    echo "⚠️  BUNDLE_DEV_DB=1 detected — bundling dev database (NOT recommended for prod)"
+    if [ -f "./db/custom.db" ]; then
+        mkdir -p "$BUILD_DIR/db"
+        cp -r ./db/. "$BUILD_DIR/db/"
+        DATABASE_URL="file:$BUILD_DIR/db/custom.db" bun run db:push
+        ls -lah "$BUILD_DIR/db"
+    else
+        echo "❌ BUNDLE_DEV_DB=1 but ./db/custom.db missing"
+        exit 1
+    fi
 else
-    echo "❌ 未找到测试环境数据库文件 ./db/custom.db，无法继续构建生产包"
-    exit 1
+    echo "🗄️  Skipping dev DB bundle — production must set DATABASE_URL externally"
+    mkdir -p "$BUILD_DIR/db"
+    cat > "$BUILD_DIR/db/README.md" <<'EOF'
+# Database
+
+This build does NOT bundle a development database.
+Production deployments MUST set the `DATABASE_URL` environment variable to a
+managed Postgres / SQLite connection string (e.g. Vercel Postgres, Neon, Turso).
+EOF
 fi
 
 # 复制 Caddyfile（如果存在）

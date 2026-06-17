@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface MastGlyphProps {
@@ -11,72 +12,28 @@ interface MastGlyphProps {
 }
 
 /**
- * Tangison shipwreck mast glyph.
+ * Tangison mark — sovereign intelligence infrastructure glyph.
  *
- * The mark consists of:
- *  - A vertical main mast pole
- *  - A diagonal sail spar angling up-right from near the top
- *  - A horizontal cross-beam
- *  - A secondary shorter diagonal (rigging hint)
- *  - A curved accent stroke in rust_signal (#C56A4A)
- *  - A small base anchor point
+ * Replaced the legacy SVG mast glyph with the official Tangison logo PNG
+ * (uploaded by the brand owner on 2026-06-17). The mark is rendered through
+ * next/image so it participates in the Next.js image optimization pipeline.
  *
- * All structural strokes use `currentColor` so the glyph adapts to
- * surrounding text colour. Only the accent uses a hard-coded brand value.
+ * `forceRustAccent` and `strokeColor` are retained for backwards
+ * compatibility with existing call sites but are no-ops on the new asset.
  */
 export function MastGlyph({ className, forceRustAccent, strokeColor }: MastGlyphProps) {
+  // Props intentionally accepted but unused — kept for API compatibility.
+  void forceRustAccent;
+  void strokeColor;
   return (
-    <svg
-      viewBox="0 0 100 120"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-    >
-      {/* ── Main vertical mast ── */}
-      <line
-        x1="50" y1="8" x2="50" y2="112"
-        stroke={strokeColor || 'currentColor'}
-        strokeWidth="4.5"
-        strokeLinecap="round"
-      />
-
-      {/* ── Horizontal cross-beam ── */}
-      <line
-        x1="24" y1="52" x2="76" y2="52"
-        stroke={strokeColor || 'currentColor'}
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
-
-      {/* ── Diagonal sail spar (up-right) ── */}
-      <line
-        x1="50" y1="22" x2="82" y2="8"
-        stroke={strokeColor || 'currentColor'}
-        strokeWidth="3.5"
-        strokeLinecap="round"
-      />
-
-      {/* ── Secondary shorter diagonal (down-left rigging hint) ── */}
-      <line
-        x1="50" y1="22" x2="22" y2="38"
-        stroke={strokeColor || 'currentColor'}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-
-      {/* ── Rust accent — curved pennant / signal line ── */}
-      <path
-        d="M82 8 C86 18, 80 26, 76 22"
-        stroke="var(--rust-signal)"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      />
-
-      {/* ── Small base anchor point ── */}
-      <circle cx="50" cy="112" r="3" fill={strokeColor || 'currentColor'} opacity="0.6" />
-    </svg>
+    <Image
+      src="/icon.png"
+      alt="Tangison"
+      width={40}
+      height={40}
+      priority
+      className={cn('h-10 w-10 object-contain', className)}
+    />
   );
 }
 
@@ -95,13 +52,13 @@ export function TangisonLogo({
   const subTextColor = isDark ? 'text-secondary' : 'text-off-black/50';
 
   if (variant === 'mark-only') {
-    return <MastGlyph className={cn('h-10 w-auto', className)} />;
+    return <MastGlyph className={cn('h-10 w-10', className)} />;
   }
 
   if (variant === 'mark-wordmark') {
     return (
       <div className={cn('flex items-center gap-3', className)}>
-        <MastGlyph className="h-10 w-auto shrink-0" />
+        <MastGlyph className="h-10 w-10 shrink-0" />
         <span className={cn('font-display text-lg tracking-[0.12em] uppercase select-none', textColor)}>
           TANGISON
         </span>
@@ -112,13 +69,13 @@ export function TangisonLogo({
   // variant === 'mark-wordmark-product'
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <MastGlyph className="h-10 w-auto shrink-0" />
+      <MastGlyph className="h-10 w-10 shrink-0" />
       <div className="flex flex-col leading-none">
         <span className={cn('font-display text-lg tracking-[0.12em] uppercase select-none', textColor)}>
           TANGISON
         </span>
         <span className={cn('font-editorial-serif text-xs tracking-[0.2em] uppercase select-none mt-1', subTextColor)}>
-          SKILLSMITH
+          SKILLSCAMP
         </span>
       </div>
     </div>
