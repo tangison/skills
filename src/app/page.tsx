@@ -74,7 +74,7 @@ export default function Page() {
       <div className="bg-[var(--rust-signal)] text-white text-center py-1.5 px-4">
         <p className="text-[11px] font-medium">
           SkillsCamp is in early beta — features under active development. Data shown is illustrative.
-          <span className="ml-2 opacity-70">v0.1.0-beta</span>
+          <span className="ml-2 opacity-70">v0.1.0</span>
         </p>
       </div>
 

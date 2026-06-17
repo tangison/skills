@@ -41,7 +41,7 @@ async function callOpenRouter(
     headers: {
       'Authorization': `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
-      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://skillscamp.tangison.com',
+      'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL || 'https://skills.tangison.com',
       'X-Title': 'SkillsCamp AI',
     },
     body: JSON.stringify({

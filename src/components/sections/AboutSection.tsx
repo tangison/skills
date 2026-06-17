@@ -161,7 +161,7 @@ export function AboutSection() {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[var(--rust-signal)] font-mono text-[10px] font-bold mt-0.5 shrink-0">04</span>
-              <span>Works with Claude Code, Cursor, Windsurf, OpenCode, and 50+ agents</span>
+              <span>Works with Claude Code, Cursor, Windsurf, OpenCode, and other major agent runtimes</span>
             </li>
           </ul>
         </div>
